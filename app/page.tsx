@@ -1,7 +1,7 @@
 import StatCard from "@/components/dashboard/StatCard";
 import QuickActions from "@/components/dashboard/QuickActions";
 import RecentActivity from "@/components/dashboard/RecentActivity";
-import { Apple, BicepsFlexed, File, Sparkles } from "lucide-react";
+import { Apple, BicepsFlexed, Droplets, File, Salad, Sparkles } from "lucide-react";
 
 
 const apple = <Apple color="green"/>
@@ -66,16 +66,16 @@ export default function Dashboard() {
           <h2 className="text-xl font-bold text-gray-900 mb-4">Health Tips</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="rounded-2xl bg-linear-to-br from-emerald-50 to-teal-50 p-6 border border-emerald-100">
-              <h3 className="font-semibold text-emerald-900 mb-2">
-                🥗 Eat the Rainbow
+              <h3 className="font-semibold text-emerald-900 mb-2 flex gap-1.5">
+                <Salad color="green"/> Eat the Rainbow
               </h3>
               <p className="text-sm text-emerald-800">
                 Include a variety of colorful vegetables and fruits to get diverse nutrients and antioxidants.
               </p>
             </div>
             <div className="rounded-2xl bg-linear-to-br from-blue-50 to-purple-50 p-6 border border-blue-100">
-              <h3 className="font-semibold text-blue-900 mb-2">
-                💧 Stay Hydrated
+              <h3 className="font-semibold text-blue-900 mb-2 flex gap-1.5">
+                <Droplets color="green"/> Stay Hydrated
               </h3>
               <p className="text-sm text-blue-800">
                 Drink at least 8 glasses of water daily to maintain optimal health and energy levels.

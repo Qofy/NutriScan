@@ -1,10 +1,18 @@
+import { Apple, BicepsFlexed, File, Sparkles, TriangleAlert } from "lucide-react";
+import { ReactNode } from "react";
+
+const apple = <Apple color="green"/>
+const papper = <File color="green"/>
+const spakles = <Sparkles color="green"/>
+const alert = <TriangleAlert color="green"/>
+
 interface Activity {
   id: string;
   type: 'food' | 'report' | 'recommendation';
   title: string;
   description: string;
   timestamp: string;
-  icon: string;
+  icon: ReactNode;
 }
 
 const mockActivities: Activity[] = [
@@ -14,7 +22,7 @@ const mockActivities: Activity[] = [
     title: 'Apple Analyzed',
     description: 'Safe for diabetic diet',
     timestamp: 'Today at 2:30 PM',
-    icon: '🍎',
+    icon: apple,
   },
   {
     id: '2',
@@ -22,7 +30,7 @@ const mockActivities: Activity[] = [
     title: 'Medical Report Uploaded',
     description: 'Hypertension report processed',
     timestamp: 'Today at 10:45 AM',
-    icon: '📄',
+    icon: papper,
   },
   {
     id: '3',
@@ -30,7 +38,7 @@ const mockActivities: Activity[] = [
     title: 'New Recommendation',
     description: 'Green vegetables recommended',
     timestamp: 'Yesterday at 5:20 PM',
-    icon: '✨',
+    icon: spakles,
   },
   {
     id: '4',
@@ -46,7 +54,7 @@ const mockActivities: Activity[] = [
     title: 'Allergy Alert',
     description: 'Peanut allergy noted',
     timestamp: '2 days ago',
-    icon: '⚠️',
+    icon: alert,
   },
 ];
 
