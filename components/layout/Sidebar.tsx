@@ -1,17 +1,25 @@
 'use client';
 
+import { Apple, ChartColumnDecreasing, File, Sparkles, User } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+
+const color = "green"
+const chart = <ChartColumnDecreasing color={color}/>
+const apple = <Apple color={color}/>
+const file = <File color={color}/>
+const spakles = <Sparkles color={color}/>
+const user = <User color={color}/>
 
 export default function Sidebar() {
   const pathname = usePathname();
 
   const navItems = [
-    { href: '/', label: 'Dashboard', icon: '📊' },
-    { href: '/food-analysis', label: 'Scan Food', icon: '🍎' },
-    { href: '/medical-reports', label: 'Reports', icon: '📄' },
-    { href: '/recommendations', label: 'Recommendations', icon: '✨' },
-    { href: '/profile', label: 'Profile', icon: '👤' },
+    { href: '/', label: 'Dashboard', icon: chart },
+    { href: '/food-analysis', label: 'Scan Food', icon: apple },
+    { href: '/medical-reports', label: 'Reports', icon: file },
+    { href: '/recommendations', label: 'Recommendations', icon: spakles },
+    { href: '/profile', label: 'Profile', icon: user },
   ];
 
   return (
