@@ -1,3 +1,4 @@
+import { Camera, File } from 'lucide-react';
 import Link from 'next/link';
 
 export default function QuickActions() {
@@ -15,9 +16,7 @@ export default function QuickActions() {
               Analyze food items with your camera
             </p>
           </div>
-          <span className="text-4xl group-hover:scale-110 transition-transform">
-            📷
-          </span>
+          <Camera size={40}/>
         </div>
       </Link>
 
@@ -33,9 +32,7 @@ export default function QuickActions() {
               Add medical reports for analysis
             </p>
           </div>
-          <span className="text-4xl group-hover:scale-110 transition-transform">
-            📋
-          </span>
+          <File size={40}/>
         </div>
       </Link>
     </div>

@@ -1,7 +1,13 @@
 import StatCard from "@/components/dashboard/StatCard";
 import QuickActions from "@/components/dashboard/QuickActions";
 import RecentActivity from "@/components/dashboard/RecentActivity";
+import { Apple, BicepsFlexed, File, Sparkles } from "lucide-react";
 
+
+const apple = <Apple color="green"/>
+const papper = <File color="green"/>
+const spakles = <Sparkles color="green"/>
+const bicepsFlexed = <BicepsFlexed color="green"/>
 export default function Dashboard() {
   return (
     <div className="flex flex-col min-h-screen">
@@ -22,28 +28,28 @@ export default function Dashboard() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           <StatCard
-            icon="🍎"
+            icon= {apple}
             label="Foods Analyzed"
             value="24"
             subtext="This month"
             bgColor="bg-emerald-50"
           />
           <StatCard
-            icon="📄"
+            icon={papper}
             label="Reports Uploaded"
             value="3"
             subtext="Active reports"
             bgColor="bg-teal-50"
           />
           <StatCard
-            icon="✨"
+            icon={spakles}
             label="Recommendations"
             value="12"
             subtext="Pending review"
             bgColor="bg-blue-50"
           />
           <StatCard
-            icon="💪"
+            icon= {bicepsFlexed}
             label="Health Score"
             value="87%"
             subtext="Excellent progress"

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef } from 'react';
-import { Camera } from 'lucide-react';
+import { Apple, Camera, Folder } from 'lucide-react';
 
 export default function FoodUploadZone() {
   const [isDragging, setIsDragging] = useState(false);
@@ -74,7 +74,7 @@ export default function FoodUploadZone() {
               onClick={capturePhoto}
               className="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-3 rounded-lg transition-colors"
             >
-               <Camera size={40} fill='true' color='green'/>
+               <Camera size={40}  color='green'/>
             </button>
             <button
               onClick={() => {
@@ -91,9 +91,9 @@ export default function FoodUploadZone() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <button
             onClick={startCamera}
-            className="rounded-2xl border-2 border-emerald-500 bg-emerald-50 p-8 hover:bg-emerald-100 transition-colors"
+            className="rounded-2xl border-2 border-emerald-500 bg-emerald-50 p-8 hover:bg-emerald-100 transition-colors text-center"
           >
-            <span className="text-4xl block mb-2">📷</span>
+            <Camera size={40} className="block mx-auto mb-2" color='green'/>
             <p className="font-semibold text-emerald-900">Use Camera</p>
             <p className="text-sm text-emerald-700 mt-1">
               Scan food with device camera
@@ -104,7 +104,7 @@ export default function FoodUploadZone() {
             onClick={() => fileInputRef.current?.click()}
             className="rounded-2xl border-2 border-teal-500 bg-teal-50 p-8 hover:bg-teal-100 transition-colors"
           >
-            <span className="text-4xl block mb-2">📁</span>
+            <Folder size={40} color='green' className='block mx-auto mb-2,'/>
             <p className="font-semibold text-teal-900">Upload Image</p>
             <p className="text-sm text-teal-700 mt-1">
               Choose from your device
@@ -123,7 +123,7 @@ export default function FoodUploadZone() {
             : 'border-gray-300 bg-gray-50 hover:bg-gray-100'
         }`}
       >
-        <p className="text-2xl mb-2">🍎</p>
+        <Apple size={30} color='green' className='block mx-auto mb-2'/>
         <p className="font-semibold text-gray-900">Drag & drop food images</p>
         <p className="text-sm text-gray-600 mt-1">or click to browse files</p>
       </div>
