@@ -1,8 +1,11 @@
 'use client';
 
-import { Apple, ChartColumnDecreasing, File, Sparkles, User } from 'lucide-react';
+import { Apple, ChartColumnDecreasing, File, Sparkles, User, LogOut } from 'lucide-react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { useDispatch } from 'react-redux';
+import { logout } from '@/features/auth';
+import { AppDispatch } from '@/store';
 
 const color = "green"
 const chart = <ChartColumnDecreasing color={color}/>
@@ -13,6 +16,13 @@ const user = <User color={color}/>
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const router = useRouter();
+  const dispatch = useDispatch<AppDispatch>();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    router.push('/login');
+  };
 
   const navItems = [
     { href: '/', label: 'Dashboard', icon: chart },
@@ -51,7 +61,7 @@ export default function Sidebar() {
         })}
       </nav>
 
-      <div className="px-4 py-6 border-t border-gray-200">
+      <div className="px-4 py-6 border-t border-gray-200 space-y-4">
         <div className="rounded-lg bg-emerald-50 p-4">
           <p className="text-sm font-semibold text-emerald-900 mb-2">
             🎯 Health Tip
@@ -60,6 +70,13 @@ export default function Sidebar() {
             Check your dietary recommendations daily for personalized guidance.
           </p>
         </div>
+        <button
+          onClick={handleLogout}
+          className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-red-50 hover:bg-red-100 text-red-700 font-semibold rounded-lg transition-colors border border-red-200"
+        >
+          <LogOut size={18} />
+          Logout
+        </button>
       </div>
     </aside>
   );

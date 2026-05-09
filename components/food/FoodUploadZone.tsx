@@ -2,14 +2,17 @@
 
 import { useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Apple, Camera, Folder } from 'lucide-react';
+import { Apple, Camera, Folder, AlertCircle, CheckCircle } from 'lucide-react';
+import Link from 'next/link';
 import { analyzeFood, setImagePreview, selectCurrentAnalysis } from '@/features/food-analysis';
-import { AppDispatch } from '@/store';
+import { selectAuth } from '@/features/auth';
+import { AppDispatch, RootState } from '@/store';
 import SmartCameraView from './SmartCameraView';
 
 export default function FoodUploadZone() {
   const dispatch = useDispatch<AppDispatch>();
   const { loading, error } = useSelector(selectCurrentAnalysis);
+  const { isAuthenticated, user } = useSelector((state: RootState) => state.auth);
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [showCamera, setShowCamera] = useState(false);
@@ -45,6 +48,35 @@ export default function FoodUploadZone() {
 
   return (
     <div className="space-y-6">
+      {isAuthenticated ? (
+        <div className="rounded-lg bg-green-50 border border-green-200 p-4 flex items-start gap-3">
+          <CheckCircle className="text-green-600 flex-shrink-0 mt-0.5" size={20} />
+          <div>
+            <p className="font-semibold text-green-900">
+              Welcome back, {user?.first_name || user?.username}! 👋
+            </p>
+            <p className="text-sm text-green-800 mt-1">
+              Your food scans and analyses are automatically saved to your profile.
+            </p>
+          </div>
+        </div>
+      ) : (
+        <div className="rounded-lg bg-blue-50 border border-blue-200 p-4 flex items-start gap-3">
+          <AlertCircle className="text-blue-600 flex-shrink-0 mt-0.5" size={20} />
+          <div>
+            <p className="font-semibold text-blue-900">
+              💡 Log in to save your food history
+            </p>
+            <p className="text-sm text-blue-800 mt-1">
+              Create an account or sign in to automatically save all your food scans and track your nutrition over time.
+            </p>
+            <Link href="/login" className="inline-block mt-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition">
+              Login Now
+            </Link>
+          </div>
+        </div>
+      )}
+
       {error && (
         <div className="rounded-lg bg-red-50 border border-red-200 p-4 text-red-800">
           {error}

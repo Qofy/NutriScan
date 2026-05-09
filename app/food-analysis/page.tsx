@@ -1,6 +1,6 @@
 import FoodUploadZone from '@/components/food/FoodUploadZone';
 import AnalysisResults from '@/components/food/AnalysisResults';
-import RecentScans from '@/components/food/RecentScans';
+import RecentScansView from '@/components/food/RecentScansView';
 import { Camera, CircleCheck, FilePenLine, Search } from 'lucide-react';
 
 export default function FoodAnalysisPage() {
@@ -50,7 +50,7 @@ export default function FoodAnalysisPage() {
         </div>
 
         <div className="mt-8">
-          <RecentScans />
+          <RecentScansView />
         </div>
       </div>
     </div>

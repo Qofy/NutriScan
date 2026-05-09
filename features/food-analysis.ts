@@ -123,6 +123,16 @@ const foodAnalysisSlice = createSlice({
       state.recentAnalyses.error = null;
     },
 
+    addRecentAnalysis: (state, action: PayloadAction<AnalysisResult>) => {
+      state.recentAnalyses.data.unshift(action.payload);
+    },
+
+    removeRecentAnalysis: (state, action: PayloadAction<number>) => {
+      state.recentAnalyses.data = state.recentAnalyses.data.filter(
+        (analysis) => analysis.id !== action.payload
+      );
+    },
+
     // Food Search Actions
     setFoodSearchLoading: (state, action: PayloadAction<boolean>) => {
       state.foodSearch.loading = action.payload;
@@ -187,6 +197,8 @@ export const {
   setRecentAnalysesLoading,
   setRecentAnalysesError,
   setRecentAnalysesData,
+  addRecentAnalysis,
+  removeRecentAnalysis,
   setFoodSearchLoading,
   setFoodSearchError,
   setFoodSearchResults,
@@ -228,12 +240,37 @@ export const analyzeFood =
 
       const data: AnalysisResult = await response.json();
       dispatch(setCurrentAnalysisData(data));
+      dispatch(addRecentAnalysis(data));
 
       return data;
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Failed to analyze food';
       dispatch(setCurrentAnalysisError(errorMessage));
       throw error;
+    }
+  };
+
+export const deleteAnalysis =
+  (analysisId: number) =>
+  async (dispatch: AppDispatch) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8000/api/food/analysis/${analysisId}/`,
+        {
+          method: 'DELETE',
+          credentials: 'include',
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`);
+      }
+
+      dispatch(removeRecentAnalysis(analysisId));
+      return { success: true };
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Failed to delete analysis';
+      throw new Error(errorMessage);
     }
   };
 
