@@ -5,14 +5,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Apple, Camera, Folder } from 'lucide-react';
 import { analyzeFood, setImagePreview, selectCurrentAnalysis } from '@/features/food-analysis';
 import { AppDispatch } from '@/store';
+import SmartCameraView from './SmartCameraView';
 
 export default function FoodUploadZone() {
   const dispatch = useDispatch<AppDispatch>();
   const { loading, error } = useSelector(selectCurrentAnalysis);
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
   const [showCamera, setShowCamera] = useState(false);
 
   const handleDragOver = (e: React.DragEvent) => {
@@ -41,44 +40,7 @@ export default function FoodUploadZone() {
     reader.readAsDataURL(file);
 
     dispatch(analyzeFood(file));
-  };
-
-  const startCamera = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: 'environment' },
-      });
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-        setShowCamera(true);
-      }
-    } catch (error) {
-      alert(`Unable to access camera, due to ${error}`);
-    }
-  };
-
-  const capturePhoto = () => {
-    if (videoRef.current && canvasRef.current) {
-      const ctx = canvasRef.current.getContext('2d');
-      if (ctx) {
-        ctx.drawImage(videoRef.current, 0, 0);
-        canvasRef.current.toBlob((blob) => {
-          if (blob) {
-            const file = new File([blob], 'camera-capture.jpg', { type: 'image/jpeg' });
-            handleFile(file);
-          }
-        }, 'image/jpeg');
-        setShowCamera(false);
-        stopCamera();
-      }
-    }
-  };
-
-  const stopCamera = () => {
-    if (videoRef.current && videoRef.current.srcObject) {
-      const tracks = (videoRef.current.srcObject as MediaStream).getTracks();
-      tracks.forEach((track) => track.stop());
-    }
+    setShowCamera(false);
   };
 
   return (
@@ -96,38 +58,11 @@ export default function FoodUploadZone() {
       )}
 
       {showCamera ? (
-        <div className="rounded-2xl overflow-hidden border-2 border-emerald-500 bg-black">
-          <video
-            ref={videoRef}
-            autoPlay
-            playsInline
-            className="w-full h-96 object-cover"
-          />
-          <canvas ref={canvasRef} className="hidden" />
-          <div className="flex gap-4 p-4 bg-gray-900">
-            <button
-              onClick={capturePhoto}
-              disabled={loading}
-              className="flex-1 bg-emerald-500 hover:bg-emerald-600 disabled:opacity-50 text-white font-semibold py-3 rounded-lg transition-colors"
-            >
-              <Camera size={40} color="white" className="mx-auto" />
-            </button>
-            <button
-              onClick={() => {
-                setShowCamera(false);
-                stopCamera();
-              }}
-              disabled={loading}
-              className="flex-1 bg-gray-700 hover:bg-gray-600 disabled:opacity-50 text-white font-semibold py-3 rounded-lg transition-colors"
-            >
-              ✕ Cancel
-            </button>
-          </div>
-        </div>
+        <SmartCameraView onCapture={handleFile} onClose={() => setShowCamera(false)} />
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <button
-            onClick={startCamera}
+            onClick={() => setShowCamera(true)}
             disabled={loading}
             className="rounded-2xl border-2 border-emerald-500 bg-emerald-50 p-8 hover:bg-emerald-100 disabled:opacity-50 transition-colors text-center"
           >

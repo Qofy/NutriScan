@@ -151,7 +151,6 @@ const foodAnalysisSlice = createSlice({
       };
     },
 
-    // Health Profile Actions
     setHealthProfile: (state, action: PayloadAction<HealthProfile>) => {
       state.healthProfile = action.payload;
     },
@@ -160,7 +159,6 @@ const foodAnalysisSlice = createSlice({
       state.healthProfile = null;
     },
 
-    // Image Preview Actions
     setImagePreview: (state, action: PayloadAction<string | null>) => {
       state.imagePreview = action.payload;
     },
@@ -169,12 +167,10 @@ const foodAnalysisSlice = createSlice({
       state.imagePreview = null;
     },
 
-    // Selected Analysis Actions
     setSelectedAnalysis: (state, action: PayloadAction<AnalysisResult | null>) => {
       state.selectedAnalysis = action.payload;
     },
 
-    // Clear all errors
     clearAllErrors: (state) => {
       state.currentAnalysis.error = null;
       state.recentAnalyses.error = null;
@@ -183,7 +179,6 @@ const foodAnalysisSlice = createSlice({
   },
 });
 
-// Export Actions
 export const {
   setCurrentAnalysisLoading,
   setCurrentAnalysisError,
@@ -205,7 +200,6 @@ export const {
   clearAllErrors,
 } = foodAnalysisSlice.actions;
 
-// Manual Async Thunks (Normal Functions)
 import { AppDispatch } from '../store';
 
 export const analyzeFood =
