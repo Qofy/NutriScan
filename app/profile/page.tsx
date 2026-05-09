@@ -167,7 +167,7 @@ export default function ProfilePage() {
                     onChange={() =>
                       handleCheckboxChange(condition.key)
                     }
-                    className="w-5 h-5 rounded border-gray-300 text-emerald-500 cursor-pointer"
+                    className="w-5 h-5 rounded border-gray-300  text-emerald-500 cursor-pointer"
                   />
                   <span className="font-medium text-gray-700">
                     {condition.label}
@@ -193,7 +193,7 @@ export default function ProfilePage() {
                   value={formData.allergies}
                   onChange={handleChange}
                   rows={3}
-                  className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 resize-none"
+                  className="w-full px-4 py-2 rounded-lg border text-black border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 resize-none"
                   placeholder="List any food allergies (comma-separated)"
                 />
               </div>
@@ -206,7 +206,7 @@ export default function ProfilePage() {
                   name="dietaryPreferences"
                   value={formData.dietaryPreferences}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                  className="w-full px-4 py-2 rounded-lg border text-black border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500"
                 >
                   <option value="None">None</option>
                   <option value="Vegetarian">Vegetarian</option>

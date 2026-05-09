@@ -82,6 +82,7 @@ export const login =
       }
 
       const data = await response.json();
+      console.log("data:",data)
       dispatch(setToken(data.token));
       dispatch(setUser(data.user));
       localStorage.setItem('auth_token', data.token);

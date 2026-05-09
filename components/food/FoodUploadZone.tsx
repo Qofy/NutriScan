@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Apple, Camera, Folder, AlertCircle, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 import { analyzeFood, setImagePreview, selectCurrentAnalysis } from '@/features/food-analysis';
-import { selectAuth } from '@/features/auth';
+// import { selectAuth } from '@/features/auth';
 import { AppDispatch, RootState } from '@/store';
 import SmartCameraView from './SmartCameraView';
 
