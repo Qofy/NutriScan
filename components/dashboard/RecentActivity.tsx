@@ -1,82 +1,128 @@
-import { Apple, BicepsFlexed, File, Sparkles, TriangleAlert } from "lucide-react";
-import { ReactNode } from "react";
+'use client';
 
-const apple = <Apple color="green"/>
-const papper = <File color="green"/>
-const spakles = <Sparkles color="green"/>
-const alert = <TriangleAlert color="green"/>
-
-interface Activity {
-  id: string;
-  type: 'food' | 'report' | 'recommendation';
-  title: string;
-  description: string;
-  timestamp: string;
-  icon: ReactNode;
-}
-
-const mockActivities: Activity[] = [
-  {
-    id: '1',
-    type: 'food',
-    title: 'Apple Analyzed',
-    description: 'Safe for diabetic diet',
-    timestamp: 'Today at 2:30 PM',
-    icon: apple,
-  },
-  {
-    id: '2',
-    type: 'report',
-    title: 'Medical Report Uploaded',
-    description: 'Hypertension report processed',
-    timestamp: 'Today at 10:45 AM',
-    icon: papper,
-  },
-  {
-    id: '3',
-    type: 'recommendation',
-    title: 'New Recommendation',
-    description: 'Green vegetables recommended',
-    timestamp: 'Yesterday at 5:20 PM',
-    icon: spakles,
-  },
-  {
-    id: '4',
-    type: 'food',
-    title: 'Broccoli Analyzed',
-    description: 'Excellent for your conditions',
-    timestamp: 'Yesterday at 3:15 PM',
-    icon: '🥦',
-  },
-  {
-    id: '5',
-    type: 'report',
-    title: 'Allergy Alert',
-    description: 'Peanut allergy noted',
-    timestamp: '2 days ago',
-    icon: alert,
-  },
-];
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Apple, TriangleAlert, CheckCircle, AlertCircle } from 'lucide-react';
+import { fetchRecentAnalyses } from '@/features/food-analysis';
+import { AppDispatch, RootState } from '@/store';
 
 export default function RecentActivity() {
+  const dispatch = useDispatch<AppDispatch>();
+  const { data: recentAnalyses } = useSelector((state: RootState) => state.foodAnalysis.recentAnalyses);
+
+  useEffect(() => {
+    dispatch(fetchRecentAnalyses(10));
+  }, [dispatch]);
+
+  const getActivityIcon = (safetyLevel: string) => {
+    switch (safetyLevel) {
+      case 'safe':
+        return <CheckCircle color="green" size={24} />;
+      case 'caution':
+        return <AlertCircle color="orange" size={24} />;
+      case 'danger':
+        return <TriangleAlert color="red" size={24} />;
+      default:
+        return <Apple color="green" size={24} />;
+    }
+  };
+
+  const getSafetyDescription = (safetyLevel: string, confidenceScore: number) => {
+    const confidence = Math.round(confidenceScore * 100);
+    switch (safetyLevel) {
+      case 'safe':
+        return `Safe to eat (${confidence}% confidence)`;
+      case 'caution':
+        return `Caution advised (${confidence}% confidence)`;
+      case 'danger':
+        return `Not recommended (${confidence}% confidence)`;
+      default:
+        return `Analyzed (${confidence}% confidence)`;
+    }
+  };
+
+  const formatTimestamp = (dateString: string) => {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffInMinutes = Math.floor((now.getTime() - date.getTime()) / (1000 * 60));
+
+    if (diffInMinutes < 1) return 'Just now';
+    if (diffInMinutes < 60) return `${diffInMinutes}m ago`;
+
+    const diffInHours = Math.floor(diffInMinutes / 60);
+    if (diffInHours < 24) return `${diffInHours}h ago`;
+
+    const diffInDays = Math.floor(diffInHours / 24);
+    if (diffInDays === 1) return 'Yesterday';
+    if (diffInDays < 7) return `${diffInDays}d ago`;
+
+    return date.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  };
+
+  if (recentAnalyses.length === 0) {
+    return (
+      <div className="rounded-2xl bg-white p-6 border border-gray-100 shadow-sm">
+        <h2 className="text-lg font-bold text-gray-900 mb-4">Recent Activity</h2>
+        <div className="text-center py-8">
+          <Apple color="green" size={40} className="mx-auto mb-3 opacity-50" />
+          <p className="text-gray-600">No food scans yet</p>
+          <p className="text-sm text-gray-500 mt-1">Start by scanning some food to see your activity</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="rounded-2xl bg-white p-6 border border-gray-100 shadow-sm">
       <h2 className="text-lg font-bold text-gray-900 mb-4">Recent Activity</h2>
       <div className="space-y-4">
-        {mockActivities.map((activity) => (
-          <div key={activity.id} className="flex items-start gap-4 pb-4 border-b border-gray-100 last:border-b-0 last:pb-0">
-            <div className="text-2xl flex-shrink-0">{activity.icon}</div>
-            <div className="flex-1 min-w-0">
-              <p className="font-medium text-gray-900 truncate">
-                {activity.title}
-              </p>
-              <p className="text-sm text-gray-600 mt-1">
-                {activity.description}
-              </p>
-              <p className="text-xs text-gray-400 mt-2">{activity.timestamp}</p>
+        {recentAnalyses.map((analysis) => {
+          const foodItems = analysis.recognized_items
+            .map((item) => item.name)
+            .join(', ');
+
+          return (
+            <div
+              key={analysis.id}
+              className="flex items-start gap-4 pb-4 border-b border-gray-100 last:border-b-0 last:pb-0"
+            >
+              <div className="flex-shrink-0">
+                {getActivityIcon(analysis.safety_level)}
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="font-medium text-gray-900 truncate">
+                  {foodItems}
+                </p>
+                <p className="text-sm text-gray-600 mt-1">
+                  {getSafetyDescription(
+                    analysis.safety_level,
+                    analysis.confidence_score
+                  )}
+                </p>
+                <p className="text-xs text-gray-400 mt-2">
+                  {formatTimestamp(analysis.uploaded_at)}
+                </p>
+              </div>
+              <span
+                className={`text-xs font-semibold px-2 py-1 rounded-full whitespace-nowrap flex-shrink-0 ${
+                  analysis.safety_level === 'safe'
+                    ? 'bg-green-100 text-green-800'
+                    : analysis.safety_level === 'caution'
+                    ? 'bg-yellow-100 text-yellow-800'
+                    : 'bg-red-100 text-red-800'
+                }`}
+              >
+                {analysis.safety_level.charAt(0).toUpperCase() +
+                  analysis.safety_level.slice(1)}
+              </span>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

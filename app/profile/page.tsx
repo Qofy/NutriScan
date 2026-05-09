@@ -1,23 +1,28 @@
 'use client';
 
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
 
 export default function ProfilePage() {
-  const [formData, setFormData] = useState({
-    name: 'Sarah Johnson',
-    email: 'sarah@example.com',
+  const { user } = useSelector((state: RootState) => state.auth);
+
+  const [formData, setFormData] = useState(() => ({
+    firstName: user?.first_name || '',
+    lastName: user?.last_name || '',
+    email: user?.email || '',
     age: '32',
     height: '5\'6"',
     weight: '65',
     conditions: {
-      diabetes: true,
+      diabetes: false,
       hypertension: false,
-      allergies: true,
+      allergies: false,
       heartDisease: false,
     },
-    allergies: 'Peanuts, Shellfish',
-    dietaryPreferences: 'Vegetarian',
-  });
+    allergies: '',
+    dietaryPreferences: 'None',
+  }));
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -64,28 +69,41 @@ export default function ProfilePage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Full Name
+                    First Name
                   </label>
                   <input
                     type="text"
-                    name="name"
-                    value={formData.name}
+                    name="firstName"
+                    value={formData.firstName}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                    className="w-full px-4 py-2 rounded-lg border text-black border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500"
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Email
+                    Last Name
                   </label>
                   <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
+                    type="text"
+                    name="lastName"
+                    value={formData.lastName}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                    className="w-full px-4 py-2 rounded-lg border text-black border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500"
                   />
                 </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 rounded-lg border text-black border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
@@ -98,7 +116,7 @@ export default function ProfilePage() {
                     name="age"
                     value={formData.age}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                    className="w-full px-4 py-2 rounded-lg border text-black border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500"
                   />
                 </div>
                 <div>
@@ -110,7 +128,7 @@ export default function ProfilePage() {
                     name="height"
                     value={formData.height}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                    className="w-full px-4 py-2 rounded-lg border text-black border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500"
                   />
                 </div>
                 <div>
@@ -122,7 +140,7 @@ export default function ProfilePage() {
                     name="weight"
                     value={formData.weight}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                    className="w-full px-4 py-2 rounded-lg border text-black border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500"
                   />
                 </div>
               </div>

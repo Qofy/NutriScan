@@ -1,20 +1,61 @@
+'use client';
+
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import StatCard from "@/components/dashboard/StatCard";
 import QuickActions from "@/components/dashboard/QuickActions";
 import RecentActivity from "@/components/dashboard/RecentActivity";
 import { Apple, BicepsFlexed, Droplets, File, Salad, Sparkles } from "lucide-react";
-
+import { fetchRecentAnalyses } from '@/features/food-analysis';
+import { AppDispatch, RootState } from '@/store';
 
 const apple = <Apple color="green"/>
 const papper = <File color="green"/>
 const spakles = <Sparkles color="green"/>
 const bicepsFlexed = <BicepsFlexed color="green"/>
+
 export default function Dashboard() {
+  const dispatch = useDispatch<AppDispatch>();
+  const { user } = useSelector((state: RootState) => state.auth);
+  const { data: recentAnalyses } = useSelector((state: RootState) => state.foodAnalysis.recentAnalyses);
+
+  useEffect(() => {
+    dispatch(fetchRecentAnalyses(100));
+  }, [dispatch]);
+
+  // Calculate stats from actual data
+  const foodsAnalyzed = recentAnalyses.length;
+  const thisMonthAnalyses = recentAnalyses.filter(analysis => {
+    const analysisDate = new Date(analysis.uploaded_at);
+    const now = new Date();
+    return analysisDate.getMonth() === now.getMonth() &&
+           analysisDate.getFullYear() === now.getFullYear();
+  }).length;
+
+  // Calculate average safety level (for health score)
+  const safetyScores = recentAnalyses.reduce((acc, analysis) => {
+    const scoreMap = { safe: 100, caution: 60, danger: 20 };
+    return acc + (scoreMap[analysis.safety_level as keyof typeof scoreMap] || 0);
+  }, 0);
+  const healthScore = recentAnalyses.length > 0
+    ? Math.round(safetyScores / recentAnalyses.length)
+    : 0;
+
+  const getHealthScoreSubtext = (score: number) => {
+    if (score >= 80) return 'Excellent progress';
+    if (score >= 60) return 'Good job';
+    if (score >= 40) return 'Keep improving';
+    return 'Needs attention';
+  };
+
+  const userName = user?.first_name ? user.first_name : user?.username || 'User';
+
   return (
     <div className="flex flex-col min-h-screen">
       <div className="flex-1 px-4 sm:px-6 py-6 sm:py-8 max-w-7xl mx-auto w-full">
         <div className="mb-8">
           <h1 className="text-3xl sm:text-4xl font-bold text-gray-900">
-            Welcome back, Sarah!
+            Welcome back, {userName}!
           </h1>
           <p className="text-gray-600 mt-2">
             {new Date().toLocaleDateString('en-US', {
@@ -28,31 +69,31 @@ export default function Dashboard() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           <StatCard
-            icon= {apple}
+            icon={apple}
             label="Foods Analyzed"
-            value="24"
-            subtext="This month"
+            value={foodsAnalyzed.toString()}
+            subtext={`${thisMonthAnalyses} this month`}
             bgColor="bg-emerald-50"
           />
           <StatCard
             icon={papper}
             label="Reports Uploaded"
-            value="3"
+            value="0"
             subtext="Active reports"
             bgColor="bg-teal-50"
           />
           <StatCard
             icon={spakles}
             label="Recommendations"
-            value="12"
+            value={recentAnalyses.length > 0 ? Math.ceil(recentAnalyses.length * 0.5).toString() : "0"}
             subtext="Pending review"
             bgColor="bg-blue-50"
           />
           <StatCard
-            icon= {bicepsFlexed}
+            icon={bicepsFlexed}
             label="Health Score"
-            value="87%"
-            subtext="Excellent progress"
+            value={`${healthScore}%`}
+            subtext={getHealthScoreSubtext(healthScore)}
             bgColor="bg-purple-50"
           />
         </div>

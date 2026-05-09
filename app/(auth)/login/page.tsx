@@ -45,7 +45,7 @@ export default function LoginPage() {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             placeholder="Enter your username"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+            className="w-full px-4 py-2 border border-gray-300 text-black rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
             disabled={loading}
           />
         </div>
@@ -60,7 +60,7 @@ export default function LoginPage() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Enter your password"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+            className="w-full px-4 py-2 border border-gray-300 text-black rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
             disabled={loading}
           />
         </div>
@@ -81,12 +81,12 @@ export default function LoginPage() {
         </Link>
       </p>
 
-      {/* Demo credentials */}
+      {/* Demo credentials
       <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
         <p className="text-sm text-blue-900 font-semibold mb-2">Demo Account:</p>
         <p className="text-sm text-blue-800">Username: <code className="bg-white px-2 py-1 rounded">kofisafoagyekum</code></p>
         <p className="text-sm text-blue-800">Password: (from your setup)</p>
-      </div>
+      </div> */}
     </div>
   );
 }
