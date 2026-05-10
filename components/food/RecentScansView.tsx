@@ -15,8 +15,10 @@ export default function RecentScansView() {
   );
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isHydrated, setIsHydrated] = useState(false);
 
   useEffect(() => {
+    setIsHydrated(true);
     dispatch(fetchRecentAnalyses(50) as any);
   }, [dispatch]);
 
@@ -75,7 +77,16 @@ export default function RecentScansView() {
     }
   };
 
-  if (loading) {
+  // Show neutral loading state during hydration to prevent mismatch
+  if (!isHydrated) {
+    return (
+      <div className="flex justify-center items-center py-12">
+        <div className="text-gray-600">Loading your scans...</div>
+      </div>
+    );
+  }
+
+  if (loading && recentScans.length === 0) {
     return (
       <div className="flex justify-center items-center py-12">
         <div className="text-gray-600">Loading your scans...</div>

@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { clearRecentAnalyses } from './food-analysis';
 
 export interface User {
   id: number;
@@ -175,6 +176,7 @@ export const logout = () => (dispatch: AppDispatch) => {
   localStorage.removeItem('auth_token');
   document.cookie = 'auth_token=; path=/; max-age=0';
   dispatch(clearAuth());
+  dispatch(clearRecentAnalyses());
 };
 
 export const selectAuth = (state: any) => state.auth;

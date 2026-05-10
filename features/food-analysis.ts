@@ -57,6 +57,26 @@ export interface FoodAnalysisState {
   selectedAnalysis: AnalysisResult | null;
 }
 
+const loadRecentAnalysesFromStorage = (): AnalysisResult[] => {
+  if (typeof window === 'undefined') return [];
+  try {
+    const stored = localStorage.getItem('recentAnalyses');
+    return stored ? JSON.parse(stored) : [];
+  } catch (error) {
+    console.error('Failed to load recent analyses from localStorage:', error);
+    return [];
+  }
+};
+
+const saveRecentAnalysesToStorage = (analyses: AnalysisResult[]): void => {
+  if (typeof window === 'undefined') return;
+  try {
+    localStorage.setItem('recentAnalyses', JSON.stringify(analyses));
+  } catch (error) {
+    console.error('Failed to save recent analyses to localStorage:', error);
+  }
+};
+
 export const initialState: FoodAnalysisState = {
   currentAnalysis: {
     image: null,
@@ -65,7 +85,7 @@ export const initialState: FoodAnalysisState = {
     data: null,
   },
   recentAnalyses: {
-    data: [],
+    data: loadRecentAnalysesFromStorage(),
     loading: false,
     error: null,
   },
@@ -121,16 +141,19 @@ const foodAnalysisSlice = createSlice({
       state.recentAnalyses.data = action.payload;
       state.recentAnalyses.loading = false;
       state.recentAnalyses.error = null;
+      saveRecentAnalysesToStorage(action.payload);
     },
 
     addRecentAnalysis: (state, action: PayloadAction<AnalysisResult>) => {
       state.recentAnalyses.data.unshift(action.payload);
+      saveRecentAnalysesToStorage(state.recentAnalyses.data);
     },
 
     removeRecentAnalysis: (state, action: PayloadAction<number>) => {
       state.recentAnalyses.data = state.recentAnalyses.data.filter(
         (analysis) => analysis.id !== action.payload
       );
+      saveRecentAnalysesToStorage(state.recentAnalyses.data);
     },
 
     // Food Search Actions
@@ -181,6 +204,13 @@ const foodAnalysisSlice = createSlice({
       state.selectedAnalysis = action.payload;
     },
 
+    clearRecentAnalyses: (state) => {
+      state.recentAnalyses.data = [];
+      state.recentAnalyses.loading = false;
+      state.recentAnalyses.error = null;
+      saveRecentAnalysesToStorage([]);
+    },
+
     clearAllErrors: (state) => {
       state.currentAnalysis.error = null;
       state.recentAnalyses.error = null;
@@ -199,6 +229,7 @@ export const {
   setRecentAnalysesData,
   addRecentAnalysis,
   removeRecentAnalysis,
+  clearRecentAnalyses,
   setFoodSearchLoading,
   setFoodSearchError,
   setFoodSearchResults,
@@ -294,13 +325,22 @@ export const fetchRecentAnalyses =
       }
 
       const data: AnalysisResult[] = await response.json();
-      dispatch(setRecentAnalysesData(data));
+
+      // If backend returns data, use it
+      if (data && data.length > 0) {
+        dispatch(setRecentAnalysesData(data));
+      } else {
+        // If backend returns empty, keep localStorage data intact
+        // (user might be offline or not authenticated)
+        dispatch(setRecentAnalysesLoading(false));
+      }
 
       return data;
-    } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Failed to fetch analyses';
-      dispatch(setRecentAnalysesError(errorMessage));
-      throw error;
+    } catch {
+      // On error, keep localStorage data (don't clear it)
+      dispatch(setRecentAnalysesLoading(false));
+      dispatch(setRecentAnalysesError(`Using saved data`));
+      return [];
     }
   };
 

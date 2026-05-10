@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import StatCard from "@/components/dashboard/StatCard";
 import QuickActions from "@/components/dashboard/QuickActions";
@@ -16,11 +16,15 @@ const bicepsFlexed = <BicepsFlexed color="green"/>
 
 export default function Dashboard() {
   const dispatch = useDispatch<AppDispatch>();
+  const [mounted, setMounted] = useState(false);
   const { user } = useSelector((state: RootState) => state.auth);
   const { data: recentAnalyses } = useSelector((state: RootState) => state.foodAnalysis.recentAnalyses);
 
   useEffect(() => {
+    // Defer setting mounted to the next tick to avoid synchronous setState in the effect
+    const id = window.setTimeout(() => setMounted(true), 0);
     dispatch(fetchRecentAnalyses(100));
+    return () => clearTimeout(id);
   }, [dispatch]);
 
   // Calculate stats from actual data
@@ -71,8 +75,8 @@ export default function Dashboard() {
           <StatCard
             icon={apple}
             label="Foods Analyzed"
-            value={foodsAnalyzed.toString()}
-            subtext={`${thisMonthAnalyses} this month`}
+            value={mounted ? foodsAnalyzed.toString() : "0"}
+            subtext={mounted ? `${thisMonthAnalyses} this month` : "0 this month"}
             bgColor="bg-emerald-50"
           />
           <StatCard
@@ -85,15 +89,15 @@ export default function Dashboard() {
           <StatCard
             icon={spakles}
             label="Recommendations"
-            value={recentAnalyses.length > 0 ? Math.ceil(recentAnalyses.length * 0.5).toString() : "0"}
+            value={mounted && recentAnalyses.length > 0 ? Math.ceil(recentAnalyses.length * 0.5).toString() : "0"}
             subtext="Pending review"
             bgColor="bg-blue-50"
           />
           <StatCard
             icon={bicepsFlexed}
             label="Health Score"
-            value={`${healthScore}%`}
-            subtext={getHealthScoreSubtext(healthScore)}
+            value={mounted ? `${healthScore}%` : "0%"}
+            subtext={mounted ? getHealthScoreSubtext(healthScore) : "Loading..."}
             bgColor="bg-purple-50"
           />
         </div>
