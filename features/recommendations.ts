@@ -66,6 +66,7 @@ export function fetchRecommendations() {
       if (!response.ok) throw new Error('Failed to fetch recommendations');
 
       const data = await response.json();
+      console.log("Recommendation Data: ", data)
       dispatch(setRecommendations(Array.isArray(data) ? data : data.results || []));
     } catch (error: any) {
       dispatch(setError(error.message));
@@ -97,6 +98,7 @@ export function generateRecommendations() {
       }
 
       const data = await response.json();
+      console.log("Generated Recommendation",data)
       dispatch(setRecommendations(Array.isArray(data) ? data : data.results || []));
       return data;
     } catch (error: any) {
