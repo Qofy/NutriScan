@@ -7,6 +7,7 @@ import QuickActions from "@/components/dashboard/QuickActions";
 import RecentActivity from "@/components/dashboard/RecentActivity";
 import { Apple, BicepsFlexed, Droplets, File, Salad, Sparkles } from "lucide-react";
 import { fetchRecentAnalyses } from '@/features/food-analysis';
+import { fetchMedicalReports } from '@/features/medical-reports';
 import { AppDispatch, RootState } from '@/store';
 
 const apple = <Apple color="green"/>
@@ -16,14 +17,15 @@ const bicepsFlexed = <BicepsFlexed color="green"/>
 
 export default function Dashboard() {
   const dispatch = useDispatch<AppDispatch>();
-  const [mounted, setMounted] = useState(false);
+  const [isHydrated, setIsHydrated] = useState(false);
   const { user } = useSelector((state: RootState) => state.auth);
   const { data: recentAnalyses } = useSelector((state: RootState) => state.foodAnalysis.recentAnalyses);
+  const { reports: medicalReports } = useSelector((state: RootState) => state.medicalReports);
 
   useEffect(() => {
-    // Defer setting mounted to the next tick to avoid synchronous setState in the effect
-    const id = window.setTimeout(() => setMounted(true), 0);
+    const id = window.setTimeout(() => setIsHydrated(true), 0);
     dispatch(fetchRecentAnalyses(100));
+    dispatch(fetchMedicalReports() as any);
     return () => clearTimeout(id);
   }, [dispatch]);
 
@@ -75,29 +77,29 @@ export default function Dashboard() {
           <StatCard
             icon={apple}
             label="Foods Analyzed"
-            value={mounted ? foodsAnalyzed.toString() : "0"}
-            subtext={mounted ? `${thisMonthAnalyses} this month` : "0 this month"}
+            value={isHydrated ? foodsAnalyzed.toString() : "0"}
+            subtext={isHydrated ? `${thisMonthAnalyses} this month` : "0 this month"}
             bgColor="bg-emerald-50"
           />
           <StatCard
             icon={papper}
             label="Reports Uploaded"
-            value="0"
-            subtext="Active reports"
+            value={isHydrated ? medicalReports.length.toString() : "0"}
+            subtext={isHydrated && medicalReports.length > 0 ? `${medicalReports.filter(r => r.status === 'completed').length} processed` : "No reports yet"}
             bgColor="bg-teal-50"
           />
           <StatCard
             icon={spakles}
             label="Recommendations"
-            value={mounted && recentAnalyses.length > 0 ? Math.ceil(recentAnalyses.length * 0.5).toString() : "0"}
+            value={isHydrated && recentAnalyses.length > 0 ? Math.ceil(recentAnalyses.length * 0.5).toString() : "0"}
             subtext="Pending review"
             bgColor="bg-blue-50"
           />
           <StatCard
             icon={bicepsFlexed}
             label="Health Score"
-            value={mounted ? `${healthScore}%` : "0%"}
-            subtext={mounted ? getHealthScoreSubtext(healthScore) : "Loading..."}
+            value={isHydrated ? `${healthScore}%` : "0%"}
+            subtext={isHydrated ? getHealthScoreSubtext(healthScore) : "Loading..."}
             bgColor="bg-purple-50"
           />
         </div>

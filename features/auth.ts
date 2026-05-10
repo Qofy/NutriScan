@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { clearRecentAnalyses } from './food-analysis';
+import { clearRecentAnalyses, fetchRecentAnalyses } from './food-analysis';
+import { clearMedicalReports, fetchMedicalReports } from './medical-reports';
 
 export interface User {
   id: number;
@@ -89,6 +90,9 @@ export const login =
       localStorage.setItem('auth_token', data.token);
       document.cookie = `auth_token=${data.token}; path=/; max-age=86400`;
 
+      dispatch(fetchRecentAnalyses(100) as any);
+      dispatch(fetchMedicalReports() as any);
+
       return data;
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Login failed';
@@ -129,6 +133,9 @@ export const register =
       localStorage.setItem('auth_token', data.token);
       document.cookie = `auth_token=${data.token}; path=/; max-age=86400`;
 
+      dispatch(fetchRecentAnalyses(100) as any);
+      dispatch(fetchMedicalReports() as any);
+
       return data;
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Registration failed';
@@ -164,6 +171,8 @@ export const restoreAuth = () => async (dispatch: AppDispatch) => {
     const user = await response.json();
     dispatch(setToken(token));
     dispatch(setUser(user));
+    dispatch(fetchRecentAnalyses(100) as any);
+    dispatch(fetchMedicalReports() as any);
   } catch (error) {
     localStorage.removeItem('auth_token');
     dispatch(clearAuth());
@@ -177,6 +186,7 @@ export const logout = () => (dispatch: AppDispatch) => {
   document.cookie = 'auth_token=; path=/; max-age=0';
   dispatch(clearAuth());
   dispatch(clearRecentAnalyses());
+  dispatch(clearMedicalReports());
 };
 
 export const selectAuth = (state: any) => state.auth;
