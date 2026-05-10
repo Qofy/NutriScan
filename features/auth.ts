@@ -18,10 +18,45 @@ export interface AuthState {
   error: string | null;
 }
 
+const loadAuthFromStorage = (): { user: User | null; token: string | null } => {
+  if (typeof window === 'undefined') return { user: null, token: null };
+  try {
+    const user = localStorage.getItem('auth_user');
+    const token = localStorage.getItem('auth_token');
+    return {
+      user: user ? JSON.parse(user) : null,
+      token: token || null,
+    };
+  } catch (error) {
+    console.error('Failed to load auth from localStorage:', error);
+    return { user: null, token: null };
+  }
+};
+
+const saveAuthToStorage = (user: User | null, token: string | null): void => {
+  if (typeof window === 'undefined') return;
+  try {
+    if (user) {
+      localStorage.setItem('auth_user', JSON.stringify(user));
+    } else {
+      localStorage.removeItem('auth_user');
+    }
+    if (token) {
+      localStorage.setItem('auth_token', token);
+    } else {
+      localStorage.removeItem('auth_token');
+    }
+  } catch (error) {
+    console.error('Failed to save auth to localStorage:', error);
+  }
+};
+
+const { user: storedUser, token: storedToken } = loadAuthFromStorage();
+
 export const initialState: AuthState = {
-  user: null,
-  token: null,
-  isAuthenticated: false,
+  user: storedUser,
+  token: storedToken,
+  isAuthenticated: !!storedUser,
   loading: false,
   error: null,
 };
@@ -33,10 +68,12 @@ const authSlice = createSlice({
     setUser: (state, action: PayloadAction<User | null>) => {
       state.user = action.payload;
       state.isAuthenticated = !!action.payload;
+      saveAuthToStorage(action.payload, state.token);
     },
 
     setToken: (state, action: PayloadAction<string | null>) => {
       state.token = action.payload;
+      saveAuthToStorage(state.user, action.payload);
     },
 
     setLoading: (state, action: PayloadAction<boolean>) => {
@@ -52,6 +89,7 @@ const authSlice = createSlice({
       state.token = null;
       state.isAuthenticated = false;
       state.error = null;
+      saveAuthToStorage(null, null);
     },
   },
 });
@@ -187,6 +225,94 @@ export const logout = () => (dispatch: AppDispatch) => {
   dispatch(clearAuth());
   dispatch(clearRecentAnalyses());
   dispatch(clearMedicalReports());
+};
+
+export const updateProfile = (profileData: any) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setLoading(true));
+    dispatch(setError(null));
+
+    const token = localStorage.getItem('auth_token');
+    if (!token) {
+      throw new Error('Not authenticated');
+    }
+
+    // Update user info (first_name, last_name, email)
+    const userResponse = await fetch('http://localhost:8000/api/profile/user/update_profile/', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${token}`,
+      },
+      body: JSON.stringify({
+        first_name: profileData.first_name,
+        last_name: profileData.last_name,
+        email: profileData.email,
+      }),
+    });
+
+    if (!userResponse.ok) {
+      const errorData = await userResponse.json();
+      throw new Error(errorData.error || 'Failed to update user profile');
+    }
+
+    const updatedUser = await userResponse.json();
+    dispatch(setUser(updatedUser));
+
+    // Update health profile (conditions, allergies, dietary preferences, etc.)
+    try {
+      await fetch('http://localhost:8000/api/profile/health/', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Token ${token}`,
+        },
+        body: JSON.stringify({
+          age: parseInt(profileData.age) || null,
+          height: parseFloat(profileData.height) || null,
+          weight: parseFloat(profileData.weight) || null,
+          health_conditions: Object.keys(profileData.conditions).filter(
+            key => profileData.conditions[key]
+          ),
+          allergies: profileData.allergies ? profileData.allergies.split(',').map((a: string) => a.trim()).filter((a: string) => a) : [],
+          dietary_preferences: profileData.dietaryPreferences ? [profileData.dietaryPreferences] : [],
+        }),
+      });
+    } catch (healthError) {
+      console.warn('Health profile update warning:', healthError);
+      // Don't fail the entire save if health profile update fails
+    }
+
+    return updatedUser;
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Failed to update profile';
+    dispatch(setError(errorMessage));
+    throw error;
+  } finally {
+    dispatch(setLoading(false));
+  }
+};
+
+export const fetchHealthProfile = () => async (dispatch: AppDispatch) => {
+  try {
+    const token = localStorage.getItem('auth_token');
+    if (!token) return null;
+
+    const response = await fetch('http://localhost:8000/api/profile/health/', {
+      method: 'GET',
+      headers: {
+        'Authorization': `Token ${token}`,
+      },
+    });
+
+    if (!response.ok) return null;
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Failed to fetch health profile:', error);
+    return null;
+  }
 };
 
 export const selectAuth = (state: any) => state.auth;
