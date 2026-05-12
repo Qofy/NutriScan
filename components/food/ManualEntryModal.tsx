@@ -1,0 +1,203 @@
+'use client';
+
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { X, Plus, Trash2 } from 'lucide-react';
+import { manualAnalyzeFood, selectCurrentAnalysis, extractHealthProfileFromReports } from '@/features/food-analysis';
+import { AppDispatch, RootState } from '@/store';
+
+interface ManualEntryModalProps {
+  onClose: () => void;
+}
+
+export default function ManualEntryModal({ onClose }: ManualEntryModalProps) {
+  const dispatch = useDispatch<AppDispatch>();
+  const { loading } = useSelector(selectCurrentAnalysis);
+  const { reports } = useSelector((state: RootState) => state.medicalReports);
+
+  const [ingredients, setIngredients] = useState<string[]>(['']);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+
+  const handleAddIngredient = () => {
+    setIngredients([...ingredients, '']);
+  };
+
+  const handleRemoveIngredient = (index: number) => {
+    setIngredients(ingredients.filter((_, i) => i !== index));
+  };
+
+  const handleIngredientChange = (index: number, value: string) => {
+    const newIngredients = [...ingredients];
+    newIngredients[index] = value;
+    setIngredients(newIngredients);
+  };
+
+  const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.currentTarget.files?.[0];
+    if (file) {
+      setImageFile(file);
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setImagePreview(e.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleRemoveImage = () => {
+    setImageFile(null);
+    setImagePreview(null);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const nonEmptyIngredients = ingredients.filter(i => i.trim());
+    if (nonEmptyIngredients.length === 0) return;
+
+    try {
+      const healthProfile = extractHealthProfileFromReports(reports);
+      await dispatch(manualAnalyzeFood(nonEmptyIngredients, imageFile, healthProfile || undefined) as any);
+      onClose();
+    } catch (error) {
+      console.error('Error submitting manual entry:', error);
+    }
+  };
+
+  const nonEmptyCount = ingredients.filter(i => i.trim()).length;
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+      <div className="bg-white rounded-2xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        {/* Header */}
+        <div className="sticky top-0 bg-white border-b border-gray-200 p-6 flex items-center justify-between">
+          <h2 className="text-2xl font-bold text-gray-900">Add Food Manually</h2>
+          <button
+            onClick={onClose}
+            disabled={loading}
+            className="text-gray-400 hover:text-gray-600 disabled:opacity-50"
+          >
+            <X size={24} />
+          </button>
+        </div>
+
+        {/* Content */}
+        <form onSubmit={handleSubmit} className="p-6 space-y-6">
+          {/* Ingredients Section */}
+          <div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">📝 Ingredients</h3>
+            <div className="space-y-3">
+              {ingredients.map((ingredient, index) => (
+                <div key={index} className="flex gap-2">
+                  <input
+                    type="text"
+                    value={ingredient}
+                    onChange={(e) => handleIngredientChange(index, e.target.value)}
+                    placeholder="e.g., Rice, Beans, Chicken"
+                    disabled={loading}
+                    className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-gray-900 placeholder-gray-500 disabled:bg-gray-100"
+                  />
+                  {ingredients.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveIngredient(index)}
+                      disabled={loading}
+                      className="px-3 py-2 text-red-600 hover:bg-red-50 rounded-lg transition disabled:opacity-50"
+                    >
+                      <Trash2 size={20} />
+                    </button>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            <button
+              type="button"
+              onClick={handleAddIngredient}
+              disabled={loading}
+              className="mt-4 flex items-center gap-2 px-4 py-2 text-emerald-600 hover:bg-emerald-50 rounded-lg transition disabled:opacity-50"
+            >
+              <Plus size={18} />
+              Add Ingredient
+            </button>
+          </div>
+
+          {/* Photo Section */}
+          <div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">📸 Photo (Optional)</h3>
+            <p className="text-sm text-gray-600 mb-3">
+              Upload a photo to help improve YOLO's food detection accuracy
+            </p>
+
+            {imagePreview ? (
+              <div className="relative">
+                <img
+                  src={imagePreview}
+                  alt="Preview"
+                  className="w-full h-48 object-cover rounded-lg border border-gray-300"
+                />
+                <button
+                  type="button"
+                  onClick={handleRemoveImage}
+                  disabled={loading}
+                  className="absolute top-2 right-2 p-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition disabled:opacity-50"
+                >
+                  <X size={18} />
+                </button>
+                <label className="absolute bottom-2 right-2 px-3 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg cursor-pointer transition disabled:opacity-50">
+                  Change
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageSelect}
+                    disabled={loading}
+                    className="hidden"
+                  />
+                </label>
+              </div>
+            ) : (
+              <label className="block border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer hover:border-emerald-500 hover:bg-emerald-50 transition disabled:opacity-50">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageSelect}
+                  disabled={loading}
+                  className="hidden"
+                />
+                <p className="text-gray-600">Click to upload or drag and drop</p>
+                <p className="text-xs text-gray-500 mt-1">PNG, JPG up to 10MB</p>
+              </label>
+            )}
+          </div>
+
+          {/* Training Note */}
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <p className="text-sm text-blue-800">
+              <span className="font-semibold">🧠 YOLO Training:</span> Your labeled photos help improve food detection accuracy. After 20 entries with photos, the system will automatically retrain.
+            </p>
+          </div>
+
+          {/* Buttons */}
+          <div className="flex gap-3 pt-4 border-t border-gray-200">
+            <button
+              type="button"
+              onClick={onClose}
+              disabled={loading}
+              className="flex-1 px-4 py-2 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg font-medium transition disabled:opacity-50"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              disabled={loading || nonEmptyCount === 0}
+              className="flex-1 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 disabled:bg-gray-400 text-white rounded-lg font-medium transition"
+            >
+              {loading ? 'Submitting...' : 'Add Entry'}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}

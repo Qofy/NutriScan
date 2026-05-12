@@ -27,6 +27,7 @@ export interface AnalysisResult {
   safety_level: 'safe' | 'caution' | 'danger';
   confidence_score: number;
   analysis_result: Record<string, any>;
+  is_manual?: boolean;
 }
 
 export interface HealthProfile {
@@ -379,6 +380,89 @@ export const searchFoodItems =
       throw error;
     }
   };
+
+export const manualAnalyzeFood =
+  (foodItems: string[], imageFile?: File, healthProfile?: HealthProfile) =>
+  async (dispatch: AppDispatch) => {
+    try {
+      dispatch(setCurrentAnalysisLoading(true));
+      dispatch(setCurrentAnalysisError(null));
+
+      const formData = new FormData();
+      const items = foodItems.filter(n => n.trim()).map(n => ({ name: n.trim(), confidence: 1.0 }));
+      formData.append('food_items', JSON.stringify(items));
+
+      if (imageFile) {
+        formData.append('image', imageFile);
+        const reader = new FileReader();
+        reader.onload = () => dispatch(setImagePreview(reader.result as string));
+        reader.readAsDataURL(imageFile);
+      }
+
+      if (healthProfile) {
+        formData.append('health_profile', JSON.stringify(healthProfile));
+      }
+
+      const response = await fetch('http://localhost:8000/api/food/analysis/manual-analyze/', {
+        method: 'POST',
+        body: formData,
+        credentials: 'include',
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to submit manual entry');
+      }
+
+      const data: AnalysisResult = await response.json();
+      dispatch(setCurrentAnalysisData(data));
+      dispatch(addRecentAnalysis(data));
+
+      return data;
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Failed to analyze foods';
+      dispatch(setCurrentAnalysisError(errorMessage));
+      throw error;
+    }
+  };
+
+// Utility: Extract health profile from medical reports
+export const extractHealthProfileFromReports = (reports: any[]): HealthProfile | null => {
+  if (!reports || reports.length === 0) return null;
+
+  const conditions = new Set<string>();
+  const allergens = new Set<string>();
+
+  reports.forEach((report) => {
+    // From extracted_data (new format)
+    if (report.extracted_data) {
+      report.extracted_data.conditions?.forEach((c: any) => {
+        if (c.condition) conditions.add(c.condition);
+      });
+      report.extracted_data.allergens?.forEach((a: any) => {
+        if (a.allergen) allergens.add(a.allergen);
+      });
+    }
+
+    // From health_info (legacy format)
+    if (report.health_info) {
+      report.health_info.forEach((h: any) => {
+        if (h.condition_name) conditions.add(h.condition_name);
+      });
+    }
+
+    // From allergies (legacy format)
+    if (report.allergies) {
+      report.allergies.forEach((a: any) => {
+        if (a.allergen) allergens.add(a.allergen);
+      });
+    }
+  });
+
+  return {
+    conditions: Array.from(conditions),
+    allergens: Array.from(allergens),
+  };
+};
 
 // Selectors
 export const selectCurrentAnalysis = (state: any) => state.foodAnalysis.currentAnalysis;

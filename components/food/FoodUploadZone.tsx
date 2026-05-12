@@ -1,24 +1,29 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Apple, Camera, Folder, AlertCircle, CheckCircle, Plus, X } from 'lucide-react';
+import { Apple, Camera, Folder, AlertCircle, CheckCircle, Plus } from 'lucide-react';
 import Link from 'next/link';
-import { analyzeFood, setImagePreview, selectCurrentAnalysis } from '@/features/food-analysis';
+import { analyzeFood, setImagePreview, selectCurrentAnalysis, extractHealthProfileFromReports } from '@/features/food-analysis';
 // import { selectAuth } from '@/features/auth';
 import { AppDispatch, RootState } from '@/store';
 import SmartCameraView from './SmartCameraView';
+import ManualEntryModal from './ManualEntryModal';
 
 export default function FoodUploadZone() {
   const dispatch = useDispatch<AppDispatch>();
   const { loading, error } = useSelector(selectCurrentAnalysis);
   const { isAuthenticated, user } = useSelector((state: RootState) => state.auth);
+  const { reports } = useSelector((state: RootState) => state.medicalReports);
   const [isDragging, setIsDragging] = useState(false);
+  const [isHydrated, setIsHydrated] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [showCamera, setShowCamera] = useState(false);
   const [showManualEntry, setShowManualEntry] = useState(false);
-  const [manualFoods, setManualFoods] = useState<string>('');
-  const [manualLoading, setManualLoading] = useState(false);
+
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
@@ -45,52 +50,25 @@ export default function FoodUploadZone() {
     };
     reader.readAsDataURL(file);
 
-    dispatch(analyzeFood(file));
+    const healthProfile = extractHealthProfileFromReports(reports);
+    dispatch(analyzeFood(file, healthProfile || undefined));
     setShowCamera(false);
   };
 
-  const handleManualSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!manualFoods.trim()) return;
 
-    setManualLoading(true);
-    try {
-      const foodList = manualFoods
-        .split(',')
-        .map(f => ({
-          name: f.trim(),
-          confidence: 1.0
-        }))
-        .filter(f => f.name.length > 0);
-
-      const response = await fetch('http://localhost:8000/api/food/analysis/manual-analyze/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ food_items: foodList, health_profile: {} }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to analyze foods');
-      }
-
-      const data = await response.json();
-      setManualFoods('');
-      setShowManualEntry(false);
-      // Trigger a refresh of food scans by dispatching analyzeFood action's success effect
-      // For now, we'll just show a success message
-      alert('Foods added successfully!');
-    } catch (error) {
-      alert('Error adding foods: ' + (error instanceof Error ? error.message : 'Unknown error'));
-    } finally {
-      setManualLoading(false);
-    }
-  };
+  if (!isHydrated) {
+    return (
+      <div className="space-y-6">
+        <div className="rounded-lg bg-gray-200 h-24 animate-pulse" />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
       {isAuthenticated ? (
         <div className="rounded-lg bg-green-50 border border-green-200 p-4 flex items-start gap-3">
-          <CheckCircle className="text-green-600 flex-shrink-0 mt-0.5" size={20} />
+          <CheckCircle className="text-green-600 shrink-0 mt-0.5" size={20} />
           <div>
             <p className="font-semibold text-green-900">
               Welcome back, {user?.first_name || user?.username}! 👋
@@ -102,7 +80,7 @@ export default function FoodUploadZone() {
         </div>
       ) : (
         <div className="rounded-lg bg-blue-50 border border-blue-200 p-4 flex items-start gap-3">
-          <AlertCircle className="text-blue-600 flex-shrink-0 mt-0.5" size={20} />
+          <AlertCircle className="text-blue-600 shrink-0 mt-0.5" size={20} />
           <div>
             <p className="font-semibold text-blue-900">
               💡 Log in to save your food history
@@ -129,53 +107,7 @@ export default function FoodUploadZone() {
         </div>
       )}
 
-      {showManualEntry ? (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl shadow-xl max-w-md w-full p-6">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-xl font-bold text-gray-900">Add Foods Manually</h3>
-              <button
-                onClick={() => setShowManualEntry(false)}
-                className="text-gray-400 hover:text-gray-600"
-              >
-                <X size={24} />
-              </button>
-            </div>
-
-            <p className="text-sm text-gray-600 mb-4">
-              Couldn't detect your food? Type the food names separated by commas (e.g., Fufu, Jollof rice, Plantain)
-            </p>
-
-            <form onSubmit={handleManualSubmit} className="space-y-4">
-              <textarea
-                value={manualFoods}
-                onChange={(e) => setManualFoods(e.currentTarget.value)}
-                placeholder="e.g., Fufu, Spaghetti, Jollof rice, Grilled fish"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-black"
-                rows={4}
-                disabled={manualLoading}
-              />
-
-              <div className="flex gap-3">
-                <button
-                  type="button"
-                  onClick={() => setShowManualEntry(false)}
-                  className="flex-1 px-4 py-2 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg font-medium transition-colors"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  disabled={manualLoading || !manualFoods.trim()}
-                  className="flex-1 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white rounded-lg font-medium transition-colors"
-                >
-                  {manualLoading ? 'Adding...' : 'Add Foods'}
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      ) : null}
+      {showManualEntry && <ManualEntryModal onClose={() => setShowManualEntry(false)} />}
 
       {showCamera ? (
         <SmartCameraView onCapture={handleFile} onClose={() => setShowCamera(false)} />

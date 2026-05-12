@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { MedicalReport } from '@/features/medical-reports';
 import ReportCard from './ReportCard';
 
@@ -16,6 +17,25 @@ export default function ReportsListSection({
   onViewReport,
   onDeleteReport,
 }: ReportsListSectionProps) {
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
+
+  if (!isHydrated) {
+    return (
+      <div>
+        <h2 className="text-xl font-bold text-gray-900 mb-4">Your Reports (0)</h2>
+        <div className="space-y-4">
+          {[1, 2, 3].map(i => (
+            <div key={i} className="rounded-2xl bg-gray-200 h-32 animate-pulse"></div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div>
       <h2 className="text-xl font-bold text-gray-900 mb-4">Your Reports ({reports.length})</h2>

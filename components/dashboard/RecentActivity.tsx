@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Apple, TriangleAlert, CheckCircle, AlertCircle } from 'lucide-react';
 import { fetchRecentAnalyses } from '@/features/food-analysis';
@@ -8,7 +8,12 @@ import { AppDispatch, RootState } from '@/store';
 
 export default function RecentActivity() {
   const dispatch = useDispatch<AppDispatch>();
+  const [isHydrated, setIsHydrated] = useState(false);
   const { data: recentAnalyses } = useSelector((state: RootState) => state.foodAnalysis.recentAnalyses);
+
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
 
   useEffect(() => {
     dispatch(fetchRecentAnalyses(10));
@@ -105,7 +110,7 @@ export default function RecentActivity() {
                   )}
                 </p>
                 <p className="text-xs text-gray-400 mt-2">
-                  {formatTimestamp(analysis.uploaded_at)}
+                  {isHydrated ? formatTimestamp(analysis.uploaded_at) : 'Just now'}
                 </p>
               </div>
               <span

@@ -23,6 +23,27 @@ export default function ReportSummaryModal({ report, onClose }: ReportSummaryMod
         </div>
 
         <div className="p-6 space-y-6">
+          {/* Mock Data Warning */}
+          {report.extracted_data?.is_mock && (
+            <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+              <p className="text-red-800 font-semibold text-sm">
+                ⚠️ Unable to extract data from this file
+              </p>
+              <p className="text-red-700 text-xs mt-1">
+                We couldn't read the content from your uploaded file. Please ensure it's a valid PDF or text file with medical information.
+              </p>
+            </div>
+          )}
+
+          {/* Extraction Method Info */}
+          {report.extracted_data?.extraction_method && !report.extracted_data?.is_mock && (
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+              <p className="text-blue-700 text-xs">
+                🔍 Extraction method: <span className="font-semibold capitalize">{report.extracted_data.extraction_method}</span>
+              </p>
+            </div>
+          )}
+
           <div>
             <h3 className="font-semibold text-gray-900 mb-2">Report Name</h3>
             <p className="text-gray-700">{report.document?.split('/').pop() || 'Medical Report'}</p>
@@ -40,6 +61,35 @@ export default function ReportSummaryModal({ report, onClose }: ReportSummaryMod
               })}
             </p>
           </div>
+
+          {/* Report Analysis Summary */}
+          {report.extracted_data && report.extracted_data.extracted_summary && (
+            <div className="bg-gradient-to-r from-blue-50 to-blue-100 border border-blue-200 rounded-lg p-4">
+              <h3 className="font-semibold text-blue-900 mb-2">📋 Extracted Summary</h3>
+              <p className="text-blue-800 text-sm whitespace-pre-wrap">
+                {report.extracted_data.extracted_summary}
+              </p>
+            </div>
+          )}
+
+          {/* Fallback: Show detected items if no AI summary */}
+          {report.extracted_data &&
+            !report.extracted_data.extracted_summary &&
+            (report.extracted_data.conditions?.length > 0 ||
+              report.extracted_data.allergens?.length > 0) && (
+              <div className="bg-gradient-to-r from-blue-50 to-blue-100 border border-blue-200 rounded-lg p-4">
+                <h3 className="font-semibold text-blue-900 mb-2">📋 Detected Health Information</h3>
+                <p className="text-blue-800 text-sm">
+                  From our extraction, we found:{' '}
+                  <span className="font-semibold">
+                    {[
+                      ...(report.extracted_data?.conditions?.map((c: any) => c.condition) || []),
+                      ...(report.extracted_data?.allergens?.map((a: any) => `${a.allergen}`) || []),
+                    ].join(', ')}
+                  </span>
+                </p>
+              </div>
+            )}
 
           {report.extracted_data && (
             <>
@@ -111,16 +161,22 @@ export default function ReportSummaryModal({ report, onClose }: ReportSummaryMod
                 (!report.extracted_data.allergens || report.extracted_data.allergens.length === 0) &&
                 (!report.extracted_data.dietary_restrictions ||
                   report.extracted_data.dietary_restrictions.length === 0) && (
-                  <div className="text-center py-8 text-gray-500">
-                    <p>No extracted data available for this report.</p>
+                  <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6 text-center">
+                    <p className="text-yellow-800 font-semibold">⚠️ No data extracted</p>
+                    <p className="text-yellow-700 text-sm mt-2">
+                      We couldn't extract health information from this report. Please ensure the document contains clear medical data.
+                    </p>
                   </div>
                 )}
             </>
           )}
 
           {!report.extracted_data && (
-            <div className="text-center py-8 text-gray-500">
-              <p>No extracted data available for this report.</p>
+            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6 text-center">
+              <p className="text-yellow-800 font-semibold">⚠️ Extraction pending</p>
+              <p className="text-yellow-700 text-sm mt-2">
+                We're still processing this report. Please refresh in a moment.
+              </p>
             </div>
           )}
         </div>

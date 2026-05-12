@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Eye, Calendar, AlertCircle } from 'lucide-react';
+import { Eye, Calendar, AlertCircle, Brain } from 'lucide-react';
 import ScanDetailsModal from './ScanDetailsModal';
 import { fetchRecentAnalyses, selectCurrentAnalysis } from '@/features/food-analysis';
 import { AppDispatch, RootState } from '@/store';
@@ -16,11 +16,36 @@ export default function RecentScansView() {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isHydrated, setIsHydrated] = useState(false);
+  const [trainingStatus, setTrainingStatus] = useState<{
+    status: string;
+    count: number;
+    threshold: number;
+    last_trained: string | null;
+  } | null>(null);
 
   useEffect(() => {
     setIsHydrated(true);
     dispatch(fetchRecentAnalyses(50) as any);
+    fetchTrainingStatus();
+
+    // Poll training status every 10 seconds
+    const interval = setInterval(fetchTrainingStatus, 10000);
+    return () => clearInterval(interval);
   }, [dispatch]);
+
+  const fetchTrainingStatus = async () => {
+    try {
+      const response = await fetch('http://localhost:8000/api/food/analysis/training_status/', {
+        credentials: 'include',
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setTrainingStatus(data);
+      }
+    } catch (error) {
+      console.error('Failed to fetch training status:', error);
+    }
+  };
 
   const openScan = (index: number) => {
     setSelectedIndex(index);
@@ -80,8 +105,19 @@ export default function RecentScansView() {
   // Show neutral loading state during hydration to prevent mismatch
   if (!isHydrated) {
     return (
-      <div className="flex justify-center items-center py-12">
-        <div className="text-gray-600">Loading your scans...</div>
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <h2 className="text-2xl font-bold text-gray-900">Recent Scans</h2>
+          <span className="text-sm text-gray-600 bg-gray-100 px-3 py-1 rounded-full">
+            0 scans
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="rounded-lg border border-gray-200 overflow-hidden bg-white h-64 animate-pulse" />
+          ))}
+        </div>
       </div>
     );
   }
@@ -122,6 +158,18 @@ export default function RecentScansView() {
 
   return (
     <>
+      {trainingStatus?.status === 'training' && (
+        <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg flex items-center gap-3">
+          <Brain className="text-blue-600 animate-spin" size={20} />
+          <div className="flex-1">
+            <p className="text-sm font-semibold text-blue-900">🧠 YOLO is retraining with your data</p>
+            <p className="text-xs text-blue-700">
+              {trainingStatus.count}/{trainingStatus.threshold} labeled entries collected
+            </p>
+          </div>
+        </div>
+      )}
+
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <h2 className="text-2xl font-bold text-gray-900">Recent Scans</h2>
@@ -175,13 +223,20 @@ export default function RecentScansView() {
 
                 {/* Safety Badge */}
                 <div className="flex items-center justify-between mb-3">
-                  <span
-                    className={`inline-block text-xs font-semibold px-2 py-1 rounded capitalize ${getSafetyColor(
-                      scan.safety_level
-                    )}`}
-                  >
-                    {getSafetyIcon(scan.safety_level)} {scan.safety_level}
-                  </span>
+                  <div className="flex gap-2">
+                    <span
+                      className={`inline-block text-xs font-semibold px-2 py-1 rounded capitalize ${getSafetyColor(
+                        scan.safety_level
+                      )}`}
+                    >
+                      {getSafetyIcon(scan.safety_level)} {scan.safety_level}
+                    </span>
+                    {scan.is_manual && (
+                      <span className="inline-block text-xs font-semibold px-2 py-1 rounded bg-blue-100 text-blue-800">
+                        📝 Manual
+                      </span>
+                    )}
+                  </div>
                   <span className="text-xs text-gray-600 font-medium">
                     {(scan.confidence_score * 100).toFixed(0)}%
                   </span>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -17,6 +17,11 @@ export default function RegisterPage() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -139,10 +144,10 @@ export default function RegisterPage() {
 
         <button
           type="submit"
-          disabled={loading || !username || !email || !password || !confirmPassword}
+          disabled={isHydrated ? (loading || !username || !email || !password || !confirmPassword) : true}
           className="w-full bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
         >
-          {loading ? 'Creating account...' : 'Register'}
+          {isHydrated && loading ? 'Creating account...' : 'Register'}
         </button>
       </form>
 

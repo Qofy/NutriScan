@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -13,6 +13,11 @@ export default function LoginPage() {
   const { loading, error } = useSelector(selectAuth);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -67,10 +72,10 @@ export default function LoginPage() {
 
         <button
           type="submit"
-          disabled={loading || !username || !password}
+          disabled={isHydrated ? (loading || !username || !password) : true}
           className="w-full bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
         >
-          {loading ? 'Logging in...' : 'Login'}
+          {isHydrated && loading ? 'Logging in...' : 'Login'}
         </button>
       </form>
 
