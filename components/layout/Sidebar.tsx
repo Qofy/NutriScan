@@ -1,11 +1,11 @@
 'use client';
 
-import { Apple, ChartColumnDecreasing, File, Sparkles, User, LogOut } from 'lucide-react';
+import { Apple, ChartColumnDecreasing, File, Sparkles, User, LogOut, LogIn } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '@/features/auth';
-import { AppDispatch } from '@/store';
+import { AppDispatch, RootState } from '@/store';
 
 const color = "green"
 const chart = <ChartColumnDecreasing color={color}/>
@@ -18,10 +18,15 @@ export default function Sidebar() {
   const pathname = usePathname();
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
 
-  const handleLogout = () => {
-    dispatch(logout());
-    router.push('/login');
+  const handleAuthAction = () => {
+    if (isAuthenticated) {
+      dispatch(logout());
+      router.push('/login');
+    } else {
+      router.push('/login');
+    }
   };
 
   const navItems = [
@@ -71,11 +76,24 @@ export default function Sidebar() {
           </p>
         </div>
         <button
-          onClick={handleLogout}
-          className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-red-50 hover:bg-red-100 text-red-700 font-semibold rounded-lg transition-colors border border-red-200"
+          onClick={handleAuthAction}
+          className={`w-full flex items-center justify-center gap-2 px-4 py-3 font-semibold rounded-lg transition-colors border ${
+            isAuthenticated
+              ? 'bg-red-50 hover:bg-red-100 text-red-700 border-red-200'
+              : 'bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border-emerald-200'
+          }`}
         >
-          <LogOut size={18} />
-          Logout
+          {isAuthenticated ? (
+            <>
+              <LogOut size={18} />
+              Logout
+            </>
+          ) : (
+            <>
+              <LogIn size={18} />
+              Login
+            </>
+          )}
         </button>
       </div>
     </aside>
