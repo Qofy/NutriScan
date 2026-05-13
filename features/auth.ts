@@ -259,7 +259,7 @@ export const updateProfile = (profileData: any) => async (dispatch: AppDispatch)
     const updatedUser = await userResponse.json();
     dispatch(setUser(updatedUser));
 
-    // Update health profile (conditions, allergies, dietary preferences, etc.)
+    // Update health profile (conditions, allergies, dietary preferences, country, etc.)
     try {
       await fetch('http://localhost:8000/api/profile/health/', {
         method: 'PUT',
@@ -271,6 +271,7 @@ export const updateProfile = (profileData: any) => async (dispatch: AppDispatch)
           age: parseInt(profileData.age) || null,
           height: parseFloat(profileData.height) || null,
           weight: parseFloat(profileData.weight) || null,
+          country: profileData.country || null,
           health_conditions: Object.keys(profileData.conditions).filter(
             key => profileData.conditions[key]
           ),

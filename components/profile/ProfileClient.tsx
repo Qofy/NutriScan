@@ -18,6 +18,7 @@ interface FormData {
   age: string;
   height: string;
   weight: string;
+  country: string;
   conditions: {
     diabetes: boolean;
     hypertension: boolean;
@@ -39,6 +40,7 @@ export default function ProfileClient() {
     age: '32',
     height: '5\'6"',
     weight: '65',
+    country: '',
     conditions: {
       diabetes: false,
       hypertension: false,
@@ -66,6 +68,7 @@ export default function ProfileClient() {
             age: healthProfile.age?.toString() || prev.age,
             height: healthProfile.height?.toString() || prev.height,
             weight: healthProfile.weight?.toString() || prev.weight,
+            country: healthProfile.country || prev.country,
             conditions: {
               diabetes: healthProfile.health_conditions?.includes('diabetes') || false,
               hypertension: healthProfile.health_conditions?.includes('hypertension') || false,
@@ -119,6 +122,7 @@ export default function ProfileClient() {
           age: formData.age,
           height: formData.height,
           weight: formData.weight,
+          country: formData.country,
           conditions: formData.conditions,
           allergies: formData.allergies,
           dietaryPreferences: formData.dietaryPreferences,

@@ -7,11 +7,12 @@ interface FormData {
   age: string;
   height: string;
   weight: string;
+  country: string;
 }
 
 interface PersonalInfoSectionProps {
   formData: FormData;
-  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
 }
 
 export default function PersonalInfoSection({
@@ -59,6 +60,22 @@ export default function PersonalInfoSection({
             onChange={handleChange}
             className="w-full px-4 py-2 rounded-lg border text-black border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500"
           />
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">Country</label>
+            <input
+              type="text"
+              name="country"
+              placeholder="e.g., Kenya, India, Nigeria"
+              value={formData.country}
+              onChange={handleChange}
+              className="w-full px-4 py-2 rounded-lg border text-black border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            />
+            <p className="text-xs text-gray-500 mt-1">Used for localized food recommendations</p>
+          </div>
+          <div></div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">

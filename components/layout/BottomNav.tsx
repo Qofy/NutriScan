@@ -2,15 +2,16 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { Apple, ChartColumnDecreasing, Sparkles, User } from 'lucide-react';
 
 export default function BottomNav() {
   const pathname = usePathname();
 
   const navItems = [
-    { href: '/', label: 'Dashboard', icon: '📊' },
-    { href: '/food-analysis', label: 'Scan', icon: '🍎' },
-    { href: '/recommendations', label: 'Tips', icon: '✨' },
-    { href: '/profile', label: 'Profile', icon: '👤' },
+    { href: '/', label: 'Dashboard', icon: ChartColumnDecreasing },
+    { href: '/food-analysis', label: 'Scan', icon: Apple },
+    { href: '/recommendations', label: 'Tips', icon: Sparkles },
+    { href: '/profile', label: 'Profile', icon: User },
   ];
 
   return (
@@ -18,6 +19,7 @@ export default function BottomNav() {
       <div className="flex items-center justify-around h-full">
         {navItems.map((item) => {
           const isActive = pathname === item.href;
+          const IconComponent = item.icon;
           return (
             <Link
               key={item.href}
@@ -28,7 +30,10 @@ export default function BottomNav() {
                   : 'text-gray-600 hover:text-gray-900'
               }`}
             >
-              <span className="text-2xl">{item.icon}</span>
+              <IconComponent
+                size={24}
+                color={isActive ? 'rgb(34, 197, 94)' : 'rgb(75, 85, 99)'}
+              />
               <span className="text-xs font-medium">{item.label}</span>
             </Link>
           );
