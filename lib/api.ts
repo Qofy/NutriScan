@@ -10,4 +10,4 @@ export const getAuthHeaders = (token: string | null): Record<string, string> => 
   return headers;
 };
 
-export const API_BASE_URL = 'https://nutriscan-api.fly.dev';
+export const API_BASE_URL = 'https://web-production-f485.up.railway.app';
