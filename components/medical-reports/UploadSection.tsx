@@ -7,7 +7,7 @@ interface UploadSectionProps {
   onDragLeave: () => void;
   onDrop: (e: React.DragEvent) => void;
   onChooseFiles: () => void;
-  fileInputRef: React.RefObject<HTMLInputElement>;
+  fileInputRef: React.RefObject<HTMLInputElement | null>;
   onFileInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 

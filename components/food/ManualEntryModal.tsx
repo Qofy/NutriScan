@@ -58,7 +58,7 @@ export default function ManualEntryModal({ onClose }: ManualEntryModalProps) {
 
     try {
       const healthProfile = extractHealthProfileFromReports(reports);
-      await dispatch(manualAnalyzeFood(nonEmptyIngredients, imageFile, healthProfile || undefined) as any);
+      await dispatch(manualAnalyzeFood(nonEmptyIngredients, imageFile || undefined, healthProfile || undefined) as any);
       onClose();
     } catch (error) {
       console.error('Error submitting manual entry:', error);

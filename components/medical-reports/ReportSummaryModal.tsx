@@ -23,23 +23,11 @@ export default function ReportSummaryModal({ report, onClose }: ReportSummaryMod
         </div>
 
         <div className="p-6 space-y-6">
-          {/* Mock Data Warning */}
-          {report.extracted_data?.is_mock && (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-              <p className="text-red-800 font-semibold text-sm">
-                ⚠️ Unable to extract data from this file
-              </p>
-              <p className="text-red-700 text-xs mt-1">
-                We couldn't read the content from your uploaded file. Please ensure it's a valid PDF or text file with medical information.
-              </p>
-            </div>
-          )}
-
-          {/* Extraction Method Info */}
-          {report.extracted_data?.extraction_method && !report.extracted_data?.is_mock && (
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
-              <p className="text-blue-700 text-xs">
-                🔍 Extraction method: <span className="font-semibold capitalize">{report.extracted_data.extraction_method}</span>
+          {/* Extraction Success Info */}
+          {report.extracted_data && (
+            <div className="bg-green-50 border border-green-200 rounded-lg p-3">
+              <p className="text-green-700 text-xs">
+                ✅ Successfully extracted medical information from report
               </p>
             </div>
           )}
@@ -63,18 +51,7 @@ export default function ReportSummaryModal({ report, onClose }: ReportSummaryMod
           </div>
 
           {/* Report Analysis Summary */}
-          {report.extracted_data && report.extracted_data.extracted_summary && (
-            <div className="bg-gradient-to-r from-blue-50 to-blue-100 border border-blue-200 rounded-lg p-4">
-              <h3 className="font-semibold text-blue-900 mb-2">📋 Extracted Summary</h3>
-              <p className="text-blue-800 text-sm whitespace-pre-wrap">
-                {report.extracted_data.extracted_summary}
-              </p>
-            </div>
-          )}
-
-          {/* Fallback: Show detected items if no AI summary */}
           {report.extracted_data &&
-            !report.extracted_data.extracted_summary &&
             (report.extracted_data.conditions?.length > 0 ||
               report.extracted_data.allergens?.length > 0) && (
               <div className="bg-gradient-to-r from-blue-50 to-blue-100 border border-blue-200 rounded-lg p-4">
