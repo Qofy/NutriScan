@@ -1,3 +1,4 @@
+import { API_BASE_URL } from '@/lib/api';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { clearRecentAnalyses, fetchRecentAnalyses } from './food-analysis';
 import { clearMedicalReports, fetchMedicalReports } from './medical-reports';
@@ -111,7 +112,7 @@ export const login =
       dispatch(setLoading(true));
       dispatch(setError(null));
 
-      const response = await fetch('http://localhost:8000/api/profile/user/login/', {
+      const response = await fetch(`${API_BASE_URL}/api/profile/user/login/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
@@ -148,7 +149,7 @@ export const register =
       dispatch(setLoading(true));
       dispatch(setError(null));
 
-      const response = await fetch('http://localhost:8000/api/profile/user/register/', {
+      const response = await fetch(`${API_BASE_URL}/api/profile/user/register/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -193,7 +194,7 @@ export const restoreAuth = () => async (dispatch: AppDispatch) => {
     }
 
     dispatch(setLoading(true));
-    const response = await fetch('http://localhost:8000/api/profile/user/me/', {
+    const response = await fetch(`${API_BASE_URL}/api/profile/user/me/`, {
       method: 'GET',
       headers: {
         'Authorization': `Token ${token}`,
@@ -238,7 +239,7 @@ export const updateProfile = (profileData: any) => async (dispatch: AppDispatch)
     }
 
     // Update user info (first_name, last_name, email)
-    const userResponse = await fetch('http://localhost:8000/api/profile/user/update_profile/', {
+    const userResponse = await fetch(`${API_BASE_URL}/api/profile/user/update_profile/`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -261,7 +262,7 @@ export const updateProfile = (profileData: any) => async (dispatch: AppDispatch)
 
     // Update health profile (conditions, allergies, dietary preferences, country, etc.)
     try {
-      await fetch('http://localhost:8000/api/profile/health/', {
+      await fetch(`${API_BASE_URL}/api/profile/health/`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -299,7 +300,7 @@ export const fetchHealthProfile = () => async (dispatch: AppDispatch) => {
     const token = localStorage.getItem('auth_token');
     if (!token) return null;
 
-    const response = await fetch('http://localhost:8000/api/profile/health/', {
+    const response = await fetch(`${API_BASE_URL}/api/profile/health/`, {
       method: 'GET',
       headers: {
         'Authorization': `Token ${token}`,

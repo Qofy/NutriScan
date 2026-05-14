@@ -50,6 +50,14 @@ export default function ReportSummaryModal({ report, onClose }: ReportSummaryMod
             </p>
           </div>
 
+          {/* AI-Generated Summary */}
+          {report.extracted_data?.extracted_summary && (
+            <div className="bg-gradient-to-r from-purple-50 to-purple-100 border border-purple-200 rounded-lg p-4">
+              <h3 className="font-semibold text-purple-900 mb-2">🧠 AI Summary</h3>
+              <p className="text-purple-800 text-sm leading-relaxed">{report.extracted_data.extracted_summary}</p>
+            </div>
+          )}
+
           {/* Report Analysis Summary */}
           {report.extracted_data &&
             (report.extracted_data.conditions?.length > 0 ||

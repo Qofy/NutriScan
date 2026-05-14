@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Eye, Calendar, AlertCircle, Brain } from 'lucide-react';
+import { API_BASE_URL } from '@/lib/api';
 import ScanDetailsModal from './ScanDetailsModal';
 import { fetchRecentAnalyses, selectCurrentAnalysis } from '@/features/food-analysis';
 import { AppDispatch, RootState } from '@/store';
@@ -35,7 +36,7 @@ export default function RecentScansView() {
 
   const fetchTrainingStatus = async () => {
     try {
-      const response = await fetch('http://localhost:8000/api/food/analysis/training_status/', {
+      const response = await fetch(`${API_BASE_URL}/api/food/analysis/training-status/`, {
         credentials: 'include',
       });
       if (response.ok) {

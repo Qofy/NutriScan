@@ -1,3 +1,4 @@
+import { API_BASE_URL } from '@/lib/api';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 // Types
@@ -260,7 +261,7 @@ export const analyzeFood =
         formData.append('health_profile', JSON.stringify(healthProfile));
       }
 
-      const response = await fetch('http://localhost:8000/api/food/analysis/analyze/', {
+      const response = await fetch(`${API_BASE_URL}/api/food/analysis/analyze/`, {
         method: 'POST',
         body: formData,
         credentials: 'include',
@@ -287,7 +288,7 @@ export const deleteAnalysis =
   async (dispatch: AppDispatch) => {
     try {
       const response = await fetch(
-        `http://localhost:8000/api/food/analysis/${analysisId}/`,
+        `${API_BASE_URL}/api/food/analysis/${analysisId}/`,
         {
           method: 'DELETE',
           credentials: 'include',
@@ -314,7 +315,7 @@ export const fetchRecentAnalyses =
       dispatch(setRecentAnalysesError(null));
 
       const response = await fetch(
-        `http://localhost:8000/api/food/analysis/recent/?limit=${limit}`,
+        `${API_BASE_URL}/api/food/analysis/recent/?limit=${limit}`,
         {
           method: 'GET',
           credentials: 'include',
@@ -359,7 +360,7 @@ export const searchFoodItems =
       dispatch(setFoodSearchError(null));
 
       const response = await fetch(
-        `http://localhost:8000/api/food/items/search/?q=${encodeURIComponent(query)}`,
+        `${API_BASE_URL}/api/food/items/search/?q=${encodeURIComponent(query)}`,
         {
           method: 'GET',
           credentials: 'include',
@@ -403,7 +404,7 @@ export const manualAnalyzeFood =
         formData.append('health_profile', JSON.stringify(healthProfile));
       }
 
-      const response = await fetch('http://localhost:8000/api/food/analysis/manual-analyze/', {
+      const response = await fetch(`${API_BASE_URL}/api/food/analysis/manual-analyze/`, {
         method: 'POST',
         body: formData,
         credentials: 'include',

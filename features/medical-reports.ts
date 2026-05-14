@@ -1,3 +1,4 @@
+import { API_BASE_URL } from '@/lib/api';
 import { createSlice } from '@reduxjs/toolkit';
 
 export interface MedicalReport {
@@ -6,6 +7,7 @@ export interface MedicalReport {
   uploaded_at: string;
   status: 'pending' | 'processing' | 'completed' | 'error';
   extracted_data: {
+    extracted_summary?: string;
     conditions: Array<{ condition: string; confidence: number; severity: string }>;
     allergens: Array<{ allergen: string; severity: string; confidence: number }>;
     dietary_restrictions: Array<{ restriction: string; reason: string; recommendation: string }>;
@@ -97,7 +99,7 @@ export function uploadMedicalReport(file: File) {
     formData.append('document', file);
 
     try {
-      const response = await fetch('http://localhost:8000/api/medical/reports/upload/', {
+      const response = await fetch(`${API_BASE_URL}/api/medical/reports/upload/`, {
         method: 'POST',
         body: formData,
       });
@@ -126,7 +128,7 @@ export function fetchMedicalReports(limit = 100) {
     dispatch(setError(null));
 
     try {
-      const response = await fetch(`http://localhost:8000/api/medical/reports/recent/?limit=${limit}`);
+      const response = await fetch(`${API_BASE_URL}/api/medical/reports/recent/?limit=${limit}`);
       if (!response.ok) throw new Error('Failed to fetch reports');
 
       const data = await response.json();
@@ -146,7 +148,7 @@ export function fetchMedicalReports(limit = 100) {
 export function deleteMedicalReport(reportId: number) {
   return async (dispatch: any) => {
     try {
-      const response = await fetch(`http://localhost:8000/api/medical/reports/${reportId}/`, {
+      const response = await fetch(`${API_BASE_URL}/api/medical/reports/${reportId}/`, {
         method: 'DELETE',
       });
 

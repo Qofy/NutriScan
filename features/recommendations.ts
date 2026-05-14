@@ -1,3 +1,4 @@
+import { API_BASE_URL } from '@/lib/api';
 import { createSlice } from '@reduxjs/toolkit';
 
 export interface Recommendation {
@@ -57,7 +58,7 @@ export function fetchRecommendations() {
     dispatch(setError(null));
 
     try {
-      const response = await fetch('http://localhost:8000/api/recommendations/', {
+      const response = await fetch(`${API_BASE_URL}/api/recommendations/`, {
         headers: {
           'Authorization': `Token ${localStorage.getItem('auth_token') || ''}`,
         },
@@ -83,7 +84,7 @@ export function generateRecommendations() {
     dispatch(setError(null));
 
     try {
-      const response = await fetch('http://localhost:8000/api/recommendations/smart_generate/', {
+      const response = await fetch(`${API_BASE_URL}/api/recommendations/smart_generate/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -114,7 +115,7 @@ export function generateRecommendations() {
 export function trackRecommendationAction(recommendationId: number, action: string) {
   return async (dispatch: any) => {
     try {
-      await fetch('http://localhost:8000/api/recommendations/track_action/', {
+      await fetch(`${API_BASE_URL}/api/recommendations/track_action/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

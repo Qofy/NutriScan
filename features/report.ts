@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppDispatch } from '../store';
+import { API_BASE_URL } from '@/lib/api';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -50,7 +51,7 @@ export interface ReportState {
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
-const BASE = 'http://localhost:8000/api';
+const BASE = `${API_BASE_URL}/api`;
 
 const loadReportsFromStorage = (): MedicalReport[] => {
   if (typeof window === 'undefined') return [];
