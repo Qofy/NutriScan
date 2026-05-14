@@ -10,4 +10,4 @@ export const getAuthHeaders = (token: string | null): Record<string, string> => 
   return headers;
 };
 
-export const API_BASE_URL = 'https://nutriscan-production-1ceb.up.railway.app';
+export const API_BASE_URL = 'http://localhost:8000';
