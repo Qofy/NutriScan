@@ -10,4 +10,4 @@ export const getAuthHeaders = (token: string | null): Record<string, string> => 
   return headers;
 };
 
-export const API_BASE_URL = 'https://nutriscanbackend-2ffx.onrender.com';
+export const API_BASE_URL = 'http://135.181.24.99:8000';
