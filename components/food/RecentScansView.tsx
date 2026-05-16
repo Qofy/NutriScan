@@ -36,7 +36,7 @@ export default function RecentScansView() {
 
   const fetchTrainingStatus = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/food/analysis/training-status/`, {
+      const response = await fetch(`${API_BASE_URL}/api/food/analysis/training_status/`, {
         credentials: 'include',
       });
       if (response.ok) {
