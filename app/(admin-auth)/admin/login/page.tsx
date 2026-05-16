@@ -92,13 +92,13 @@ export default function AdminLoginPage() {
         </p>
       </div>
 
-      <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+      {/* <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
         <p className="text-blue-900 text-xs font-semibold mb-2">💡 Test Credentials:</p>
         <p className="text-blue-800 text-xs">
           <strong>Username:</strong> admin_test<br />
           <strong>Password:</strong> admin123
         </p>
-      </div>
+      </div> */}
     </div>
   );
 }
