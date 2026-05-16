@@ -1,4 +1,5 @@
 import { API_BASE_URL } from '@/lib/api';
+import { setAuthCookies, clearAuthCookies } from '@/lib/auth-cookies';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { clearRecentAnalyses, fetchRecentAnalyses } from './food-analysis';
 import { clearMedicalReports, fetchMedicalReports } from './medical-reports';
@@ -75,6 +76,10 @@ const authSlice = createSlice({
     setToken: (state, action: PayloadAction<string | null>) => {
       state.token = action.payload;
       saveAuthToStorage(state.user, action.payload);
+      // Also set cookie for server-side middleware
+      if (action.payload) {
+        setAuthCookies(action.payload);
+      }
     },
 
     setLoading: (state, action: PayloadAction<boolean>) => {
@@ -91,6 +96,8 @@ const authSlice = createSlice({
       state.isAuthenticated = false;
       state.error = null;
       saveAuthToStorage(null, null);
+      // Clear cookies for server-side middleware
+      clearAuthCookies();
     },
   },
 });
