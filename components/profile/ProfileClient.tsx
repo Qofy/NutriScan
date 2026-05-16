@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from 'next/navigation';
 import { AppDispatch, RootState } from '@/store';
-import { updateProfile, fetchHealthProfile } from '@/features/auth';
+import { updateProfile, fetchHealthProfile, logout } from '@/features/auth';
 import PersonalInfoSection from './PersonalInfoSection';
 import HealthConditionsSection from './HealthConditionsSection';
 import AllergiesSection from './AllergiesSection';
@@ -31,6 +32,7 @@ interface FormData {
 
 export default function ProfileClient() {
   const dispatch = useDispatch<AppDispatch>();
+  const router = useRouter();
   const { user, loading, error } = useSelector((state: RootState) => state.auth);
   const [saveStatus, setSaveStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [formData, setFormData] = useState<FormData>(() => ({
@@ -146,6 +148,11 @@ export default function ProfileClient() {
     }
   };
 
+  const handleLogout = () => {
+    dispatch(logout());
+    router.push('/login');
+  };
+
   return (
     <div className="space-y-8">
       {saveStatus === 'success' && (
@@ -164,7 +171,7 @@ export default function ProfileClient() {
       <AllergiesSection formData={formData} handleChange={handleChange} />
       <NotificationPreferences />
 
-      <ActionButtons loading={loading} onSave={handleSave} onCancel={handleCancel} />
+      <ActionButtons loading={loading} onSave={handleSave} onCancel={handleCancel} onLogout={handleLogout} />
     </div>
   );
 }
