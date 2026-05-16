@@ -10,4 +10,4 @@ export const getAuthHeaders = (token: string | null): Record<string, string> => 
   return headers;
 };
 
-export const API_BASE_URL = 'https://web-production-cc1b9.up.railway.app';
+export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';

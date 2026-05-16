@@ -19,7 +19,7 @@ export default function AdminLoginPage() {
 
     try {
       const result = await dispatch(login(username, password));
-      const user = result.payload?.user;
+      const user = result?.user;
 
       // Check if user is admin
       if (user?.role === 'admin') {

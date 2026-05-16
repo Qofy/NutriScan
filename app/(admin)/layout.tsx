@@ -22,13 +22,8 @@ export default function AdminRootLayout({
 
     if (user?.role !== 'admin') {
       router.push('/');
-      return;
     }
   }, [isAuthenticated, user, router]);
-
-  if (!isAuthenticated || user?.role !== 'admin') {
-    return null;
-  }
 
   return <AdminLayout>{children}</AdminLayout>;
 }

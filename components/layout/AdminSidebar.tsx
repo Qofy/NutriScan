@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { BarChart2, Users, Camera, FileText, LogOut, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
@@ -8,10 +9,15 @@ import { logout } from '@/features/auth';
 import { AppDispatch, RootState } from '@/store';
 
 export default function AdminSidebar() {
+  const [isHydrated, setIsHydrated] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
   const { user } = useSelector((state: RootState) => state.auth);
+
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -37,15 +43,19 @@ export default function AdminSidebar() {
         </div>
       </div>
 
-      {user && (
-        <div className="px-6 py-4 border-b border-slate-700 bg-slate-800">
-          <p className="text-sm text-slate-300">Logged in as</p>
-          <p className="text-white font-semibold">{user.username}</p>
-          <div className="inline-block mt-2 px-2 py-1 bg-green-600 text-white text-xs rounded font-medium">
-            👤 Admin
-          </div>
-        </div>
-      )}
+      <div className="px-6 py-4 border-b border-slate-700 bg-slate-800">
+        {isHydrated && user ? (
+          <>
+            <p className="text-sm text-slate-300">Logged in as</p>
+            <p className="text-white font-semibold">{user.username}</p>
+            <div className="inline-block mt-2 px-2 py-1 bg-green-600 text-white text-xs rounded font-medium">
+              👤 Admin
+            </div>
+          </>
+        ) : (
+          <div className="h-16" />
+        )}
+      </div>
 
       <nav className="flex-1 px-4 py-6 space-y-2">
         {navItems.map((item) => {
