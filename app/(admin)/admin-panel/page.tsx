@@ -63,43 +63,43 @@ export default function AdminDashboard() {
 
       {/* Stat Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <div className="bg-white rounded-lg shadow p-6">
+        <div className="bg-white rounded-lg shadow-md p-6 border-t-4 border-blue-600">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-gray-600 text-sm font-medium">Total Users</p>
-              <p className="text-3xl font-bold text-gray-900 mt-2">{stats.total_users}</p>
+              <p className="text-3xl font-bold text-blue-600 mt-2">{stats.total_users}</p>
             </div>
-            <Users size={32} className="text-blue-500" />
+            <Users size={32} className="text-blue-300" />
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow p-6">
+        <div className="bg-white rounded-lg shadow-md p-6 border-t-4 border-indigo-600">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-gray-600 text-sm font-medium">Total Scans</p>
-              <p className="text-3xl font-bold text-gray-900 mt-2">{stats.total_scans}</p>
+              <p className="text-3xl font-bold text-indigo-600 mt-2">{stats.total_scans}</p>
             </div>
-            <Eye size={32} className="text-emerald-500" />
+            <Eye size={32} className="text-indigo-300" />
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow p-6">
+        <div className="bg-white rounded-lg shadow-md p-6 border-t-4 border-violet-600">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-gray-600 text-sm font-medium">Medical Reports</p>
-              <p className="text-3xl font-bold text-gray-900 mt-2">{stats.total_reports}</p>
+              <p className="text-3xl font-bold text-violet-600 mt-2">{stats.total_reports}</p>
             </div>
-            <FileText size={32} className="text-purple-500" />
+            <FileText size={32} className="text-violet-300" />
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow p-6">
+        <div className="bg-white rounded-lg shadow-md p-6 border-t-4 border-red-600">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-gray-600 text-sm font-medium">Danger Alerts</p>
               <p className="text-3xl font-bold text-red-600 mt-2">{totalDanger}</p>
             </div>
-            <AlertCircle size={32} className="text-red-500" />
+            <AlertCircle size={32} className="text-red-300" />
           </div>
         </div>
       </div>

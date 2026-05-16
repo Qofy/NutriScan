@@ -72,10 +72,10 @@ export default function LoginPage() {
 
         <button
           type="submit"
-          disabled={isHydrated ? (loading || !username || !password) : true}
+          disabled={loading}
           className="w-full bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
         >
-          {isHydrated && loading ? 'Logging in...' : 'Login'}
+          {loading ? 'Logging in...' : 'Login'}
         </button>
       </form>
 
