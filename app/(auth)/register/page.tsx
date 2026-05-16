@@ -33,7 +33,8 @@ export default function RegisterPage() {
 
     try {
       await dispatch(register(username, email, password, firstName, lastName));
-      router.push('/');
+      // Redirect to dashboard after successful registration (not root)
+      router.push('/food-analysis');
     } catch {
       // Error is handled by Redux state
     }
