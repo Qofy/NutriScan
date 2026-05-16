@@ -33,7 +33,7 @@ export default function ActionButtons({ loading, onSave, onCancel, onLogout }: A
         <button
           onClick={onLogout}
           disabled={loading}
-          className="w-full px-6 py-3 bg-red-50 hover:bg-red-100 disabled:bg-gray-300 text-red-700 font-semibold rounded-lg transition-colors flex items-center justify-center gap-2 md:w-auto"
+          className="lg:hidden w-full px-6 py-3 bg-red-50 hover:bg-red-100 disabled:bg-gray-300 text-red-700 font-semibold rounded-lg transition-colors flex items-center justify-center gap-2"
         >
           <LogOut size={18} />
           Logout
