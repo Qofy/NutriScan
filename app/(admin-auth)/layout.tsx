@@ -8,7 +8,7 @@ export default function AdminAuthLayout({
       <div className="w-full max-w-md">
         {/* Admin Header */}
         <div className="text-center mb-8">
-          <div className="w-16 h-16 rounded-lg bg-white flex items-center justify-center font-bold text-2xl text-blue-600 mx-auto mb-4">
+          <div className="w-16 h-16 rounded-lg bg-slate-50 flex items-center justify-center font-bold text-2xl text-blue-600 mx-auto mb-4">
             N
           </div>
           <h1 className="text-3xl font-bold text-white">NutriScan</h1>

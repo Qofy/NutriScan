@@ -116,7 +116,7 @@ export default function RecentScansView() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="rounded-lg border border-gray-200 overflow-hidden bg-white h-64 animate-pulse" />
+            <div key={i} className="rounded-lg border border-slate-200 overflow-hidden bg-slate-50 h-64 animate-pulse" />
           ))}
         </div>
       </div>
@@ -184,7 +184,7 @@ export default function RecentScansView() {
             <div
               key={scan.id}
               onClick={() => openScan(index)}
-              className="rounded-lg border border-gray-200 overflow-hidden hover:shadow-lg hover:border-emerald-500 transition cursor-pointer bg-white"
+              className="rounded-lg border border-slate-200 overflow-hidden hover:shadow-lg hover:border-emerald-500 transition cursor-pointer bg-slate-50"
             >
               {/* Image */}
               {scan.image && (

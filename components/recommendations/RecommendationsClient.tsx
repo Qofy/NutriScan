@@ -125,7 +125,7 @@ export default function RecommendationsClient() {
 
           {showMoreModal && (
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-              <div className="bg-white rounded-2xl p-8 max-w-md w-full shadow-lg">
+              <div className="bg-slate-50 rounded-2xl p-8 max-w-md w-full shadow-lg">
                 <h3 className="text-xl font-bold text-gray-900 mb-4">What type of recommendations?</h3>
                 <div className="space-y-3">
                   <button

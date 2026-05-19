@@ -12,7 +12,7 @@ interface AllergiesSectionProps {
 
 export default function AllergiesSection({ formData, handleChange }: AllergiesSectionProps) {
   return (
-    <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-100 shadow-sm">
+    <div className="bg-slate-50 rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm">
       <h2 className="text-xl font-bold text-gray-900 mb-6">Allergies & Dietary Restrictions</h2>
 
       <div className="space-y-6">

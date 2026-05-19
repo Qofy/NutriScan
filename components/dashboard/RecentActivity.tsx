@@ -71,7 +71,7 @@ export default function RecentActivity() {
 
   if (recentAnalyses.length === 0) {
     return (
-      <div className="rounded-2xl bg-white p-6 border border-gray-100 shadow-sm">
+      <div className="rounded-2xl bg-slate-50 p-6 border border-slate-200 shadow-sm">
         <h2 className="text-lg font-bold text-gray-900 mb-4">Recent Activity</h2>
         <div className="text-center py-8">
           <Apple color="green" size={40} className="mx-auto mb-3 opacity-50" />
@@ -83,7 +83,7 @@ export default function RecentActivity() {
   }
 
   return (
-    <div className="rounded-2xl bg-white p-6 border border-gray-100 shadow-sm">
+    <div className="rounded-2xl bg-slate-50 p-6 border border-slate-200 shadow-sm">
       <h2 className="text-lg font-bold text-gray-900 mb-4">Recent Activity</h2>
       <div className="space-y-4">
         {recentAnalyses.map((analysis) => {
@@ -94,7 +94,7 @@ export default function RecentActivity() {
           return (
             <div
               key={analysis.id}
-              className="flex items-start gap-4 pb-4 border-b border-gray-100 last:border-b-0 last:pb-0"
+              className="flex items-start gap-4 pb-4 border-b border-slate-200 last:border-b-0 last:pb-0"
             >
               <div className="flex-shrink-0">
                 {getActivityIcon(analysis.safety_level)}

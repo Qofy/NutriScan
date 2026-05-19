@@ -11,8 +11,8 @@ interface ReportSummaryModalProps {
 export default function ReportSummaryModal({ report, onClose }: ReportSummaryModalProps) {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-end sm:items-center justify-center p-4">
-      <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
-        <div className="sticky top-0 bg-white border-b border-gray-100 p-6 flex items-center justify-between">
+      <div className="bg-slate-50 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+        <div className="sticky top-0 bg-slate-50 border-b border-slate-200 p-6 flex items-center justify-between">
           <h2 className="text-2xl font-bold text-gray-900">Extracted Summary</h2>
           <button
             onClick={onClose}

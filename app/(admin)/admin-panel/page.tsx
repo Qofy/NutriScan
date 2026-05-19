@@ -63,7 +63,7 @@ export default function AdminDashboard() {
 
       {/* Stat Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <div className="bg-white rounded-lg shadow-md p-6 border-t-4 border-blue-600">
+        <div className="bg-slate-50 rounded-lg shadow-md p-6 border-t-4 border-blue-600">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-gray-600 text-sm font-medium">Total Users</p>
@@ -73,7 +73,7 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow-md p-6 border-t-4 border-indigo-600">
+        <div className="bg-slate-50 rounded-lg shadow-md p-6 border-t-4 border-indigo-600">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-gray-600 text-sm font-medium">Total Scans</p>
@@ -83,7 +83,7 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow-md p-6 border-t-4 border-violet-600">
+        <div className="bg-slate-50 rounded-lg shadow-md p-6 border-t-4 border-violet-600">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-gray-600 text-sm font-medium">Medical Reports</p>
@@ -93,7 +93,7 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow-md p-6 border-t-4 border-red-600">
+        <div className="bg-slate-50 rounded-lg shadow-md p-6 border-t-4 border-red-600">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-gray-600 text-sm font-medium">Danger Alerts</p>
@@ -105,7 +105,7 @@ export default function AdminDashboard() {
       </div>
 
       {/* Safety Breakdown */}
-      <div className="bg-white rounded-lg shadow p-6 mb-8">
+      <div className="bg-slate-50 rounded-lg shadow p-6 mb-8">
         <h2 className="text-xl font-bold text-gray-900 mb-6">Food Safety Breakdown</h2>
         <div className="space-y-4">
           <div>
@@ -141,7 +141,7 @@ export default function AdminDashboard() {
       </div>
 
       {/* Scan Type Breakdown */}
-      <div className="bg-white rounded-lg shadow p-6 mb-8">
+      <div className="bg-slate-50 rounded-lg shadow p-6 mb-8">
         <h2 className="text-xl font-bold text-gray-900 mb-4">Scan Type Distribution</h2>
         <div className="grid grid-cols-2 gap-4">
           <div className="rounded-lg bg-blue-50 p-4 border border-blue-200">
@@ -157,11 +157,11 @@ export default function AdminDashboard() {
 
       {/* Recent Scans */}
       {stats.recent_scans.length > 0 && (
-        <div className="bg-white rounded-lg shadow p-6 mb-8">
+        <div className="bg-slate-50 rounded-lg shadow p-6 mb-8">
           <h2 className="text-xl font-bold text-gray-900 mb-4">Recent Food Scans</h2>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
-              <thead className="border-b border-gray-200">
+              <thead className="border-b border-slate-200">
                 <tr>
                   <th className="text-left py-3 px-4 font-semibold text-gray-700">User</th>
                   <th className="text-left py-3 px-4 font-semibold text-gray-700">Items</th>
@@ -194,11 +194,11 @@ export default function AdminDashboard() {
 
       {/* Recent Reports */}
       {stats.recent_reports.length > 0 && (
-        <div className="bg-white rounded-lg shadow p-6">
+        <div className="bg-slate-50 rounded-lg shadow p-6">
           <h2 className="text-xl font-bold text-gray-900 mb-4">Recent Medical Reports</h2>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
-              <thead className="border-b border-gray-200">
+              <thead className="border-b border-slate-200">
                 <tr>
                   <th className="text-left py-3 px-4 font-semibold text-gray-700">User</th>
                   <th className="text-left py-3 px-4 font-semibold text-gray-700">Status</th>

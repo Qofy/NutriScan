@@ -61,7 +61,7 @@ export default function ScansOverview() {
       </div>
 
       {/* Filters */}
-      <div className="bg-white rounded-lg shadow p-6 mb-6">
+      <div className="bg-slate-50 rounded-lg shadow p-6 mb-6">
         <div className="flex items-center gap-2 mb-4">
           <Filter size={20} className="text-gray-600" />
           <h2 className="text-lg font-semibold text-gray-900">Filters</h2>
@@ -97,10 +97,10 @@ export default function ScansOverview() {
       </div>
 
       {/* Scans Table */}
-      <div className="bg-white rounded-lg shadow overflow-hidden">
+      <div className="bg-slate-50 rounded-lg shadow overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-gray-50 border-b border-gray-200">
+            <thead className="bg-gray-50 border-b border-slate-200">
               <tr>
                 <th className="text-left py-3 px-4 font-semibold text-gray-700">User</th>
                 <th className="text-left py-3 px-4 font-semibold text-gray-700">Food Items</th>

@@ -24,7 +24,7 @@ const getStatusColor = (status: string) => {
 
 export default function ReportCard({ report, onView, onDelete }: ReportCardProps) {
   return (
-    <div className="rounded-2xl bg-white border border-gray-100 p-6 shadow-sm hover:shadow-md transition-shadow">
+    <div className="rounded-2xl bg-slate-50 border border-slate-200 p-6 shadow-sm hover:shadow-md transition-shadow">
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-start gap-4 flex-1">
           <div className="text-3xl">📄</div>

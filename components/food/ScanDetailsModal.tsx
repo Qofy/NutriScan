@@ -99,9 +99,9 @@ export default function ScanDetailsModal({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-lg">
+      <div className="bg-slate-50 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-lg">
         {/* Header */}
-        <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex items-center justify-between">
+        <div className="sticky top-0 bg-slate-50 border-b border-slate-200 p-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <h2 className="text-xl font-semibold text-gray-900">Scan Details</h2>
           </div>
@@ -204,7 +204,7 @@ export default function ScanDetailsModal({
           </div>
 
           {/* Details */}
-          <div className="text-sm text-gray-600 pt-4 border-t border-gray-200">
+          <div className="text-sm text-gray-600 pt-4 border-t border-slate-200">
             <p>
               <span className="font-semibold text-gray-900">Scanned on:</span>{' '}
               {formatDate(analysis.uploaded_at)}

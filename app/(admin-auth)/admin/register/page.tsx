@@ -5,7 +5,7 @@ import { Lock, ArrowLeft } from 'lucide-react';
 
 export default function AdminRegisterPage() {
   return (
-    <div className="bg-white rounded-lg shadow-2xl p-8 text-center">
+    <div className="bg-slate-50 rounded-lg shadow-2xl p-8 text-center">
       <div className="flex justify-center mb-6">
         <div className="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center">
           <Lock size={32} className="text-blue-600" />
@@ -33,7 +33,7 @@ export default function AdminRegisterPage() {
         </Link>
       </div>
 
-      <div className="border-t border-gray-200 pt-6">
+      <div className="border-t border-slate-200 pt-6">
         <Link
           href="/admin/login"
           className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-semibold"

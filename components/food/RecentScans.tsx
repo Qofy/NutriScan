@@ -38,7 +38,7 @@ export default function RecentScans() {
         {analyses.map((analysis: AnalysisResult) => (
           <div
             key={analysis.id}
-            className="flex items-center justify-between bg-white rounded-lg p-4"
+            className="flex items-center justify-between bg-slate-50 rounded-lg p-4"
           >
             <div>
               <p className="font-medium text-gray-900">

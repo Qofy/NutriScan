@@ -14,7 +14,7 @@ export default function AnalysisResults() {
     <div className="mt-8 space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {imagePreview && (
-          <div className="rounded-2xl overflow-hidden border border-gray-200 shadow-sm">
+          <div className="rounded-2xl overflow-hidden border border-slate-200 shadow-sm">
             <img
               src={imagePreview}
               alt="Analyzed food"
@@ -24,7 +24,7 @@ export default function AnalysisResults() {
         )}
 
         <div className="space-y-4">
-          <div className="bg-white rounded-2xl p-6 border border-gray-100">
+          <div className="bg-slate-50 rounded-2xl p-6 border border-slate-200">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">
               Identified Items
             </h3>
@@ -81,7 +81,7 @@ export default function AnalysisResults() {
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl p-6 border border-gray-100">
+      <div className="bg-slate-50 rounded-2xl p-6 border border-slate-200">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">
           Nutritional Information
         </h3>

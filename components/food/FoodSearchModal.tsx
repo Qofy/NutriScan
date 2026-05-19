@@ -181,9 +181,9 @@ export default function FoodSearchModal({ isOpen, onClose, onSave }: Props) {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-lg">
+      <div className="bg-slate-50 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-lg">
         {/* Header */}
-        <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex items-center justify-between">
+        <div className="sticky top-0 bg-slate-50 border-b border-slate-200 p-4 flex items-center justify-between">
           <h2 className="text-xl font-semibold text-gray-900">Add Food Items</h2>
           <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-lg">
             <X size={20} />
@@ -210,7 +210,7 @@ export default function FoodSearchModal({ isOpen, onClose, onSave }: Props) {
 
             {/* Search Results */}
             {searchResults.length > 0 && (
-              <div className="mt-3 border border-gray-200 rounded-lg max-h-40 overflow-y-auto">
+              <div className="mt-3 border border-slate-200 rounded-lg max-h-40 overflow-y-auto">
                 {searchResults.map((food) => (
                   <div
                     key={food.id}
@@ -250,7 +250,7 @@ export default function FoodSearchModal({ isOpen, onClose, onSave }: Props) {
               Add Custom Food Item
             </button>
           ) : (
-            <div className="border border-gray-200 rounded-lg p-4 space-y-3">
+            <div className="border border-slate-200 rounded-lg p-4 space-y-3">
               <input
                 type="text"
                 placeholder="Food name"
@@ -342,7 +342,7 @@ export default function FoodSearchModal({ isOpen, onClose, onSave }: Props) {
                   return (
                     <div
                       key={food.id}
-                      className="border border-gray-200 rounded-lg p-4"
+                      className="border border-slate-200 rounded-lg p-4"
                     >
                       <div className="flex items-start justify-between mb-3">
                         <div>
@@ -465,7 +465,7 @@ export default function FoodSearchModal({ isOpen, onClose, onSave }: Props) {
         </div>
 
         {/* Footer */}
-        <div className="sticky bottom-0 bg-white border-t border-gray-200 p-4 flex gap-3">
+        <div className="sticky bottom-0 bg-slate-50 border-t border-slate-200 p-4 flex gap-3">
           <button
             onClick={onClose}
             className="flex-1 px-4 py-3 bg-gray-200 hover:bg-gray-300 text-gray-900 font-semibold rounded-lg transition"

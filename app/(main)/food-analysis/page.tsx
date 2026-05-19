@@ -16,7 +16,7 @@ export default function FoodAnalysisPage() {
           </p>
         </div>
 
-        <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-100 shadow-sm mb-8">
+        <div className="bg-slate-50 rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm mb-8">
           <FoodUploadZone />
         </div>
 

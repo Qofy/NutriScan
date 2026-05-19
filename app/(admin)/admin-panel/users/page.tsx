@@ -96,10 +96,10 @@ export default function UsersManagement() {
       </div>
 
       {/* Users Table */}
-      <div className="bg-white rounded-lg shadow overflow-hidden">
+      <div className="bg-slate-50 rounded-lg shadow overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-gray-50 border-b border-gray-200">
+            <thead className="bg-gray-50 border-b border-slate-200">
               <tr>
                 <th className="text-left py-3 px-4 font-semibold text-gray-700">User</th>
                 <th className="text-left py-3 px-4 font-semibold text-gray-700">Email</th>

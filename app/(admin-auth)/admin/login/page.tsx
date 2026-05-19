@@ -34,7 +34,7 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-2xl p-8">
+    <div className="bg-slate-50 rounded-lg shadow-2xl p-8">
       <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Admin Login</h2>
 
       {error && (

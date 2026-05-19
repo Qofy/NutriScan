@@ -30,7 +30,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg p-8">
+    <div className="bg-slate-50 rounded-2xl shadow-lg p-8">
       <h2 className="text-2xl font-bold text-gray-900 mb-6">Login</h2>
 
       {error && (
@@ -89,7 +89,7 @@ export default function LoginPage() {
       {/* Demo credentials
       <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
         <p className="text-sm text-blue-900 font-semibold mb-2">Demo Account:</p>
-        <p className="text-sm text-blue-800">Username: <code className="bg-white px-2 py-1 rounded">kofisafoagyekum</code></p>
+        <p className="text-sm text-blue-800">Username: <code className="bg-slate-50 px-2 py-1 rounded">kofisafoagyekum</code></p>
         <p className="text-sm text-blue-800">Password: (from your setup)</p>
       </div> */}
     </div>
