@@ -35,7 +35,7 @@ export default function AdminLoginPage() {
 
   return (
     <div className="bg-slate-50 rounded-lg shadow-2xl p-8">
-      <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Admin Login</h2>
+      <h2 className="text-2xl font-bold text-slate-900 mb-6 text-center">Admin Login</h2>
 
       {error && (
         <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg text-red-800 text-sm">
@@ -45,7 +45,7 @@ export default function AdminLoginPage() {
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="username" className="block text-sm font-medium text-slate-700 mb-1">
             Username
           </label>
           <input
@@ -54,13 +54,13 @@ export default function AdminLoginPage() {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             placeholder="Enter your username"
-            className="w-full px-4 py-2 border border-gray-300 text-gray-900 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-4 py-2 border border-slate-300 text-slate-900 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
             disabled={loading}
           />
         </div>
 
         <div>
-          <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="password" className="block text-sm font-medium text-slate-700 mb-1">
             Password
           </label>
           <input
@@ -69,7 +69,7 @@ export default function AdminLoginPage() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Enter your password"
-            className="w-full px-4 py-2 border border-gray-300 text-gray-900 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-4 py-2 border border-slate-300 text-slate-900 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
             disabled={loading}
           />
         </div>
@@ -77,24 +77,24 @@ export default function AdminLoginPage() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
+          className="w-full bg-orange-600 hover:bg-orange-700 disabled:opacity-50 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
         >
           {loading ? 'Signing in...' : 'Sign In'}
         </button>
       </form>
 
       <div className="mt-6 text-center">
-        <p className="text-gray-600 text-sm">
+        <p className="text-slate-600 text-sm">
           Not an admin?{' '}
-          <Link href="/login" className="text-blue-600 hover:text-blue-700 font-semibold">
+          <Link href="/login" className="text-orange-600 hover:text-orange-700 font-semibold">
             Regular Login
           </Link>
         </p>
       </div>
 
-      {/* <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
-        <p className="text-blue-900 text-xs font-semibold mb-2">💡 Test Credentials:</p>
-        <p className="text-blue-800 text-xs">
+      {/* <div className="mt-6 p-4 bg-orange-50 rounded-lg border border-orange-200">
+        <p className="text-orange-900 text-xs font-semibold mb-2">💡 Test Credentials:</p>
+        <p className="text-orange-800 text-xs">
           <strong>Username:</strong> admin_test<br />
           <strong>Password:</strong> admin123
         </p>
