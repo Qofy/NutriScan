@@ -38,7 +38,7 @@ export default function Sidebar() {
   ];
 
   return (
-    <aside className="hidden lg:fixed lg:left-0 lg:top-0 lg:h-screen lg:w-60 lg:flex lg:flex-col lg:border-r lg:border-slate-200 lg:bg-gradient-to-b lg:from-slate-50 lg:to-stone-50 lg:shadow-md lg:z-40 lg:transition-all lg:duration-300">
+    <aside className="hidden lg:fixed lg:left-0 lg:top-0 lg:h-screen lg:w-60 lg:flex lg:flex-col lg:border-r lg:border-slate-200 lg:bg-white lg:shadow-md lg:z-40 lg:transition-all lg:duration-300">
       <div className="flex items-center gap-3 px-6 py-6 border-b border-slate-200 bg-gradient-to-r from-orange-50 to-white">
         <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center text-white font-bold shadow-lg">
           N
