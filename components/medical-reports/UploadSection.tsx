@@ -1,5 +1,6 @@
 'use client';
 
+import { ClipboardList, Upload, Loader2 } from 'lucide-react';
 interface UploadSectionProps {
   isDragging: boolean;
   uploading: boolean;
@@ -33,7 +34,7 @@ export default function UploadSection({
             : 'border-gray-300 bg-gray-50 hover:bg-gray-100'
         }`}
       >
-        <p className="text-4xl mb-4">📋</p>
+        <ClipboardList className="mx-auto mb-4 text-teal-500" size={48} />
         <p className="font-semibold text-gray-900 mb-2">
           {uploading ? 'Uploading...' : 'Upload medical reports'}
         </p>
@@ -41,9 +42,11 @@ export default function UploadSection({
         <button
           onClick={onChooseFiles}
           disabled={uploading}
-          className="px-6 py-2 bg-teal-500 hover:bg-teal-600 disabled:bg-gray-400 text-white rounded-lg font-medium transition-colors"
+          className="inline-flex items-center gap-2 px-6 py-2 bg-teal-500 hover:bg-teal-600 disabled:bg-gray-400 text-white rounded-lg font-medium transition-colors"
         >
-          {uploading ? 'Uploading...' : 'Choose Files'}
+          {uploading
+            ? <><Loader2 size={16} className="animate-spin" /> Uploading...</>
+            : <><Upload size={16} /> Choose Files</>}
         </button>
         <input
           ref={fileInputRef}

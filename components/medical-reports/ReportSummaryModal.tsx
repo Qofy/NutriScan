@@ -1,6 +1,6 @@
 'use client';
 
-import { X } from 'lucide-react';
+import { X, CheckCircle2, Brain, ClipboardList, Hospital, TriangleAlert, UtensilsCrossed, AlertCircle } from 'lucide-react';
 import { MedicalReport } from '@/features/medical-reports';
 
 interface ReportSummaryModalProps {
@@ -26,8 +26,8 @@ export default function ReportSummaryModal({ report, onClose }: ReportSummaryMod
           {/* Extraction Success Info */}
           {report.extracted_data && (
             <div className="bg-green-50 border border-green-200 rounded-lg p-3">
-              <p className="text-green-700 text-xs">
-                ✅ Successfully extracted medical information from report
+              <p className="text-green-700 text-xs flex items-center gap-1.5">
+                <CheckCircle2 size={14} /> Successfully extracted medical information from report
               </p>
             </div>
           )}
@@ -52,8 +52,8 @@ export default function ReportSummaryModal({ report, onClose }: ReportSummaryMod
 
           {/* AI-Generated Summary */}
           {report.extracted_data?.extracted_summary && (
-            <div className="bg-gradient-to-r from-purple-50 to-purple-100 border border-purple-200 rounded-lg p-4">
-              <h3 className="font-semibold text-purple-900 mb-2">🧠 AI Summary</h3>
+            <div className="bg-linear-to-r from-purple-50 to-purple-100 border border-purple-200 rounded-lg p-4">
+              <h3 className="font-semibold text-purple-900 mb-2 flex items-center gap-2"><Brain size={16} /> AI Summary</h3>
               <p className="text-purple-800 text-sm leading-relaxed">{report.extracted_data.extracted_summary}</p>
             </div>
           )}
@@ -62,14 +62,14 @@ export default function ReportSummaryModal({ report, onClose }: ReportSummaryMod
           {report.extracted_data &&
             (report.extracted_data.conditions?.length > 0 ||
               report.extracted_data.allergens?.length > 0) && (
-              <div className="bg-gradient-to-r from-blue-50 to-blue-100 border border-blue-200 rounded-lg p-4">
-                <h3 className="font-semibold text-blue-900 mb-2">📋 Detected Health Information</h3>
+              <div className="bg-linear-to-r from-blue-50 to-blue-100 border border-blue-200 rounded-lg p-4">
+                <h3 className="font-semibold text-blue-900 mb-2 flex items-center gap-2"><ClipboardList size={16} /> Detected Health Information</h3>
                 <p className="text-blue-800 text-sm">
                   From our extraction, we found:{' '}
                   <span className="font-semibold">
                     {[
-                      ...(report.extracted_data?.conditions?.map((c: any) => c.condition) || []),
-                      ...(report.extracted_data?.allergens?.map((a: any) => `${a.allergen}`) || []),
+                      ...(report.extracted_data?.conditions?.map((c: { condition: string }) => c.condition) || []),
+                      ...(report.extracted_data?.allergens?.map((a: { allergen: string }) => `${a.allergen}`) || []),
                     ].join(', ')}
                   </span>
                 </p>
@@ -80,9 +80,9 @@ export default function ReportSummaryModal({ report, onClose }: ReportSummaryMod
             <>
               {report.extracted_data.conditions && report.extracted_data.conditions.length > 0 && (
                 <div>
-                  <h3 className="font-semibold text-gray-900 mb-3">🏥 Conditions</h3>
+                  <h3 className="font-semibold text-gray-900 mb-3 flex items-center gap-2"><Hospital size={16} /> Conditions</h3>
                   <div className="space-y-2">
-                    {report.extracted_data.conditions.map((condition: any, idx: number) => (
+                    {report.extracted_data.conditions.map((condition: { condition: string; confidence?: number; severity?: string }, idx: number) => (
                       <div key={idx} className="bg-red-50 p-4 rounded-lg border border-red-100">
                         <p className="font-medium text-red-900">{condition.condition}</p>
                         {condition.confidence && (
@@ -101,9 +101,9 @@ export default function ReportSummaryModal({ report, onClose }: ReportSummaryMod
 
               {report.extracted_data.allergens && report.extracted_data.allergens.length > 0 && (
                 <div>
-                  <h3 className="font-semibold text-gray-900 mb-3">⚠️ Allergens</h3>
+                  <h3 className="font-semibold text-gray-900 mb-3 flex items-center gap-2"><TriangleAlert size={16} /> Allergens</h3>
                   <div className="space-y-2">
-                    {report.extracted_data.allergens.map((allergen: any, idx: number) => (
+                    {report.extracted_data.allergens.map((allergen: { allergen: string; confidence?: number; severity?: string }, idx: number) => (
                       <div key={idx} className="bg-yellow-50 p-4 rounded-lg border border-yellow-100">
                         <p className="font-medium text-yellow-900">{allergen.allergen}</p>
                         {allergen.confidence && (
@@ -123,9 +123,9 @@ export default function ReportSummaryModal({ report, onClose }: ReportSummaryMod
               {report.extracted_data.dietary_restrictions &&
                 report.extracted_data.dietary_restrictions.length > 0 && (
                   <div>
-                    <h3 className="font-semibold text-gray-900 mb-3">🍽️ Dietary Restrictions</h3>
+                    <h3 className="font-semibold text-gray-900 mb-3 flex items-center gap-2"><UtensilsCrossed size={16} /> Dietary Restrictions</h3>
                     <div className="space-y-2">
-                      {report.extracted_data.dietary_restrictions.map((restriction: any, idx: number) => (
+                      {report.extracted_data.dietary_restrictions.map((restriction: { restriction: string; reason?: string; recommendation?: string }, idx: number) => (
                         <div key={idx} className="bg-blue-50 p-4 rounded-lg border border-blue-100">
                           <p className="font-medium text-blue-900">{restriction.restriction}</p>
                           {restriction.reason && (
@@ -147,9 +147,9 @@ export default function ReportSummaryModal({ report, onClose }: ReportSummaryMod
                 (!report.extracted_data.dietary_restrictions ||
                   report.extracted_data.dietary_restrictions.length === 0) && (
                   <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6 text-center">
-                    <p className="text-yellow-800 font-semibold">⚠️ No data extracted</p>
+                    <p className="text-yellow-800 font-semibold flex items-center justify-center gap-2"><AlertCircle size={16} /> No data extracted</p>
                     <p className="text-yellow-700 text-sm mt-2">
-                      We couldn't extract health information from this report. Please ensure the document contains clear medical data.
+                      We couldn&apos;t extract health information from this report. Please ensure the document contains clear medical data.
                     </p>
                   </div>
                 )}
@@ -158,9 +158,9 @@ export default function ReportSummaryModal({ report, onClose }: ReportSummaryMod
 
           {!report.extracted_data && (
             <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6 text-center">
-              <p className="text-yellow-800 font-semibold">⚠️ Extraction pending</p>
+              <p className="text-yellow-800 font-semibold flex items-center justify-center gap-2"><AlertCircle size={16} /> Extraction pending</p>
               <p className="text-yellow-700 text-sm mt-2">
-                We're still processing this report. Please refresh in a moment.
+                We&apos;re still processing this report. Please refresh in a moment.
               </p>
             </div>
           )}

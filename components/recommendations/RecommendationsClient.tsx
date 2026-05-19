@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { Loader2, RefreshCw, Globe, Globe2, PlusCircle, ArrowLeft } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/store';
 import { generateRecommendations } from '@/features/recommendations';
@@ -81,9 +82,11 @@ export default function RecommendationsClient() {
         <button
           onClick={() => dispatch(generateRecommendations())}
           disabled={loading}
-          className="bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white px-6 py-2 rounded-lg transition font-semibold"
+          className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white px-6 py-2 rounded-lg transition font-semibold"
         >
-          {loading ? 'Generating...' : 'Refresh'}
+          {loading
+            ? <><Loader2 size={16} className="animate-spin" /> Generating...</>
+            : <><RefreshCw size={16} /> Refresh</>}
         </button>
       </div>
 
@@ -97,14 +100,14 @@ export default function RecommendationsClient() {
         <div className="space-y-8">
           {localRecommendations.length > 0 && (
             <div>
-              <h2 className="text-xl font-bold text-gray-900 mb-4">🌍 Local Cuisine</h2>
+              <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2"><Globe size={20} className="text-emerald-600" /> Local Cuisine</h2>
               <RecommendationGrid items={localRecommendations} />
             </div>
           )}
 
           {continentalRecommendations.length > 0 && (
             <div>
-              <h2 className="text-xl font-bold text-gray-900 mb-4">🌐 Continental & International</h2>
+              <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2"><Globe2 size={20} className="text-blue-600" /> Continental &amp; International</h2>
               <RecommendationGrid items={continentalRecommendations} />
             </div>
           )}
@@ -115,7 +118,7 @@ export default function RecommendationsClient() {
                 onClick={() => setShowMoreModal(true)}
                 className="bg-emerald-100 hover:bg-emerald-200 text-emerald-700 px-8 py-3 rounded-lg transition font-semibold inline-flex items-center gap-2"
               >
-                ➕ More Recommendations
+                <PlusCircle size={18} /> More Recommendations
               </button>
             </div>
           )}
@@ -130,18 +133,18 @@ export default function RecommendationsClient() {
                       setMoreFilterType('local');
                       setShowMoreModal(false);
                     }}
-                    className="w-full bg-blue-50 hover:bg-blue-100 border border-blue-200 text-blue-900 px-4 py-3 rounded-lg transition font-semibold text-left"
+                    className="w-full bg-blue-50 hover:bg-blue-100 border border-blue-200 text-blue-900 px-4 py-3 rounded-lg transition font-semibold text-left inline-flex items-center gap-2"
                   >
-                    🌍 More Local Recommendations
+                    <Globe size={16} /> More Local Recommendations
                   </button>
                   <button
                     onClick={() => {
                       setMoreFilterType('continental');
                       setShowMoreModal(false);
                     }}
-                    className="w-full bg-purple-50 hover:bg-purple-100 border border-purple-200 text-purple-900 px-4 py-3 rounded-lg transition font-semibold text-left"
+                    className="w-full bg-purple-50 hover:bg-purple-100 border border-purple-200 text-purple-900 px-4 py-3 rounded-lg transition font-semibold text-left inline-flex items-center gap-2"
                   >
-                    🌐 More Continental Recommendations
+                    <Globe2 size={16} /> More Continental Recommendations
                   </button>
                   <button
                     onClick={() => setShowMoreModal(false)}
@@ -156,14 +159,14 @@ export default function RecommendationsClient() {
 
           {moreLocalRecommendations.length > 0 && moreFilterType === 'local' && (
             <div>
-              <h2 className="text-xl font-bold text-gray-900 mb-4">🌍 Additional Local Options</h2>
+              <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2"><Globe size={20} className="text-emerald-600" /> Additional Local Options</h2>
               <RecommendationGrid items={moreLocalRecommendations} />
               <div className="text-center pt-4">
                 <button
                   onClick={() => setMoreFilterType(null)}
-                  className="text-gray-600 hover:text-gray-900 font-semibold"
+                  className="inline-flex items-center gap-1 text-gray-600 hover:text-gray-900 font-semibold"
                 >
-                  ← Back to main recommendations
+                  <ArrowLeft size={16} /> Back to main recommendations
                 </button>
               </div>
             </div>

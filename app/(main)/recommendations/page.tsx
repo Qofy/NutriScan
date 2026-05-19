@@ -1,3 +1,4 @@
+import { Sparkles } from 'lucide-react';
 import RecommendationsClient from '@/components/recommendations/RecommendationsClient';
 import InfoSection from '@/components/recommendations/InfoSection';
 
@@ -11,8 +12,9 @@ export default function RecommendationsPage() {
     <div className="flex flex-col min-h-screen">
       <div className="flex-1 px-4 sm:px-6 py-6 sm:py-8 max-w-6xl mx-auto w-full">
         <div className="mb-8">
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900">
-            Recommendations ✨
+          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 flex items-center gap-3">
+            <Sparkles size={36} className="text-purple-500" />
+            Recommendations
           </h1>
           <p className="text-gray-600 mt-2">
             Personalized dietary recommendations based on your health profile

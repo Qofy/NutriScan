@@ -1,5 +1,8 @@
+import type { ReactNode } from 'react';
+import { CheckCircle2, TriangleAlert, XCircle, Pin, Lightbulb } from 'lucide-react';
+
 interface RecommendationCardProps {
-  icon: string;
+  icon: ReactNode;
   title: string;
   description: string;
   condition: string;
@@ -12,19 +15,19 @@ const severityStyles = {
     bg: 'bg-emerald-50',
     border: 'border-emerald-200',
     badge: 'bg-emerald-100 text-emerald-800',
-    icon: '✅',
+    icon: <CheckCircle2 size={13} />,
   },
   caution: {
     bg: 'bg-amber-50',
     border: 'border-amber-200',
     badge: 'bg-amber-100 text-amber-800',
-    icon: '⚠️',
+    icon: <TriangleAlert size={13} />,
   },
   danger: {
     bg: 'bg-red-50',
     border: 'border-red-200',
     badge: 'bg-red-100 text-red-800',
-    icon: '❌',
+    icon: <XCircle size={13} />,
   },
 };
 
@@ -44,7 +47,7 @@ export default function RecommendationCard({
     >
       <div className="flex items-start justify-between mb-4">
         <span className="text-4xl">{icon}</span>
-        <span className={`${styles.badge} px-3 py-1 rounded-full text-xs font-semibold`}>
+        <span className={`${styles.badge} inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold`}>
           {styles.icon} {severity.charAt(0).toUpperCase() + severity.slice(1)}
         </span>
       </div>
@@ -54,14 +57,14 @@ export default function RecommendationCard({
 
       <div className="space-y-2">
         <div className="flex items-start gap-2">
-          <span className="text-gray-400 text-sm">📌</span>
+        <span className="text-gray-400"><Pin size={14} /></span>
           <div>
             <p className="text-xs font-semibold text-gray-600">Condition</p>
             <p className="text-sm text-gray-900">{condition}</p>
           </div>
         </div>
         <div className="flex items-start gap-2">
-          <span className="text-gray-400 text-sm">💡</span>
+          <span className="text-gray-400"><Lightbulb size={14} /></span>
           <div>
             <p className="text-xs font-semibold text-gray-600">Benefit</p>
             <p className="text-sm text-gray-900">{benefit}</p>
