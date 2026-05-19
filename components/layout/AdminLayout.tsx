@@ -6,7 +6,7 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex min-h-screen bg-gray-50" suppressHydrationWarning>
+    <div className="flex min-h-screen bg-gradient-to-br from-orange-50 to-red-50" suppressHydrationWarning>
       <AdminSidebar />
       <main className="flex-1 lg:ml-64">
         {/* Admin Header Banner */}
