@@ -6,7 +6,7 @@ export default function QuickActions() {
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
       <Link
         href="/food-analysis"
-        className="rounded-2xl bg-linear-to-br from-emerald-500 to-emerald-600 p-6 text-white hover:shadow-lg transition-all group cursor-pointer"
+        className="rounded-2xl bg-linear-to-br from-orange-500 to-red-500 p-6 text-white hover:shadow-xl transition-all duration-300 group cursor-pointer hover:scale-105"
       >
         <div className="flex items-center justify-between">
           <div>
@@ -16,13 +16,13 @@ export default function QuickActions() {
               Analyze food items with your camera
             </p>
           </div>
-          <Camera size={40}/>
+          <Camera size={40} className="group-hover:scale-110 transition-transform duration-300"/>
         </div>
       </Link>
 
       <Link
         href="/medical-reports"
-        className="rounded-2xl bg-linear-to-br from-teal-500 to-teal-600 p-6 text-white hover:shadow-lg transition-all group cursor-pointer"
+        className="rounded-2xl bg-linear-to-br from-red-500 to-orange-500 p-6 text-white hover:shadow-xl transition-all duration-300 group cursor-pointer hover:scale-105"
       >
         <div className="flex items-center justify-between">
           <div>
@@ -32,7 +32,7 @@ export default function QuickActions() {
               Add medical reports for analysis
             </p>
           </div>
-          <File size={40}/>
+          <File size={40} className="group-hover:scale-110 transition-transform duration-300"/>
         </div>
       </Link>
     </div>

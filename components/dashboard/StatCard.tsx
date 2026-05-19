@@ -13,15 +13,15 @@ export default function StatCard({
   label,
   value,
   subtext,
-  bgColor = 'bg-emerald-50',
+  bgColor = 'bg-orange-50',
 }: StatCardProps) {
   return (
-    <div className={`rounded-2xl ${bgColor} p-6 border border-gray-100 shadow-sm`}>
+    <div className={`rounded-2xl ${bgColor} p-6 border border-orange-100 shadow-sm hover:shadow-md transition-all duration-200`}>
       <div className="flex items-start justify-between">
         <div>
-          <p className="text-sm font-medium text-gray-600 mb-2">{label}</p>
-          <p className="text-3xl font-bold text-gray-900">{value}</p>
-          {subtext && <p className="text-xs text-gray-500 mt-1">{subtext}</p>}
+          <p className="text-sm font-medium text-slate-600 mb-2">{label}</p>
+          <p className="text-3xl font-bold text-slate-900">{value}</p>
+          {subtext && <p className="text-xs text-slate-500 mt-1">{subtext}</p>}
         </div>
         <span className="text-3xl">{icon}</span>
       </div>
