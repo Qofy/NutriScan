@@ -72,11 +72,11 @@ export default function ManualEntryModal({ onClose }: ManualEntryModalProps) {
       <div className="bg-slate-50 rounded-2xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
         <div className="sticky top-0 bg-slate-50 border-b border-slate-200 p-6 flex items-center justify-between">
-          <h2 className="text-2xl font-bold text-gray-900">Add Food Manually</h2>
+          <h2 className="text-2xl font-bold text-slate-900">Add Food Manually</h2>
           <button
             onClick={onClose}
             disabled={loading}
-            className="text-gray-400 hover:text-gray-600 disabled:opacity-50"
+            className="text-slate-400 hover:text-slate-600 disabled:opacity-50"
           >
             <X size={24} />
           </button>
@@ -86,7 +86,7 @@ export default function ManualEntryModal({ onClose }: ManualEntryModalProps) {
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
           {/* Ingredients Section */}
           <div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">📝 Ingredients</h3>
+            <h3 className="text-lg font-semibold text-slate-900 mb-4">📝 Ingredients</h3>
             <div className="space-y-3">
               {ingredients.map((ingredient, index) => (
                 <div key={index} className="flex gap-2">
@@ -96,7 +96,7 @@ export default function ManualEntryModal({ onClose }: ManualEntryModalProps) {
                     onChange={(e) => handleIngredientChange(index, e.target.value)}
                     placeholder="e.g., Rice, Beans, Chicken"
                     disabled={loading}
-                    className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-gray-900 placeholder-gray-500 disabled:bg-gray-100"
+                    className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-slate-900 placeholder-gray-500 disabled:bg-gray-100"
                   />
                   {ingredients.length > 1 && (
                     <button
@@ -116,7 +116,7 @@ export default function ManualEntryModal({ onClose }: ManualEntryModalProps) {
               type="button"
               onClick={handleAddIngredient}
               disabled={loading}
-              className="mt-4 flex items-center gap-2 px-4 py-2 text-emerald-600 hover:bg-emerald-50 rounded-lg transition disabled:opacity-50"
+              className="mt-4 flex items-center gap-2 px-4 py-2 text-orange-600 hover:bg-orange-50 rounded-lg transition disabled:opacity-50"
             >
               <Plus size={18} />
               Add Ingredient
@@ -125,8 +125,8 @@ export default function ManualEntryModal({ onClose }: ManualEntryModalProps) {
 
           {/* Photo Section */}
           <div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">📸 Photo (Optional)</h3>
-            <p className="text-sm text-gray-600 mb-3">
+            <h3 className="text-lg font-semibold text-slate-900 mb-4">📸 Photo (Optional)</h3>
+            <p className="text-sm text-slate-600 mb-3">
               Upload a photo to help improve YOLO's food detection accuracy
             </p>
 
@@ -145,7 +145,7 @@ export default function ManualEntryModal({ onClose }: ManualEntryModalProps) {
                 >
                   <X size={18} />
                 </button>
-                <label className="absolute bottom-2 right-2 px-3 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg cursor-pointer transition disabled:opacity-50">
+                <label className="absolute bottom-2 right-2 px-3 py-2 bg-orange-600 hover:bg-emerald-700 text-white rounded-lg cursor-pointer transition disabled:opacity-50">
                   Change
                   <input
                     type="file"
@@ -157,7 +157,7 @@ export default function ManualEntryModal({ onClose }: ManualEntryModalProps) {
                 </label>
               </div>
             ) : (
-              <label className="block border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer hover:border-emerald-500 hover:bg-emerald-50 transition disabled:opacity-50">
+              <label className="block border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer hover:border-orange-500 hover:bg-orange-50 transition disabled:opacity-50">
                 <input
                   type="file"
                   accept="image/*"
@@ -165,15 +165,15 @@ export default function ManualEntryModal({ onClose }: ManualEntryModalProps) {
                   disabled={loading}
                   className="hidden"
                 />
-                <p className="text-gray-600">Click to upload or drag and drop</p>
+                <p className="text-slate-600">Click to upload or drag and drop</p>
                 <p className="text-xs text-gray-500 mt-1">PNG, JPG up to 10MB</p>
               </label>
             )}
           </div>
 
           {/* Training Note */}
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-            <p className="text-sm text-blue-800">
+          <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+            <p className="text-sm text-red-800">
               <span className="font-semibold">🧠 YOLO Training:</span> Your labeled photos help improve food detection accuracy. After 20 entries with photos, the system will automatically retrain.
             </p>
           </div>
@@ -184,14 +184,14 @@ export default function ManualEntryModal({ onClose }: ManualEntryModalProps) {
               type="button"
               onClick={onClose}
               disabled={loading}
-              className="flex-1 px-4 py-2 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg font-medium transition disabled:opacity-50"
+              className="flex-1 px-4 py-2 text-slate-700 bg-gray-100 hover:bg-gray-200 rounded-lg font-medium transition disabled:opacity-50"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading || nonEmptyCount === 0}
-              className="flex-1 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 disabled:bg-gray-400 text-white rounded-lg font-medium transition"
+              className="flex-1 px-4 py-2 bg-orange-600 hover:bg-emerald-700 disabled:bg-gray-400 text-white rounded-lg font-medium transition"
             >
               {loading ? 'Submitting...' : 'Add Entry'}
             </button>

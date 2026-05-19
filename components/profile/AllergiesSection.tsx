@@ -13,11 +13,11 @@ interface AllergiesSectionProps {
 export default function AllergiesSection({ formData, handleChange }: AllergiesSectionProps) {
   return (
     <div className="bg-slate-50 rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm">
-      <h2 className="text-xl font-bold text-gray-900 mb-6">Allergies & Dietary Restrictions</h2>
+      <h2 className="text-xl font-bold text-slate-900 mb-6">Allergies & Dietary Restrictions</h2>
 
       <div className="space-y-6">
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">
+          <label className="block text-sm font-semibold text-slate-700 mb-2">
             Food Allergies
           </label>
           <textarea
@@ -31,7 +31,7 @@ export default function AllergiesSection({ formData, handleChange }: AllergiesSe
         </div>
 
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">
+          <label className="block text-sm font-semibold text-slate-700 mb-2">
             Dietary Preferences
           </label>
           <select

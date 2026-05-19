@@ -379,12 +379,12 @@ export default function SmartCameraView({ onCapture, onClose }: Props) {
           </div>
         ) : detectedItems.length > 0 ? (
           <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <div className="w-2 h-2 rounded-full bg-orange-500 animate-pulse" />
             Food Detected!
           </div>
         ) : (
           <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
+            <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
             Scanning...
           </div>
         )}
@@ -397,7 +397,7 @@ export default function SmartCameraView({ onCapture, onClose }: Props) {
           <div>
             <h3 className="font-semibold">{ANGLE_STEPS[instructionStep].title}</h3>
             <p className="text-sm text-gray-300">{ANGLE_STEPS[instructionStep].desc}</p>
-            <p className="text-xs text-gray-400 mt-1">Angle {instructionStep + 1} of 3</p>
+            <p className="text-xs text-slate-400 mt-1">Angle {instructionStep + 1} of 3</p>
           </div>
         </div>
       </div>
@@ -406,7 +406,7 @@ export default function SmartCameraView({ onCapture, onClose }: Props) {
       <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-4">
         <button
           onClick={manualCapture}
-          className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-6 rounded-full transition-colors"
+          className="flex items-center gap-2 bg-orange-600 hover:bg-emerald-700 text-white font-semibold py-3 px-6 rounded-full transition-colors"
         >
           <Camera size={24} />
           Capture

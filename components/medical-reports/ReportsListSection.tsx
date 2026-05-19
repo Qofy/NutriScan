@@ -26,7 +26,7 @@ export default function ReportsListSection({
   if (!isHydrated) {
     return (
       <div>
-        <h2 className="text-xl font-bold text-gray-900 mb-4">Your Reports (0)</h2>
+        <h2 className="text-xl font-bold text-slate-900 mb-4">Your Reports (0)</h2>
         <div className="space-y-4">
           {[1, 2, 3].map(i => (
             <div key={i} className="rounded-2xl bg-gray-200 h-32 animate-pulse"></div>
@@ -38,7 +38,7 @@ export default function ReportsListSection({
 
   return (
     <div>
-      <h2 className="text-xl font-bold text-gray-900 mb-4">Your Reports ({reports.length})</h2>
+      <h2 className="text-xl font-bold text-slate-900 mb-4">Your Reports ({reports.length})</h2>
 
       {loading && !reports.length && (
         <div className="space-y-4">

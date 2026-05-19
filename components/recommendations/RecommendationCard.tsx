@@ -12,9 +12,9 @@ interface RecommendationCardProps {
 
 const severityStyles = {
   safe: {
-    bg: 'bg-emerald-50',
-    border: 'border-emerald-200',
-    badge: 'bg-emerald-100 text-emerald-800',
+    bg: 'bg-orange-50',
+    border: 'border-orange-200',
+    badge: 'bg-orange-100 text-orange-800',
     icon: <CheckCircle2 size={13} />,
   },
   caution: {
@@ -52,22 +52,22 @@ export default function RecommendationCard({
         </span>
       </div>
 
-      <h3 className="font-bold text-gray-900 mb-2">{title}</h3>
-      <p className="text-sm text-gray-700 mb-4">{description}</p>
+      <h3 className="font-bold text-slate-900 mb-2">{title}</h3>
+      <p className="text-sm text-slate-700 mb-4">{description}</p>
 
       <div className="space-y-2">
         <div className="flex items-start gap-2">
-        <span className="text-gray-400"><Pin size={14} /></span>
+        <span className="text-slate-400"><Pin size={14} /></span>
           <div>
-            <p className="text-xs font-semibold text-gray-600">Condition</p>
-            <p className="text-sm text-gray-900">{condition}</p>
+            <p className="text-xs font-semibold text-slate-600">Condition</p>
+            <p className="text-sm text-slate-900">{condition}</p>
           </div>
         </div>
         <div className="flex items-start gap-2">
-          <span className="text-gray-400"><Lightbulb size={14} /></span>
+          <span className="text-slate-400"><Lightbulb size={14} /></span>
           <div>
-            <p className="text-xs font-semibold text-gray-600">Benefit</p>
-            <p className="text-sm text-gray-900">{benefit}</p>
+            <p className="text-xs font-semibold text-slate-600">Benefit</p>
+            <p className="text-sm text-slate-900">{benefit}</p>
           </div>
         </div>
       </div>

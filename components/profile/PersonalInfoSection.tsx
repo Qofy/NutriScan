@@ -21,12 +21,12 @@ export default function PersonalInfoSection({
 }: PersonalInfoSectionProps) {
   return (
     <div className="bg-slate-50 rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm">
-      <h2 className="text-xl font-bold text-gray-900 mb-6">Personal Information</h2>
+      <h2 className="text-xl font-bold text-slate-900 mb-6">Personal Information</h2>
 
       <div className="space-y-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
+            <label className="block text-sm font-semibold text-slate-700 mb-2">
               First Name
             </label>
             <input
@@ -38,7 +38,7 @@ export default function PersonalInfoSection({
             />
           </div>
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
+            <label className="block text-sm font-semibold text-slate-700 mb-2">
               Last Name
             </label>
             <input
@@ -52,7 +52,7 @@ export default function PersonalInfoSection({
         </div>
 
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">Email</label>
+          <label className="block text-sm font-semibold text-slate-700 mb-2">Email</label>
           <input
             type="email"
             name="email"
@@ -64,7 +64,7 @@ export default function PersonalInfoSection({
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">Country</label>
+            <label className="block text-sm font-semibold text-slate-700 mb-2">Country</label>
             <input
               type="text"
               name="country"
@@ -80,7 +80,7 @@ export default function PersonalInfoSection({
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">Age</label>
+            <label className="block text-sm font-semibold text-slate-700 mb-2">Age</label>
             <input
               type="number"
               name="age"
@@ -90,7 +90,7 @@ export default function PersonalInfoSection({
             />
           </div>
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">Height</label>
+            <label className="block text-sm font-semibold text-slate-700 mb-2">Height</label>
             <input
               type="text"
               name="height"
@@ -100,7 +100,7 @@ export default function PersonalInfoSection({
             />
           </div>
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
+            <label className="block text-sm font-semibold text-slate-700 mb-2">
               Weight (kg)
             </label>
             <input

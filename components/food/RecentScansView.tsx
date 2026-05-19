@@ -80,13 +80,13 @@ export default function RecentScansView() {
   const getSafetyColor = (level: string) => {
     switch (level) {
       case 'safe':
-        return 'bg-green-100 text-green-800';
+        return 'bg-orange-100 text-orange-800';
       case 'caution':
         return 'bg-yellow-100 text-yellow-800';
       case 'danger':
         return 'bg-red-100 text-red-800';
       default:
-        return 'bg-gray-100 text-gray-800';
+        return 'bg-gray-100 text-slate-800';
     }
   };
 
@@ -108,8 +108,8 @@ export default function RecentScansView() {
     return (
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-bold text-gray-900">Recent Scans</h2>
-          <span className="text-sm text-gray-600 bg-gray-100 px-3 py-1 rounded-full">
+          <h2 className="text-2xl font-bold text-slate-900">Recent Scans</h2>
+          <span className="text-sm text-slate-600 bg-gray-100 px-3 py-1 rounded-full">
             0 scans
           </span>
         </div>
@@ -126,7 +126,7 @@ export default function RecentScansView() {
   if (loading && recentScans.length === 0) {
     return (
       <div className="flex justify-center items-center py-12">
-        <div className="text-gray-600">Loading your scans...</div>
+        <div className="text-slate-600">Loading your scans...</div>
       </div>
     );
   }
@@ -148,8 +148,8 @@ export default function RecentScansView() {
   if (recentScans.length === 0) {
     return (
       <div className="rounded-lg border-2 border-dashed border-gray-300 p-12 text-center">
-        <Eye size={48} className="mx-auto mb-4 text-gray-400" />
-        <p className="text-gray-600 text-lg font-semibold">No scans yet</p>
+        <Eye size={48} className="mx-auto mb-4 text-slate-400" />
+        <p className="text-slate-600 text-lg font-semibold">No scans yet</p>
         <p className="text-gray-500 mt-2">
           Start by scanning some food with the camera or uploading an image
         </p>
@@ -160,11 +160,11 @@ export default function RecentScansView() {
   return (
     <>
       {trainingStatus?.status === 'training' && (
-        <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg flex items-center gap-3">
-          <Brain className="text-blue-600 animate-spin" size={20} />
+        <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center gap-3">
+          <Brain className="text-red-600 animate-spin" size={20} />
           <div className="flex-1">
-            <p className="text-sm font-semibold text-blue-900">🧠 YOLO is retraining with your data</p>
-            <p className="text-xs text-blue-700">
+            <p className="text-sm font-semibold text-red-900">🧠 YOLO is retraining with your data</p>
+            <p className="text-xs text-red-700">
               {trainingStatus.count}/{trainingStatus.threshold} labeled entries collected
             </p>
           </div>
@@ -173,8 +173,8 @@ export default function RecentScansView() {
 
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-bold text-gray-900">Recent Scans</h2>
-          <span className="text-sm text-gray-600 bg-gray-100 px-3 py-1 rounded-full">
+          <h2 className="text-2xl font-bold text-slate-900">Recent Scans</h2>
+          <span className="text-sm text-slate-600 bg-gray-100 px-3 py-1 rounded-full">
             {recentScans.length} scans
           </span>
         </div>
@@ -184,7 +184,7 @@ export default function RecentScansView() {
             <div
               key={scan.id}
               onClick={() => openScan(index)}
-              className="rounded-lg border border-slate-200 overflow-hidden hover:shadow-lg hover:border-emerald-500 transition cursor-pointer bg-slate-50"
+              className="rounded-lg border border-slate-200 overflow-hidden hover:shadow-lg hover:border-orange-500 transition cursor-pointer bg-slate-50"
             >
               {/* Image */}
               {scan.image && (
@@ -201,7 +201,7 @@ export default function RecentScansView() {
               <div className="p-4">
                 {/* Food Items */}
                 <div className="mb-3">
-                  <p className="text-sm text-gray-600 mb-2">
+                  <p className="text-sm text-slate-600 mb-2">
                     {scan.recognized_items.length} item
                     {scan.recognized_items.length !== 1 ? 's' : ''}
                   </p>
@@ -209,13 +209,13 @@ export default function RecentScansView() {
                     {scan.recognized_items.slice(0, 2).map((item, idx) => (
                       <p
                         key={idx}
-                        className="text-sm font-medium text-gray-900 truncate"
+                        className="text-sm font-medium text-slate-900 truncate"
                       >
                         • {item.name}
                       </p>
                     ))}
                     {scan.recognized_items.length > 2 && (
-                      <p className="text-xs text-gray-600 italic">
+                      <p className="text-xs text-slate-600 italic">
                         +{scan.recognized_items.length - 2} more
                       </p>
                     )}
@@ -233,24 +233,24 @@ export default function RecentScansView() {
                       {getSafetyIcon(scan.safety_level)} {scan.safety_level}
                     </span>
                     {scan.is_manual && (
-                      <span className="inline-block text-xs font-semibold px-2 py-1 rounded bg-blue-100 text-blue-800">
+                      <span className="inline-block text-xs font-semibold px-2 py-1 rounded bg-red-100 text-red-800">
                         📝 Manual
                       </span>
                     )}
                   </div>
-                  <span className="text-xs text-gray-600 font-medium">
+                  <span className="text-xs text-slate-600 font-medium">
                     {(scan.confidence_score * 100).toFixed(0)}%
                   </span>
                 </div>
 
                 {/* Date */}
-                <div className="flex items-center gap-2 text-xs text-gray-600">
+                <div className="flex items-center gap-2 text-xs text-slate-600">
                   <Calendar size={14} />
                   <span>{formatDate(scan.uploaded_at)}</span>
                 </div>
 
                 {/* View Button */}
-                <button className="mt-4 w-full py-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-semibold rounded-lg transition flex items-center justify-center gap-2">
+                <button className="mt-4 w-full py-2 bg-orange-50 hover:bg-orange-100 text-orange-700 font-semibold rounded-lg transition flex items-center justify-center gap-2">
                   <Eye size={16} />
                   View Details
                 </button>

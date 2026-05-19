@@ -34,12 +34,12 @@ export default function AdminSidebar() {
   return (
     <aside className="hidden lg:fixed lg:left-0 lg:top-0 lg:h-screen lg:w-64 lg:flex lg:flex-col lg:border-r lg:border-slate-700 lg:bg-slate-900 lg:shadow-lg lg:z-40">
       <div className="flex items-center gap-3 px-6 py-6 border-b border-slate-700">
-        <div className="w-10 h-10 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold">
+        <div className="w-10 h-10 rounded-lg bg-red-600 flex items-center justify-center text-white font-bold">
           N
         </div>
         <div>
           <h1 className="text-lg font-bold text-white">NutriScan</h1>
-          <p className="text-xs text-blue-300">Admin Panel</p>
+          <p className="text-xs text-red-300">Admin Panel</p>
         </div>
       </div>
 
@@ -48,7 +48,7 @@ export default function AdminSidebar() {
           <>
             <p className="text-sm text-slate-300">Logged in as</p>
             <p className="text-white font-semibold">{user.username}</p>
-            <div className="inline-block mt-2 px-2 py-1 bg-green-600 text-white text-xs rounded font-medium">
+            <div className="inline-block mt-2 px-2 py-1 bg-orange-600 text-white text-xs rounded font-medium">
               👤 Admin
             </div>
           </>
@@ -66,7 +66,7 @@ export default function AdminSidebar() {
               href={item.href}
               className={`flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors ${
                 isActive
-                  ? 'bg-blue-600 text-white'
+                  ? 'bg-red-600 text-white'
                   : 'text-slate-300 hover:bg-slate-800 hover:text-white'
               }`}
             >

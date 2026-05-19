@@ -72,10 +72,10 @@ export default function RecentActivity() {
   if (recentAnalyses.length === 0) {
     return (
       <div className="rounded-2xl bg-slate-50 p-6 border border-slate-200 shadow-sm">
-        <h2 className="text-lg font-bold text-gray-900 mb-4">Recent Activity</h2>
+        <h2 className="text-lg font-bold text-slate-900 mb-4">Recent Activity</h2>
         <div className="text-center py-8">
           <Apple color="green" size={40} className="mx-auto mb-3 opacity-50" />
-          <p className="text-gray-600">No food scans yet</p>
+          <p className="text-slate-600">No food scans yet</p>
           <p className="text-sm text-gray-500 mt-1">Start by scanning some food to see your activity</p>
         </div>
       </div>
@@ -84,7 +84,7 @@ export default function RecentActivity() {
 
   return (
     <div className="rounded-2xl bg-slate-50 p-6 border border-slate-200 shadow-sm">
-      <h2 className="text-lg font-bold text-gray-900 mb-4">Recent Activity</h2>
+      <h2 className="text-lg font-bold text-slate-900 mb-4">Recent Activity</h2>
       <div className="space-y-4">
         {recentAnalyses.map((analysis) => {
           const foodItems = analysis.recognized_items
@@ -100,23 +100,23 @@ export default function RecentActivity() {
                 {getActivityIcon(analysis.safety_level)}
               </div>
               <div className="flex-1 min-w-0">
-                <p className="font-medium text-gray-900 truncate">
+                <p className="font-medium text-slate-900 truncate">
                   {foodItems}
                 </p>
-                <p className="text-sm text-gray-600 mt-1">
+                <p className="text-sm text-slate-600 mt-1">
                   {getSafetyDescription(
                     analysis.safety_level,
                     analysis.confidence_score
                   )}
                 </p>
-                <p className="text-xs text-gray-400 mt-2">
+                <p className="text-xs text-slate-400 mt-2">
                   {isHydrated ? formatTimestamp(analysis.uploaded_at) : 'Just now'}
                 </p>
               </div>
               <span
                 className={`text-xs font-semibold px-2 py-1 rounded-full whitespace-nowrap flex-shrink-0 ${
                   analysis.safety_level === 'safe'
-                    ? 'bg-green-100 text-green-800'
+                    ? 'bg-orange-100 text-orange-800'
                     : analysis.safety_level === 'caution'
                     ? 'bg-yellow-100 text-yellow-800'
                     : 'bg-red-100 text-red-800'

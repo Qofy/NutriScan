@@ -16,14 +16,14 @@ export default function ActionButtons({ loading, onSave, onCancel, onLogout }: A
         <button
           onClick={onSave}
           disabled={loading}
-          className="flex-1 px-6 py-3 bg-emerald-500 hover:bg-emerald-600 disabled:bg-gray-400 text-white font-semibold rounded-lg transition-colors"
+          className="flex-1 px-6 py-3 bg-orange-500 hover:bg-orange-600 disabled:bg-gray-400 text-white font-semibold rounded-lg transition-colors"
         >
           {loading ? 'Saving...' : 'Save Changes'}
         </button>
         <button
           onClick={onCancel}
           disabled={loading}
-          className="flex-1 px-6 py-3 bg-gray-200 hover:bg-gray-300 disabled:bg-gray-300 text-gray-900 font-semibold rounded-lg transition-colors"
+          className="flex-1 px-6 py-3 bg-gray-200 hover:bg-gray-300 disabled:bg-gray-300 text-slate-900 font-semibold rounded-lg transition-colors"
         >
           Cancel
         </button>

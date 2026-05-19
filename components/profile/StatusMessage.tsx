@@ -8,7 +8,7 @@ interface StatusMessageProps {
 export default function StatusMessage({ type, message }: StatusMessageProps) {
   if (type === 'success') {
     return (
-      <div className="p-4 bg-emerald-50 border border-emerald-200 text-emerald-700 rounded-lg">
+      <div className="p-4 bg-orange-50 border border-orange-200 text-orange-700 rounded-lg">
         ✓ {message}
       </div>
     );

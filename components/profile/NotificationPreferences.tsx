@@ -10,7 +10,7 @@ const NOTIFICATION_PREFS = [
 export default function NotificationPreferences() {
   return (
     <div className="bg-slate-50 rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm">
-      <h2 className="text-xl font-bold text-gray-900 mb-6">Notification Preferences</h2>
+      <h2 className="text-xl font-bold text-slate-900 mb-6">Notification Preferences</h2>
 
       <div className="space-y-4">
         {NOTIFICATION_PREFS.map((pref) => (
@@ -18,9 +18,9 @@ export default function NotificationPreferences() {
             <input
               type="checkbox"
               defaultChecked
-              className="w-5 h-5 rounded border-gray-300 text-emerald-500 cursor-pointer"
+              className="w-5 h-5 rounded border-gray-300 text-orange-500 cursor-pointer"
             />
-            <span className="font-medium text-gray-700">{pref.label}</span>
+            <span className="font-medium text-slate-700">{pref.label}</span>
           </label>
         ))}
       </div>

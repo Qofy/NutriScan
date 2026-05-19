@@ -13,7 +13,7 @@ export default function ConditionFilter({
 }: ConditionFilterProps) {
   return (
     <div>
-      <h2 className="text-sm font-semibold text-gray-700 mb-4 uppercase tracking-wide">
+      <h2 className="text-sm font-semibold text-slate-700 mb-4 uppercase tracking-wide">
         Filter by Condition
       </h2>
       <div className="flex flex-wrap gap-3">
@@ -23,8 +23,8 @@ export default function ConditionFilter({
             onClick={() => onConditionChange(condition)}
             className={`px-4 py-2 rounded-full font-medium transition-colors ${
               selectedCondition === condition
-                ? 'bg-emerald-500 text-white'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                ? 'bg-orange-500 text-white'
+                : 'bg-gray-100 text-slate-700 hover:bg-gray-200'
             }`}
           >
             {condition.charAt(0).toUpperCase() + condition.slice(1)}

@@ -67,28 +67,28 @@ export default function FoodUploadZone() {
   return (
     <div className="space-y-6">
       {isAuthenticated ? (
-        <div className="rounded-lg bg-green-50 border border-green-200 p-4 flex items-start gap-3">
-          <CheckCircle className="text-green-600 shrink-0 mt-0.5" size={20} />
+        <div className="rounded-lg bg-orange-50 border border-orange-200 p-4 flex items-start gap-3">
+          <CheckCircle className="text-orange-600 shrink-0 mt-0.5" size={20} />
           <div>
-            <p className="font-semibold text-green-900 flex items-center gap-2">
-              Welcome back, {user?.first_name || user?.username}! <Hand size={16} className="text-green-700" />
+            <p className="font-semibold text-orange-900 flex items-center gap-2">
+              Welcome back, {user?.first_name || user?.username}! <Hand size={16} className="text-orange-700" />
             </p>
-            <p className="text-sm text-green-800 mt-1">
+            <p className="text-sm text-orange-800 mt-1">
               Your food scans and analyses are automatically saved to your profile.
             </p>
           </div>
         </div>
       ) : (
-        <div className="rounded-lg bg-blue-50 border border-blue-200 p-4 flex items-start gap-3">
-          <AlertCircle className="text-blue-600 shrink-0 mt-0.5" size={20} />
+        <div className="rounded-lg bg-red-50 border border-red-200 p-4 flex items-start gap-3">
+          <AlertCircle className="text-red-600 shrink-0 mt-0.5" size={20} />
           <div>
-            <p className="font-semibold text-blue-900 flex items-center gap-2">
-              <Lightbulb size={16} className="text-blue-600 shrink-0" /> Log in to save your food history
+            <p className="font-semibold text-red-900 flex items-center gap-2">
+              <Lightbulb size={16} className="text-red-600 shrink-0" /> Log in to save your food history
             </p>
-            <p className="text-sm text-blue-800 mt-1">
+            <p className="text-sm text-red-800 mt-1">
               Create an account or sign in to automatically save all your food scans and track your nutrition over time.
             </p>
-            <Link href="/login" className="inline-block mt-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition">
+            <Link href="/login" className="inline-block mt-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg transition">
               Login Now
             </Link>
           </div>
@@ -102,7 +102,7 @@ export default function FoodUploadZone() {
       )}
 
       {loading && (
-        <div className="rounded-lg bg-blue-50 border border-blue-200 p-4 text-blue-800">
+        <div className="rounded-lg bg-red-50 border border-red-200 p-4 text-red-800">
           Analyzing food image...
         </div>
       )}
@@ -116,11 +116,11 @@ export default function FoodUploadZone() {
           <button
             onClick={() => setShowCamera(true)}
             disabled={loading}
-            className="w-56 rounded-2xl border-2 border-emerald-500 bg-emerald-50 p-8 hover:bg-emerald-100 disabled:opacity-50 transition-colors text-center"
+            className="w-56 rounded-2xl border-2 border-emerald-500 bg-orange-50 p-8 hover:bg-orange-100 disabled:opacity-50 transition-colors text-center"
           >
             <Camera size={40} className="block mx-auto mb-2" color="green" />
-            <p className="font-semibold text-emerald-900">Use Camera</p>
-            <p className="text-sm text-emerald-700 mt-1">
+            <p className="font-semibold text-orange-900">Use Camera</p>
+            <p className="text-sm text-orange-700 mt-1">
               Scan food with device camera
             </p>
           </button>
@@ -128,11 +128,11 @@ export default function FoodUploadZone() {
           {/* <button
             onClick={() => fileInputRef.current?.click()}
             disabled={loading}
-            className="w-56 rounded-2xl border-2 border-teal-500 bg-teal-50 p-8 hover:bg-teal-100 disabled:opacity-50 transition-colors text-center"
+            className="w-56 rounded-2xl border-2 border-teal-500 bg-orange-50 p-8 hover:bg-teal-100 disabled:opacity-50 transition-colors text-center"
           >
             <Folder size={40} color="green" className="block mx-auto mb-2" />
             <p className="font-semibold text-teal-900">Upload Image</p>
-            <p className="text-sm text-teal-700 mt-1">
+            <p className="text-sm text-orange-700 mt-1">
               Choose from your device
             </p>
           </button> */}
@@ -140,11 +140,11 @@ export default function FoodUploadZone() {
           <button
             onClick={() => setShowManualEntry(true)}
             disabled={loading}
-            className="w-56 rounded-2xl border-2 border-blue-500 bg-blue-50 p-8 hover:bg-blue-100 disabled:opacity-50 transition-colors text-center"
+            className="w-56 rounded-2xl border-2 border-blue-500 bg-red-50 p-8 hover:bg-red-100 disabled:opacity-50 transition-colors text-center"
           >
             <Plus size={40} color="blue" className="block mx-auto mb-2" />
-            <p className="font-semibold text-blue-900">Manual Entry</p>
-            <p className="text-sm text-blue-700 mt-1">
+            <p className="font-semibold text-red-900">Manual Entry</p>
+            <p className="text-sm text-red-700 mt-1">
               Type food names directly
             </p>
           </button>
@@ -157,13 +157,13 @@ export default function FoodUploadZone() {
         onDrop={handleDrop}
         className={`rounded-2xl border-2 border-dashed p-8 text-center transition-colors ${
           isDragging
-            ? 'border-emerald-500 bg-emerald-50'
+            ? 'border-emerald-500 bg-orange-50'
             : 'border-gray-300 bg-gray-50 hover:bg-gray-100'
         }`}
       >
         <Apple size={30} color="green" className="block mx-auto mb-2" />
-        <p className="font-semibold text-gray-900">Drag & drop food images</p>
-        <p className="text-sm text-gray-600 mt-1">or click to browse files</p>
+        <p className="font-semibold text-slate-900">Drag & drop food images</p>
+        <p className="text-sm text-slate-600 mt-1">or click to browse files</p>
       </div>
 
       <input

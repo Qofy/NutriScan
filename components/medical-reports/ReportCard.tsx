@@ -12,13 +12,13 @@ interface ReportCardProps {
 const getStatusColor = (status: string) => {
   switch (status) {
     case 'completed':
-      return 'bg-emerald-50 text-emerald-700';
+      return 'bg-orange-50 text-orange-700';
     case 'processing':
-      return 'bg-blue-50 text-blue-700';
+      return 'bg-red-50 text-red-700';
     case 'error':
       return 'bg-red-50 text-red-700';
     default:
-      return 'bg-gray-50 text-gray-700';
+      return 'bg-gray-50 text-slate-700';
   }
 };
 
@@ -29,10 +29,10 @@ export default function ReportCard({ report, onView, onDelete }: ReportCardProps
         <div className="flex items-start gap-4 flex-1">
           <div className="text-3xl">📄</div>
           <div className="flex-1">
-            <h3 className="font-semibold text-gray-900">
+            <h3 className="font-semibold text-slate-900">
               {report.document?.split('/').pop() || 'Medical Report'}
             </h3>
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-slate-600">
               Uploaded on{' '}
               {new Date(report.uploaded_at).toLocaleDateString('en-US', {
                 year: 'numeric',
@@ -46,7 +46,7 @@ export default function ReportCard({ report, onView, onDelete }: ReportCardProps
           {report.status === 'completed' && (
             <button
               onClick={() => onView(report)}
-              className="text-gray-400 hover:text-blue-600 transition-colors p-2"
+              className="text-slate-400 hover:text-red-600 transition-colors p-2"
               title="View summary"
             >
               <Eye size={20} />
@@ -54,7 +54,7 @@ export default function ReportCard({ report, onView, onDelete }: ReportCardProps
           )}
           <button
             onClick={() => onDelete(report.id)}
-            className="text-gray-400 hover:text-red-600 transition-colors p-2"
+            className="text-slate-400 hover:text-red-600 transition-colors p-2"
             title="Delete report"
           >
             <Trash2 size={20} />
@@ -82,7 +82,7 @@ export default function ReportCard({ report, onView, onDelete }: ReportCardProps
             ))}
 
             {report.extracted_data.dietary_restrictions?.map((restriction: any, idx: number) => (
-              <span key={idx} className="inline-block px-3 py-1 bg-blue-50 text-blue-700 text-xs font-semibold rounded-full">
+              <span key={idx} className="inline-block px-3 py-1 bg-red-50 text-red-700 text-xs font-semibold rounded-full">
                 {restriction.restriction}
               </span>
             ))}
@@ -91,7 +91,7 @@ export default function ReportCard({ report, onView, onDelete }: ReportCardProps
       </div>
 
       {report.status === 'processing' && (
-        <p className="text-sm text-gray-600">Processing your report. Please wait...</p>
+        <p className="text-sm text-slate-600">Processing your report. Please wait...</p>
       )}
 
       {report.status === 'error' && (

@@ -82,7 +82,7 @@ export default function RecommendationsClient() {
         <button
           onClick={() => dispatch(generateRecommendations())}
           disabled={loading}
-          className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white px-6 py-2 rounded-lg transition font-semibold"
+          className="inline-flex items-center gap-2 bg-orange-600 hover:bg-green-700 disabled:bg-gray-400 text-white px-6 py-2 rounded-lg transition font-semibold"
         >
           {loading
             ? <><Loader2 size={16} className="animate-spin" /> Generating...</>
@@ -94,20 +94,20 @@ export default function RecommendationsClient() {
         <LoadingState />
       ) : filteredItems.length === 0 ? (
         <div className="text-center py-12">
-          <p className="text-gray-600 text-lg">No recommendations found for this filter</p>
+          <p className="text-slate-600 text-lg">No recommendations found for this filter</p>
         </div>
       ) : (
         <div className="space-y-8">
           {localRecommendations.length > 0 && (
             <div>
-              <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2"><Globe size={20} className="text-emerald-600" /> Local Cuisine</h2>
+              <h2 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2"><Globe size={20} className="text-orange-600" /> Local Cuisine</h2>
               <RecommendationGrid items={localRecommendations} />
             </div>
           )}
 
           {continentalRecommendations.length > 0 && (
             <div>
-              <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2"><Globe2 size={20} className="text-blue-600" /> Continental &amp; International</h2>
+              <h2 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2"><Globe2 size={20} className="text-red-600" /> Continental &amp; International</h2>
               <RecommendationGrid items={continentalRecommendations} />
             </div>
           )}
@@ -116,7 +116,7 @@ export default function RecommendationsClient() {
             <div className="text-center pt-6">
               <button
                 onClick={() => setShowMoreModal(true)}
-                className="bg-emerald-100 hover:bg-emerald-200 text-emerald-700 px-8 py-3 rounded-lg transition font-semibold inline-flex items-center gap-2"
+                className="bg-orange-100 hover:bg-emerald-200 text-orange-700 px-8 py-3 rounded-lg transition font-semibold inline-flex items-center gap-2"
               >
                 <PlusCircle size={18} /> More Recommendations
               </button>
@@ -126,14 +126,14 @@ export default function RecommendationsClient() {
           {showMoreModal && (
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
               <div className="bg-slate-50 rounded-2xl p-8 max-w-md w-full shadow-lg">
-                <h3 className="text-xl font-bold text-gray-900 mb-4">What type of recommendations?</h3>
+                <h3 className="text-xl font-bold text-slate-900 mb-4">What type of recommendations?</h3>
                 <div className="space-y-3">
                   <button
                     onClick={() => {
                       setMoreFilterType('local');
                       setShowMoreModal(false);
                     }}
-                    className="w-full bg-blue-50 hover:bg-blue-100 border border-blue-200 text-blue-900 px-4 py-3 rounded-lg transition font-semibold text-left inline-flex items-center gap-2"
+                    className="w-full bg-red-50 hover:bg-red-100 border border-red-200 text-red-900 px-4 py-3 rounded-lg transition font-semibold text-left inline-flex items-center gap-2"
                   >
                     <Globe size={16} /> More Local Recommendations
                   </button>
@@ -142,13 +142,13 @@ export default function RecommendationsClient() {
                       setMoreFilterType('continental');
                       setShowMoreModal(false);
                     }}
-                    className="w-full bg-purple-50 hover:bg-purple-100 border border-purple-200 text-purple-900 px-4 py-3 rounded-lg transition font-semibold text-left inline-flex items-center gap-2"
+                    className="w-full bg-orange-50 hover:bg-purple-100 border border-orange-200 text-orange-900 px-4 py-3 rounded-lg transition font-semibold text-left inline-flex items-center gap-2"
                   >
                     <Globe2 size={16} /> More Continental Recommendations
                   </button>
                   <button
                     onClick={() => setShowMoreModal(false)}
-                    className="w-full bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-3 rounded-lg transition font-semibold"
+                    className="w-full bg-gray-100 hover:bg-gray-200 text-slate-800 px-4 py-3 rounded-lg transition font-semibold"
                   >
                     Cancel
                   </button>
@@ -159,12 +159,12 @@ export default function RecommendationsClient() {
 
           {moreLocalRecommendations.length > 0 && moreFilterType === 'local' && (
             <div>
-              <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2"><Globe size={20} className="text-emerald-600" /> Additional Local Options</h2>
+              <h2 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2"><Globe size={20} className="text-orange-600" /> Additional Local Options</h2>
               <RecommendationGrid items={moreLocalRecommendations} />
               <div className="text-center pt-4">
                 <button
                   onClick={() => setMoreFilterType(null)}
-                  className="inline-flex items-center gap-1 text-gray-600 hover:text-gray-900 font-semibold"
+                  className="inline-flex items-center gap-1 text-slate-600 hover:text-slate-900 font-semibold"
                 >
                   <ArrowLeft size={16} /> Back to main recommendations
                 </button>

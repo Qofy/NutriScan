@@ -25,7 +25,7 @@ export default function AnalysisResults() {
 
         <div className="space-y-4">
           <div className="bg-slate-50 rounded-2xl p-6 border border-slate-200">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">
+            <h3 className="text-lg font-semibold text-slate-900 mb-4">
               Identified Items
             </h3>
             <div className="space-y-3">
@@ -34,8 +34,8 @@ export default function AnalysisResults() {
                   key={idx}
                   className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
                 >
-                  <span className="text-gray-900 font-medium">{item.name}</span>
-                  <span className="text-sm text-gray-600">
+                  <span className="text-slate-900 font-medium">{item.name}</span>
+                  <span className="text-sm text-slate-600">
                     {(item.confidence * 100).toFixed(1)}% confident
                   </span>
                 </div>
@@ -45,7 +45,7 @@ export default function AnalysisResults() {
 
           <div className={`rounded-2xl p-6 border-2 ${
             data.safety_level === 'safe'
-              ? 'bg-green-50 border-green-200'
+              ? 'bg-orange-50 border-orange-200'
               : data.safety_level === 'caution'
               ? 'bg-amber-50 border-amber-200'
               : 'bg-red-50 border-red-200'
@@ -60,7 +60,7 @@ export default function AnalysisResults() {
               </span>
               <h3 className={`text-lg font-semibold ${
                 data.safety_level === 'safe'
-                  ? 'text-green-900'
+                  ? 'text-orange-900'
                   : data.safety_level === 'caution'
                   ? 'text-amber-900'
                   : 'text-red-900'
@@ -70,7 +70,7 @@ export default function AnalysisResults() {
             </div>
             <p className={`text-sm ${
               data.safety_level === 'safe'
-                ? 'text-green-800'
+                ? 'text-orange-800'
                 : data.safety_level === 'caution'
                 ? 'text-amber-800'
                 : 'text-red-800'
@@ -82,16 +82,16 @@ export default function AnalysisResults() {
       </div>
 
       <div className="bg-slate-50 rounded-2xl p-6 border border-slate-200">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">
+        <h3 className="text-lg font-semibold text-slate-900 mb-4">
           Nutritional Information
         </h3>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {Object.entries(data.nutritional_info).map(([foodName, nutrition]: [string, any]) => (
             <div key={foodName} className="bg-gray-50 rounded-lg p-4">
-              <h4 className="font-medium text-gray-900 text-sm mb-2">
+              <h4 className="font-medium text-slate-900 text-sm mb-2">
                 {foodName}
               </h4>
-              <div className="space-y-1 text-xs text-gray-600">
+              <div className="space-y-1 text-xs text-slate-600">
                 {nutrition.calories && (
                   <p>Calories: <span className="font-semibold">{nutrition.calories}</span></p>
                 )}

@@ -54,13 +54,13 @@ export default function ScanDetailsModal({
   const getSafetyColor = (level: string) => {
     switch (level) {
       case 'safe':
-        return 'text-green-600 bg-green-50';
+        return 'text-orange-600 bg-orange-50';
       case 'caution':
         return 'text-yellow-600 bg-yellow-50';
       case 'danger':
         return 'text-red-600 bg-red-50';
       default:
-        return 'text-gray-600 bg-gray-50';
+        return 'text-slate-600 bg-gray-50';
     }
   };
 
@@ -103,7 +103,7 @@ export default function ScanDetailsModal({
         {/* Header */}
         <div className="sticky top-0 bg-slate-50 border-b border-slate-200 p-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <h2 className="text-xl font-semibold text-gray-900">Scan Details</h2>
+            <h2 className="text-xl font-semibold text-slate-900">Scan Details</h2>
           </div>
           <div className="flex items-center gap-2">
             {onNavigate && (
@@ -148,22 +148,22 @@ export default function ScanDetailsModal({
 
           {/* Recognized Items */}
           <div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-3">Recognized Items</h3>
+            <h3 className="text-lg font-semibold text-slate-900 mb-3">Recognized Items</h3>
             <div className="space-y-2">
               {analysis.recognized_items.map((item, idx) => (
                 <div
                   key={idx}
                   className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
                 >
-                  <span className="text-gray-800 font-medium">{item.name}</span>
+                  <span className="text-slate-800 font-medium">{item.name}</span>
                   <div className="flex items-center gap-2">
                     <div className="w-32 bg-gray-200 rounded-full h-2">
                       <div
-                        className="bg-emerald-500 h-2 rounded-full"
+                        className="bg-orange-500 h-2 rounded-full"
                         style={{ width: `${item.confidence * 100}%` }}
                       />
                     </div>
-                    <span className="text-sm text-gray-600 min-w-[50px]">
+                    <span className="text-sm text-slate-600 min-w-[50px]">
                       {(item.confidence * 100).toFixed(0)}%
                     </span>
                   </div>
@@ -174,7 +174,7 @@ export default function ScanDetailsModal({
 
           {/* Nutrition Summary */}
           <div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-3">Nutritional Information</h3>
+            <h3 className="text-lg font-semibold text-slate-900 mb-3">Nutritional Information</h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
               <div className="bg-gradient-to-br from-orange-50 to-orange-100 rounded-lg p-4">
                 <div className="text-2xl font-bold text-orange-600">{Math.round(totalCalories)}</div>
@@ -189,12 +189,12 @@ export default function ScanDetailsModal({
                 <div className="text-sm text-yellow-700 mt-1">Carbs</div>
               </div>
               <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4">
-                <div className="text-2xl font-bold text-blue-600">{totalFat.toFixed(1)}g</div>
-                <div className="text-sm text-blue-700 mt-1">Fat</div>
+                <div className="text-2xl font-bold text-red-600">{totalFat.toFixed(1)}g</div>
+                <div className="text-sm text-red-700 mt-1">Fat</div>
               </div>
               <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-4">
-                <div className="text-2xl font-bold text-green-600">{totalFiber.toFixed(1)}g</div>
-                <div className="text-sm text-green-700 mt-1">Fiber</div>
+                <div className="text-2xl font-bold text-orange-600">{totalFiber.toFixed(1)}g</div>
+                <div className="text-sm text-orange-700 mt-1">Fiber</div>
               </div>
               <div className={`rounded-lg p-4 ${getSafetyColor(analysis.safety_level)}`}>
                 <div className="text-2xl font-bold">{getSafetyIcon(analysis.safety_level)}</div>
@@ -204,13 +204,13 @@ export default function ScanDetailsModal({
           </div>
 
           {/* Details */}
-          <div className="text-sm text-gray-600 pt-4 border-t border-slate-200">
+          <div className="text-sm text-slate-600 pt-4 border-t border-slate-200">
             <p>
-              <span className="font-semibold text-gray-900">Scanned on:</span>{' '}
+              <span className="font-semibold text-slate-900">Scanned on:</span>{' '}
               {formatDate(analysis.uploaded_at)}
             </p>
             <p className="mt-2">
-              <span className="font-semibold text-gray-900">Confidence Score:</span>{' '}
+              <span className="font-semibold text-slate-900">Confidence Score:</span>{' '}
               {(analysis.confidence_score * 100).toFixed(1)}%
             </p>
           </div>
@@ -232,7 +232,7 @@ export default function ScanDetailsModal({
                 <button
                   onClick={() => setShowDeleteConfirm(false)}
                   disabled={isDeleting}
-                  className="flex-1 bg-gray-300 hover:bg-gray-400 disabled:opacity-50 text-gray-900 font-semibold py-2 rounded-lg transition"
+                  className="flex-1 bg-gray-300 hover:bg-gray-400 disabled:opacity-50 text-slate-900 font-semibold py-2 rounded-lg transition"
                 >
                   Cancel
                 </button>

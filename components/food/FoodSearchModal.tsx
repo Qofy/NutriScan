@@ -184,7 +184,7 @@ export default function FoodSearchModal({ isOpen, onClose, onSave }: Props) {
       <div className="bg-slate-50 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-lg">
         {/* Header */}
         <div className="sticky top-0 bg-slate-50 border-b border-slate-200 p-4 flex items-center justify-between">
-          <h2 className="text-xl font-semibold text-gray-900">Add Food Items</h2>
+          <h2 className="text-xl font-semibold text-slate-900">Add Food Items</h2>
           <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-lg">
             <X size={20} />
           </button>
@@ -194,11 +194,11 @@ export default function FoodSearchModal({ isOpen, onClose, onSave }: Props) {
         <div className="p-6 space-y-6">
           {/* Search */}
           <div>
-            <label className="block text-sm font-semibold text-gray-900 mb-2">
+            <label className="block text-sm font-semibold text-slate-900 mb-2">
               Search Food Database
             </label>
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
               <input
                 type="text"
                 placeholder="Search for food items..."
@@ -217,12 +217,12 @@ export default function FoodSearchModal({ isOpen, onClose, onSave }: Props) {
                     className="p-3 hover:bg-gray-50 border-b last:border-b-0 flex items-center justify-between cursor-pointer"
                   >
                     <div>
-                      <p className="font-medium text-gray-900">{food.name}</p>
-                      <p className="text-sm text-gray-600">{food.calories} cal/100g</p>
+                      <p className="font-medium text-slate-900">{food.name}</p>
+                      <p className="text-sm text-slate-600">{food.calories} cal/100g</p>
                     </div>
                     <button
                       onClick={() => addFood(food)}
-                      className="p-2 hover:bg-emerald-50 text-emerald-600 rounded-lg"
+                      className="p-2 hover:bg-orange-50 text-orange-600 rounded-lg"
                     >
                       <Plus size={18} />
                     </button>
@@ -232,11 +232,11 @@ export default function FoodSearchModal({ isOpen, onClose, onSave }: Props) {
             )}
 
             {loading && (
-              <p className="mt-2 text-sm text-gray-600">Searching...</p>
+              <p className="mt-2 text-sm text-slate-600">Searching...</p>
             )}
 
             {searchQuery && searchResults.length === 0 && !loading && (
-              <p className="mt-2 text-sm text-gray-600">No foods found</p>
+              <p className="mt-2 text-sm text-slate-600">No foods found</p>
             )}
           </div>
 
@@ -244,7 +244,7 @@ export default function FoodSearchModal({ isOpen, onClose, onSave }: Props) {
           {!showCustom ? (
             <button
               onClick={() => setShowCustom(true)}
-              className="w-full py-2 border-2 border-dashed border-gray-300 text-gray-700 font-semibold rounded-lg hover:border-gray-400 transition flex items-center justify-center gap-2"
+              className="w-full py-2 border-2 border-dashed border-gray-300 text-slate-700 font-semibold rounded-lg hover:border-gray-400 transition flex items-center justify-center gap-2"
             >
               <Plus size={18} />
               Add Custom Food Item
@@ -313,13 +313,13 @@ export default function FoodSearchModal({ isOpen, onClose, onSave }: Props) {
               <div className="flex gap-2">
                 <button
                   onClick={addCustomFood}
-                  className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2 rounded-lg transition"
+                  className="flex-1 bg-orange-600 hover:bg-emerald-700 text-white font-semibold py-2 rounded-lg transition"
                 >
                   Add
                 </button>
                 <button
                   onClick={() => setShowCustom(false)}
-                  className="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-900 font-semibold py-2 rounded-lg transition"
+                  className="flex-1 bg-gray-300 hover:bg-gray-400 text-slate-900 font-semibold py-2 rounded-lg transition"
                 >
                   Cancel
                 </button>
@@ -330,7 +330,7 @@ export default function FoodSearchModal({ isOpen, onClose, onSave }: Props) {
           {/* Selected Foods */}
           {selectedFoods.length > 0 && (
             <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-3">Selected Foods</h3>
+              <h3 className="text-lg font-semibold text-slate-900 mb-3">Selected Foods</h3>
               <div className="space-y-4 mb-4">
                 {selectedFoods.map(({ food, portionSize, portionUnit }) => {
                   const adjusted = calculateAdjustedNutrition(
@@ -346,8 +346,8 @@ export default function FoodSearchModal({ isOpen, onClose, onSave }: Props) {
                     >
                       <div className="flex items-start justify-between mb-3">
                         <div>
-                          <p className="font-semibold text-gray-900">{food.name}</p>
-                          <p className="text-sm text-gray-600">
+                          <p className="font-semibold text-slate-900">{food.name}</p>
+                          <p className="text-sm text-slate-600">
                             {adjusted.calories} cal
                           </p>
                         </div>
@@ -362,7 +362,7 @@ export default function FoodSearchModal({ isOpen, onClose, onSave }: Props) {
                       {/* Portion Control */}
                       <div className="flex gap-3 mb-3">
                         <div className="flex-1">
-                          <label className="text-xs text-gray-600">Portion</label>
+                          <label className="text-xs text-slate-600">Portion</label>
                           <input
                             type="number"
                             value={portionSize}
@@ -377,7 +377,7 @@ export default function FoodSearchModal({ isOpen, onClose, onSave }: Props) {
                           />
                         </div>
                         <div className="flex-1">
-                          <label className="text-xs text-gray-600">Unit</label>
+                          <label className="text-xs text-slate-600">Unit</label>
                           <select
                             value={portionUnit}
                             onChange={(e) =>
@@ -410,11 +410,11 @@ export default function FoodSearchModal({ isOpen, onClose, onSave }: Props) {
                           </div>
                           <div className="text-yellow-600">Carbs</div>
                         </div>
-                        <div className="bg-blue-50 rounded p-2">
-                          <div className="font-semibold text-blue-700">
+                        <div className="bg-red-50 rounded p-2">
+                          <div className="font-semibold text-red-700">
                             {adjusted.fat}g
                           </div>
-                          <div className="text-blue-600">Fat</div>
+                          <div className="text-red-600">Fat</div>
                         </div>
                       </div>
                     </div>
@@ -424,38 +424,38 @@ export default function FoodSearchModal({ isOpen, onClose, onSave }: Props) {
 
               {/* Total Nutrition */}
               <div className="bg-gradient-to-r from-emerald-50 to-teal-50 rounded-lg p-4 mb-4">
-                <p className="text-sm text-gray-600 mb-2">Total Nutrition</p>
+                <p className="text-sm text-slate-600 mb-2">Total Nutrition</p>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <div className="text-2xl font-bold text-emerald-600">
+                    <div className="text-2xl font-bold text-orange-600">
                       {totalNutrition.calories}
                     </div>
-                    <div className="text-sm text-gray-600">Calories</div>
+                    <div className="text-sm text-slate-600">Calories</div>
                   </div>
                   <div className="grid grid-cols-2 gap-2">
                     <div>
-                      <div className="text-lg font-bold text-gray-900">
+                      <div className="text-lg font-bold text-slate-900">
                         {totalNutrition.protein.toFixed(1)}g
                       </div>
-                      <div className="text-xs text-gray-600">Protein</div>
+                      <div className="text-xs text-slate-600">Protein</div>
                     </div>
                     <div>
-                      <div className="text-lg font-bold text-gray-900">
+                      <div className="text-lg font-bold text-slate-900">
                         {totalNutrition.carbs.toFixed(1)}g
                       </div>
-                      <div className="text-xs text-gray-600">Carbs</div>
+                      <div className="text-xs text-slate-600">Carbs</div>
                     </div>
                     <div>
-                      <div className="text-lg font-bold text-gray-900">
+                      <div className="text-lg font-bold text-slate-900">
                         {totalNutrition.fat.toFixed(1)}g
                       </div>
-                      <div className="text-xs text-gray-600">Fat</div>
+                      <div className="text-xs text-slate-600">Fat</div>
                     </div>
                     <div>
-                      <div className="text-lg font-bold text-gray-900">
+                      <div className="text-lg font-bold text-slate-900">
                         {totalNutrition.fiber.toFixed(1)}g
                       </div>
-                      <div className="text-xs text-gray-600">Fiber</div>
+                      <div className="text-xs text-slate-600">Fiber</div>
                     </div>
                   </div>
                 </div>
@@ -468,14 +468,14 @@ export default function FoodSearchModal({ isOpen, onClose, onSave }: Props) {
         <div className="sticky bottom-0 bg-slate-50 border-t border-slate-200 p-4 flex gap-3">
           <button
             onClick={onClose}
-            className="flex-1 px-4 py-3 bg-gray-200 hover:bg-gray-300 text-gray-900 font-semibold rounded-lg transition"
+            className="flex-1 px-4 py-3 bg-gray-200 hover:bg-gray-300 text-slate-900 font-semibold rounded-lg transition"
           >
             Cancel
           </button>
           <button
             onClick={handleSave}
             disabled={selectedFoods.length === 0}
-            className="flex-1 px-4 py-3 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white font-semibold rounded-lg transition"
+            className="flex-1 px-4 py-3 bg-orange-600 hover:bg-emerald-700 disabled:opacity-50 text-white font-semibold rounded-lg transition"
           >
             Save {selectedFoods.length > 0 && `(${selectedFoods.length})`}
           </button>

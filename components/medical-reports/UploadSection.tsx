@@ -30,19 +30,19 @@ export default function UploadSection({
         onDrop={onDrop}
         className={`rounded-2xl border-2 border-dashed p-12 text-center transition-colors ${
           isDragging
-            ? 'border-teal-500 bg-teal-50'
+            ? 'border-teal-500 bg-orange-50'
             : 'border-gray-300 bg-gray-50 hover:bg-gray-100'
         }`}
       >
         <ClipboardList className="mx-auto mb-4 text-teal-500" size={48} />
-        <p className="font-semibold text-gray-900 mb-2">
+        <p className="font-semibold text-slate-900 mb-2">
           {uploading ? 'Uploading...' : 'Upload medical reports'}
         </p>
-        <p className="text-sm text-gray-600 mb-4">Drag & drop PDF or image files here</p>
+        <p className="text-sm text-slate-600 mb-4">Drag & drop PDF or image files here</p>
         <button
           onClick={onChooseFiles}
           disabled={uploading}
-          className="inline-flex items-center gap-2 px-6 py-2 bg-teal-500 hover:bg-teal-600 disabled:bg-gray-400 text-white rounded-lg font-medium transition-colors"
+          className="inline-flex items-center gap-2 px-6 py-2 bg-orange-500 hover:bg-orange-600 disabled:bg-gray-400 text-white rounded-lg font-medium transition-colors"
         >
           {uploading
             ? <><Loader2 size={16} className="animate-spin" /> Uploading...</>
