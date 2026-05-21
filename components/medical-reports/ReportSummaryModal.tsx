@@ -12,8 +12,8 @@ export default function ReportSummaryModal({ report, onClose }: ReportSummaryMod
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-end sm:items-center justify-center p-4">
       <div className="bg-slate-50 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
-        <div className="sticky top-0 bg-slate-50 border-b border-slate-200 p-6 flex items-center justify-between">
-          <h2 className="text-2xl font-bold text-slate-900">Extracted Summary</h2>
+        <div className="sticky top-0 bg-slate-50 border-b border-slate-200 p-4 sm:p-6 flex items-center justify-between">
+          <h2 className="text-xl sm:text-2xl font-bold text-slate-900">Extracted Summary</h2>
           <button
             onClick={onClose}
             className="text-slate-400 hover:text-slate-600 transition-colors"
@@ -22,7 +22,7 @@ export default function ReportSummaryModal({ report, onClose }: ReportSummaryMod
           </button>
         </div>
 
-        <div className="p-6 space-y-6">
+        <div className="p-4 sm:p-6 space-y-6">
           {/* Extraction Success Info */}
           {report.extracted_data && (
             <div className="bg-orange-50 border border-orange-200 rounded-lg p-3">

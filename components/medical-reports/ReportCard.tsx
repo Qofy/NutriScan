@@ -24,15 +24,15 @@ const getStatusColor = (status: string) => {
 
 export default function ReportCard({ report, onView, onDelete }: ReportCardProps) {
   return (
-    <div className="rounded-2xl bg-slate-50 border border-slate-200 p-6 shadow-sm hover:shadow-md transition-shadow">
-      <div className="flex items-start justify-between mb-4">
-        <div className="flex items-start gap-4 flex-1">
-          <div className="text-3xl">📄</div>
-          <div className="flex-1">
-            <h3 className="font-semibold text-slate-900">
+    <div className="rounded-2xl bg-slate-50 border border-slate-200 p-4 sm:p-6 shadow-sm hover:shadow-md transition-shadow">
+      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-4">
+        <div className="flex items-start gap-3 sm:gap-4 flex-1 min-w-0">
+          <div className="text-2xl sm:text-3xl flex-shrink-0">📄</div>
+          <div className="flex-1 min-w-0">
+            <h3 className="font-semibold text-slate-900 break-words text-sm sm:text-base">
               {report.document?.split('/').pop() || 'Medical Report'}
             </h3>
-            <p className="text-sm text-slate-600">
+            <p className="text-xs sm:text-sm text-slate-600 mt-1">
               Uploaded on{' '}
               {new Date(report.uploaded_at).toLocaleDateString('en-US', {
                 year: 'numeric',
@@ -42,11 +42,11 @@ export default function ReportCard({ report, onView, onDelete }: ReportCardProps
             </p>
           </div>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-3 flex-shrink-0">
           {report.status === 'completed' && (
             <button
               onClick={() => onView(report)}
-              className="text-slate-400 hover:text-red-600 transition-colors p-2"
+              className="text-slate-400 hover:text-red-600 transition-colors p-2.5 hover:bg-red-50 rounded-lg"
               title="View summary"
             >
               <Eye size={20} />
@@ -54,7 +54,7 @@ export default function ReportCard({ report, onView, onDelete }: ReportCardProps
           )}
           <button
             onClick={() => onDelete(report.id)}
-            className="text-slate-400 hover:text-red-600 transition-colors p-2"
+            className="text-slate-400 hover:text-red-600 transition-colors p-2.5 hover:bg-red-50 rounded-lg"
             title="Delete report"
           >
             <Trash2 size={20} />

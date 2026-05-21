@@ -23,26 +23,26 @@ export default function UploadSection({
   onFileInputChange,
 }: UploadSectionProps) {
   return (
-    <div className="bg-slate-50 rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm">
+    <div className="bg-slate-50 rounded-2xl p-4 sm:p-8 border border-slate-200 shadow-sm">
       <div
         onDragOver={onDragOver}
         onDragLeave={onDragLeave}
         onDrop={onDrop}
-        className={`rounded-2xl border-2 border-dashed p-12 text-center transition-colors ${
+        className={`rounded-2xl border-2 border-dashed p-6 sm:p-12 text-center transition-colors ${
           isDragging
             ? 'border-teal-500 bg-orange-50'
             : 'border-gray-300 bg-gray-50 hover:bg-gray-100'
         }`}
       >
-        <ClipboardList className="mx-auto mb-4 text-teal-500" size={48} />
-        <p className="font-semibold text-slate-900 mb-2">
+        <ClipboardList className="mx-auto mb-4 text-teal-500" size={36} />
+        <p className="font-semibold text-slate-900 mb-2 text-base sm:text-lg">
           {uploading ? 'Uploading...' : 'Upload medical reports'}
         </p>
         <p className="text-sm text-slate-600 mb-4">Drag & drop PDF or image files here</p>
         <button
           onClick={onChooseFiles}
           disabled={uploading}
-          className="inline-flex items-center gap-2 px-6 py-2 bg-orange-500 hover:bg-orange-600 disabled:bg-gray-400 text-white rounded-lg font-medium transition-colors"
+          className="inline-flex items-center gap-2 px-4 sm:px-6 py-2 bg-orange-500 hover:bg-orange-600 disabled:bg-gray-400 text-white rounded-lg font-medium transition-colors text-sm sm:text-base"
         >
           {uploading
             ? <><Loader2 size={16} className="animate-spin" /> Uploading...</>
