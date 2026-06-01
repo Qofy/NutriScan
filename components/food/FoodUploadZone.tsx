@@ -64,7 +64,6 @@ export default function FoodUploadZone() {
     console.log('✅ [FOOD] Health profile extracted:', {
       conditions: healthProfile?.conditions?.length || 0,
       allergens: healthProfile?.allergens?.length || 0,
-      restrictions: healthProfile?.restrictions?.length || 0,
     });
 
     console.log('⏳ [FOOD] Starting food analysis...');
