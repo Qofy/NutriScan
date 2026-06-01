@@ -30,16 +30,35 @@ export default function RecommendationsClient() {
   }, []);
 
   useEffect(() => {
-    if (!isAuthenticated) return;
+    if (!isAuthenticated) {
+      console.log('ℹ️  [RECOMMENDATIONS] Not authenticated, skipping data fetch');
+      return;
+    }
+    console.log('📊 [RECOMMENDATIONS] Fetching user data (food analyses & medical reports)...');
     dispatch(fetchRecentAnalyses());
     dispatch(fetchMedicalReports());
   }, [isAuthenticated, dispatch]);
 
   useEffect(() => {
-    if (!isAuthenticated) return;
+    if (!isAuthenticated) {
+      console.log('ℹ️  [RECOMMENDATIONS] Not authenticated, skipping recommendations');
+      return;
+    }
     const hasData = foodAnalyses.length > 0 || medicalReports.length > 0;
+    console.log('✅ [RECOMMENDATIONS] Data status:', {
+      foodAnalyses: foodAnalyses.length,
+      medicalReports: medicalReports.length,
+      hasData: hasData,
+      loading: loading,
+      generated: generated,
+      itemsCount: items.length,
+    });
+
     if (hasData && !generated && items.length === 0 && !loading) {
+      console.log('⏳ [RECOMMENDATIONS] Triggering recommendation generation...');
+      const startTime = performance.now();
       dispatch(generateRecommendations());
+      console.log(`🔄 [RECOMMENDATIONS] Generation dispatched (${(performance.now() - startTime).toFixed(2)}ms)`);
     }
   }, [isAuthenticated, generated, items.length, loading, foodAnalyses, medicalReports, dispatch]);
 
@@ -62,6 +81,24 @@ export default function RecommendationsClient() {
     : items.filter(item => item.condition.toLowerCase() === selectedCondition.toLowerCase());
 
   const conditions = ['all', ...new Set(items.map(item => item.condition))];
+
+  // Log recommendation results
+  if (filteredItems.length > 0) {
+    console.log(`✅ [RECOMMENDATIONS] Generated ${filteredItems.length} recommendations`);
+    console.log('📋 [RECOMMENDATIONS] Recommendation breakdown:', {
+      total: filteredItems.length,
+      condition: selectedCondition,
+      local: filteredItems.slice(0, 3).length,
+      continental: filteredItems.slice(3, 6).length,
+      additional: filteredItems.slice(6).length,
+    });
+    console.table(filteredItems.map(r => ({
+      Food: r.food_item,
+      Condition: r.condition,
+      Safety: r.severity,
+      Benefit: r.benefit.substring(0, 40) + '...',
+    })));
+  }
 
   // Split recommendations: first 3 are local, next 3 are continental
   const localRecommendations = filteredItems.slice(0, 3);

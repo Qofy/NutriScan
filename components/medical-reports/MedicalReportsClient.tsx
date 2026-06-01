@@ -34,16 +34,29 @@ export default function MedicalReportsClient() {
   };
 
   const handleFileUpload = async (file: File) => {
+    console.log('📄 [MEDICAL] Medical report upload started');
+    console.log('📋 [MEDICAL] File details:', {
+      name: file.name,
+      size: `${(file.size / 1024 / 1024).toFixed(2)}MB`,
+      type: file.type,
+    });
+
     const validationError = validateFile(file);
     if (validationError) {
+      console.error('❌ [MEDICAL] Validation failed:', validationError);
       alert(validationError);
       return;
     }
 
     try {
-      await dispatch(uploadMedicalReport(file) as any);
+      console.log('⏳ [MEDICAL] Uploading to backend...');
+      const startTime = performance.now();
+      const result = await dispatch(uploadMedicalReport(file) as any);
+      const endTime = performance.now();
+      console.log(`✅ [MEDICAL] Upload successful! (${(endTime - startTime).toFixed(2)}ms)`);
+      console.log('📊 [MEDICAL] Result:', result);
     } catch (err) {
-      console.error('Upload failed:', err);
+      console.error('❌ [MEDICAL] Upload failed:', err);
     }
   };
 

@@ -44,14 +44,33 @@ export default function FoodUploadZone() {
   };
 
   const handleFile = async (file: File) => {
+    console.log('🍽️  [FOOD] Food image upload started');
+    console.log('📷 [FOOD] File details:', {
+      name: file.name,
+      size: `${(file.size / 1024).toFixed(2)}KB`,
+      type: file.type,
+      width: file.type.includes('image') ? 'detecting...' : 'N/A',
+    });
+
     const reader = new FileReader();
     reader.onload = () => {
+      console.log('✅ [FOOD] Image loaded into preview');
       dispatch(setImagePreview(reader.result as string));
     };
     reader.readAsDataURL(file);
 
+    console.log('📊 [FOOD] Extracting health profile from medical reports...');
     const healthProfile = extractHealthProfileFromReports(reports);
+    console.log('✅ [FOOD] Health profile extracted:', {
+      conditions: healthProfile?.conditions?.length || 0,
+      allergens: healthProfile?.allergens?.length || 0,
+      restrictions: healthProfile?.restrictions?.length || 0,
+    });
+
+    console.log('⏳ [FOOD] Starting food analysis...');
+    const startTime = performance.now();
     dispatch(analyzeFood(file, healthProfile || undefined));
+    console.log(`🔄 [FOOD] Food analysis dispatched (${(performance.now() - startTime).toFixed(2)}ms)`);
     setShowCamera(false);
   };
 

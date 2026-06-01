@@ -21,10 +21,18 @@ export default function LoginPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log('🔐 [LOGIN] Starting login process...');
+    console.log('📝 [LOGIN] Username:', username);
     try {
+      console.log('⏳ [LOGIN] Sending login request to backend...');
+      const startTime = performance.now();
       await dispatch(login(username, password));
+      const endTime = performance.now();
+      console.log(`✅ [LOGIN] Login successful! (${(endTime - startTime).toFixed(2)}ms)`);
+      console.log('🔄 [LOGIN] Redirecting to home page...');
       router.push('/');
-    } catch {
+    } catch (error) {
+      console.error('❌ [LOGIN] Login failed:', error);
       // Error is handled by Redux state
     }
   };
