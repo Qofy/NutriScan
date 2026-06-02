@@ -235,20 +235,28 @@ export default function SmartCameraView({ onCapture, onClose }: Props) {
           const formData = new FormData();
           formData.append('image', blob, 'detect.jpg');
 
-          const response = await fetch('http://localhost:8000/api/food/analysis/detect/', {
-            method: 'POST',
-            body: formData,
-            credentials: 'include',
-          });
+          // Use environment variable or fallback to deployed backend
+          const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'https://web-production-cc1b9.up.railway.app';
+          const detectUrl = `${backendUrl}/api/food/analysis/detect/`;
 
-          if (!response.ok) return;
+          try {
+            const response = await fetch(detectUrl, {
+              method: 'POST',
+              body: formData,
+              credentials: 'include',
+            });
 
-          const data = await response.json();
-          setDetectedItems(data.items || []);
+            if (!response.ok) return;
 
-          // Auto-capture if high confidence
-          if (isAutoCapturing && data.detected && data.confidence_score > 0.65 && countdown === null) {
-            setCountdown(3);
+            const data = await response.json();
+            setDetectedItems(data.items || []);
+
+            // Auto-capture if high confidence
+            if (isAutoCapturing && data.detected && data.confidence_score > 0.65 && countdown === null) {
+              setCountdown(3);
+            }
+          } catch (error) {
+            console.warn('Detection API unavailable, continuing without live preview:', error);
           }
         }, 'image/jpeg', 0.6);
       } catch (error) {
@@ -286,19 +294,26 @@ export default function SmartCameraView({ onCapture, onClose }: Props) {
         const formData = new FormData();
         formData.append('image', blob, 'detect.jpg');
 
-        const response = await fetch('http://localhost:8000/api/food/analysis/detect/', {
-          method: 'POST',
-          body: formData,
-          credentials: 'include',
-        });
+        const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'https://web-production-cc1b9.up.railway.app';
+        const detectUrl = `${backendUrl}/api/food/analysis/detect/`;
 
-        if (!response.ok) return;
+        try {
+          const response = await fetch(detectUrl, {
+            method: 'POST',
+            body: formData,
+            credentials: 'include',
+          });
 
-        const data = await response.json();
-        setDetectedItems(data.items || []);
+          if (!response.ok) return;
+
+          const data = await response.json();
+          setDetectedItems(data.items || []);
+        } catch (error) {
+          console.warn('Detection API unavailable:', error);
+        }
       }, 'image/jpeg', 0.6);
     } catch (error) {
-      console.error('Detection error:', error);
+      console.error('Detection setup error:', error);
     }
   };
 
