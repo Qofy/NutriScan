@@ -240,10 +240,13 @@ export default function SmartCameraView({ onCapture, onClose }: Props) {
           const detectUrl = `${backendUrl}/api/food/analysis/detect/`;
 
           try {
+            const token = localStorage.getItem('auth_token');
             const response = await fetch(detectUrl, {
               method: 'POST',
               body: formData,
-              credentials: 'include',
+              headers: {
+                ...(token && { 'Authorization': `Token ${token}` }),
+              },
             });
 
             if (!response.ok) return;
@@ -298,10 +301,13 @@ export default function SmartCameraView({ onCapture, onClose }: Props) {
         const detectUrl = `${backendUrl}/api/food/analysis/detect/`;
 
         try {
+          const token = localStorage.getItem('auth_token');
           const response = await fetch(detectUrl, {
             method: 'POST',
             body: formData,
-            credentials: 'include',
+            headers: {
+              ...(token && { 'Authorization': `Token ${token}` }),
+            },
           });
 
           if (!response.ok) return;

@@ -293,11 +293,12 @@ export const deleteAnalysis =
   (analysisId: number) =>
   async (dispatch: AppDispatch) => {
     try {
+      const token = localStorage.getItem('auth_token');
       const response = await fetch(
         `${API_BASE_URL}/api/food/analysis/${analysisId}/`,
         {
           method: 'DELETE',
-          credentials: 'include',
+          headers: getAuthHeaders(token),
         }
       );
 
@@ -366,11 +367,12 @@ export const searchFoodItems =
       dispatch(setFoodSearchLoading(true));
       dispatch(setFoodSearchError(null));
 
+      const token = localStorage.getItem('auth_token');
       const response = await fetch(
         `${API_BASE_URL}/api/food/items/search/?q=${encodeURIComponent(query)}`,
         {
           method: 'GET',
-          credentials: 'include',
+          headers: getAuthHeaders(token),
         }
       );
 

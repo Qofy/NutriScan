@@ -36,8 +36,11 @@ export default function RecentScansView() {
 
   const fetchTrainingStatus = async () => {
     try {
+      const token = localStorage.getItem('auth_token');
       const response = await fetch(`${API_BASE_URL}/api/food/analysis/training_status/`, {
-        credentials: 'include',
+        headers: {
+          ...(token && { 'Authorization': `Token ${token}` }),
+        },
       });
       if (response.ok) {
         const data = await response.json();
