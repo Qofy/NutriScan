@@ -1,4 +1,4 @@
-import { API_BASE_URL } from '@/lib/api';
+import { API_BASE_URL, getAuthHeaders } from '@/lib/api';
 import { createSlice } from '@reduxjs/toolkit';
 
 export interface MedicalReport {
@@ -99,9 +99,16 @@ export function uploadMedicalReport(file: File) {
     formData.append('document', file);
 
     try {
+      const token = localStorage.getItem('auth_token');
+      const headers: Record<string, string> = {};
+      if (token) {
+        headers['Authorization'] = `Token ${token}`;
+      }
+
       const response = await fetch(`${API_BASE_URL}/api/medical/reports/upload/`, {
         method: 'POST',
         body: formData,
+        headers,
       });
 
       if (!response.ok) {
@@ -128,7 +135,10 @@ export function fetchMedicalReports(limit = 100) {
     dispatch(setError(null));
 
     try {
-      const response = await fetch(`${API_BASE_URL}/api/medical/reports/recent/?limit=${limit}`);
+      const token = localStorage.getItem('auth_token');
+      const response = await fetch(`${API_BASE_URL}/api/medical/reports/recent/?limit=${limit}`, {
+        headers: getAuthHeaders(token),
+      });
       if (!response.ok) throw new Error('Failed to fetch reports');
 
       const data = await response.json();
@@ -148,8 +158,10 @@ export function fetchMedicalReports(limit = 100) {
 export function deleteMedicalReport(reportId: number) {
   return async (dispatch: any) => {
     try {
+      const token = localStorage.getItem('auth_token');
       const response = await fetch(`${API_BASE_URL}/api/medical/reports/${reportId}/`, {
         method: 'DELETE',
+        headers: getAuthHeaders(token),
       });
 
       if (!response.ok) throw new Error('Failed to delete report');

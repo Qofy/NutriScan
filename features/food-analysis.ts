@@ -1,4 +1,4 @@
-import { API_BASE_URL } from '@/lib/api';
+import { API_BASE_URL, getAuthHeaders } from '@/lib/api';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 // Types
@@ -261,10 +261,16 @@ export const analyzeFood =
         formData.append('health_profile', JSON.stringify(healthProfile));
       }
 
+      const token = localStorage.getItem('auth_token');
+      const headers: Record<string, string> = {};
+      if (token) {
+        headers['Authorization'] = `Token ${token}`;
+      }
+
       const response = await fetch(`${API_BASE_URL}/api/food/analysis/analyze/`, {
         method: 'POST',
         body: formData,
-        credentials: 'include',
+        headers,
       });
 
       if (!response.ok) {
@@ -314,11 +320,12 @@ export const fetchRecentAnalyses =
       dispatch(setRecentAnalysesLoading(true));
       dispatch(setRecentAnalysesError(null));
 
+      const token = localStorage.getItem('auth_token');
       const response = await fetch(
         `${API_BASE_URL}/api/food/analysis/recent/?limit=${limit}`,
         {
           method: 'GET',
-          credentials: 'include',
+          headers: getAuthHeaders(token),
         }
       );
 
@@ -404,10 +411,16 @@ export const manualAnalyzeFood =
         formData.append('health_profile', JSON.stringify(healthProfile));
       }
 
+      const token = localStorage.getItem('auth_token');
+      const headers: Record<string, string> = {};
+      if (token) {
+        headers['Authorization'] = `Token ${token}`;
+      }
+
       const response = await fetch(`${API_BASE_URL}/api/food/analysis/manual-analyze/`, {
         method: 'POST',
         body: formData,
-        credentials: 'include',
+        headers,
       });
 
       if (!response.ok) {
