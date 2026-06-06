@@ -209,9 +209,17 @@ export const restoreAuth = () => async (dispatch: AppDispatch) => {
       },
     });
 
-    if (!response.ok) {
+    // Only clear auth on 401 Unauthorized (invalid token)
+    if (response.status === 401) {
       localStorage.removeItem('auth_token');
       dispatch(clearAuth());
+      return;
+    }
+
+    // For other errors, trust the localStorage token and continue
+    if (!response.ok) {
+      console.warn(`Auth validation failed: ${response.status}. Keeping stored token.`);
+      // Set token and user from localStorage (they were already loaded in initialState)
       return;
     }
 
@@ -221,8 +229,8 @@ export const restoreAuth = () => async (dispatch: AppDispatch) => {
     dispatch(fetchRecentAnalyses(100) as any);
     dispatch(fetchMedicalReports() as any);
   } catch (error) {
-    localStorage.removeItem('auth_token');
-    dispatch(clearAuth());
+    console.warn('Failed to validate auth, keeping stored token:', error);
+    // Keep auth if token exists in storage - network errors shouldn't log user out
   } finally {
     dispatch(setLoading(false));
   }

@@ -10,8 +10,9 @@ function AuthRestorer({ children }: { children: React.ReactNode }) {
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
+    // Only restore auth on first mount, not on every dispatch change
     dispatch(restoreAuth());
-  }, [dispatch]);
+  }, []);
 
   return <>{children}</>;
 }
