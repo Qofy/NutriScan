@@ -1,6 +1,6 @@
 'use client';
 
-import { X, CheckCircle2, Brain, ClipboardList, Hospital, TriangleAlert, UtensilsCrossed, AlertCircle } from 'lucide-react';
+import { X, CheckCircle2, Brain, ClipboardList, Hospital, TriangleAlert, UtensilsCrossed, AlertCircle, FileText, AlertTriangle } from 'lucide-react';
 import { MedicalReport } from '@/features/medical-reports';
 
 interface ReportSummaryModalProps {
@@ -50,11 +50,58 @@ export default function ReportSummaryModal({ report, onClose }: ReportSummaryMod
             </p>
           </div>
 
-          {/* AI-Generated Summary */}
-          {report.extracted_data?.extracted_summary && (
-            <div className="bg-linear-to-r from-purple-50 to-purple-100 border border-orange-200 rounded-lg p-4">
-              <h3 className="font-semibold text-orange-900 mb-2 flex items-center gap-2"><Brain size={16} /> AI Summary</h3>
-              <p className="text-orange-800 text-sm leading-relaxed">{report.extracted_data.extracted_summary}</p>
+          {/* Comprehensive Clinical Summary */}
+          {report.extracted_data?.clinical_summary && (
+            <div className="space-y-4">
+              {/* Report Assessment */}
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <h3 className="font-semibold text-blue-900 mb-3 flex items-center gap-2">
+                  <FileText size={16} /> Report Assessment
+                </h3>
+                <div className="space-y-2 text-sm text-blue-800">
+                  {report.extracted_data.report_type && (
+                    <p><span className="font-medium">Type:</span> {report.extracted_data.report_type}</p>
+                  )}
+                  {report.extracted_data.completeness !== undefined && (
+                    <p><span className="font-medium">Completeness:</span> {report.extracted_data.completeness}%</p>
+                  )}
+                  {report.extracted_data.missing_sections && report.extracted_data.missing_sections.length > 0 && (
+                    <p><span className="font-medium">Missing Data:</span> {report.extracted_data.missing_sections.join(', ')}</p>
+                  )}
+                </div>
+              </div>
+
+              {/* Clinical Interpretation */}
+              <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
+                <h3 className="font-semibold text-purple-900 mb-3 flex items-center gap-2">
+                  <Brain size={16} /> Clinical Interpretation
+                </h3>
+                <div className="text-sm text-purple-800 leading-relaxed whitespace-pre-wrap">
+                  {report.extracted_data.clinical_summary.includes('CLINICAL INTERPRETATION')
+                    ? report.extracted_data.clinical_summary
+                        .split('CLINICAL INTERPRETATION')[1]
+                        ?.split('===')[0]
+                        ?.trim()
+                    : report.extracted_data.clinical_summary.split('REPORT LIMITATIONS')[0]?.trim()}
+                </div>
+              </div>
+
+              {/* Report Limitations & Warnings */}
+              {report.extracted_data.missing_sections && report.extracted_data.missing_sections.length > 0 && (
+                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                  <h3 className="font-semibold text-yellow-900 mb-3 flex items-center gap-2">
+                    <AlertTriangle size={16} /> Report Limitations
+                  </h3>
+                  <div className="text-sm text-yellow-800 leading-relaxed whitespace-pre-wrap">
+                    {report.extracted_data.clinical_summary.includes('REPORT LIMITATIONS')
+                      ? report.extracted_data.clinical_summary
+                          .split('REPORT LIMITATIONS')[1]
+                          ?.trim()
+                      : `This report is missing: ${report.extracted_data.missing_sections.join(', ')}.
+                      Recommendations may be incomplete without this information.`}
+                  </div>
+                </div>
+              )}
             </div>
           )}
 
