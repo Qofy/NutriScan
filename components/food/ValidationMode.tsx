@@ -5,6 +5,8 @@ import { Camera, Download, Copy, Trash2, Play, RotateCcw } from 'lucide-react';
 import SmartCameraView from './SmartCameraView';
 import { getAuthHeaders } from '@/utils/auth';
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+
 interface ValidationResult {
   angle: string;
   timestamp: string;
@@ -92,7 +94,7 @@ export default function ValidationMode() {
         const formData = new FormData();
         formData.append('image', file);
 
-        const response = await fetch('/api/food-analyses/', {
+        const response = await fetch(`${API_BASE_URL}/api/food/analysis/analyze/`, {
           method: 'POST',
           headers: getAuthHeaders(localStorage.getItem('auth_token')),
           body: formData,
