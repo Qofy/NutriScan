@@ -69,17 +69,38 @@ export default function FoodUploadZone() {
 
     console.log('⏳ [FOOD] Starting food analysis...');
     const startTime = performance.now();
-    dispatch(analyzeFood(file, healthProfile || undefined));
-    const dispatchTime = performance.now() - startTime;
-    console.log(`🔄 [FOOD] Food analysis dispatched (${dispatchTime.toFixed(2)}ms)`);
 
-    // Log thesis metrics for RQ1: Food Recognition
-    console.log('\n📚 [THESIS VERIFICATION - RQ1] Food Recognition Accuracy');
-    console.log('RQ1 Claim: 90.4% detection accuracy, 520ms latency');
-    console.log('Expected to see metrics logged when analysis completes');
-    logMetric('Average Latency (ms)', 520, 520);
-    logMetric('Overall Accuracy (%)', 90.4, 90.4);
-    logThesisMetrics('rq1');
+    try {
+      // Await real API response with actual metrics
+      const result = await dispatch(analyzeFood(file, healthProfile || undefined));
+      const actualLatency = performance.now() - startTime;
+
+      console.log(`✅ [FOOD] Analysis complete (${actualLatency.toFixed(0)}ms)`);
+
+      // Extract real metrics from actual API response
+      if (result) {
+        const detectedItems = result.recognized_items || [];
+        const actualConfidence = result.confidence_score || 0;
+
+        console.log(`📊 [FOOD] Real detection results:`);
+        console.log(`  - Items detected: ${detectedItems.length}`);
+        detectedItems.forEach((item: any, idx: number) => {
+          console.log(`    [${idx + 1}] ${item.name} (confidence: ${(item.confidence * 100).toFixed(1)}%)`);
+        });
+
+        // Log REAL thesis metrics for RQ1: Food Recognition
+        console.log('\n📚 [THESIS VERIFICATION - RQ1] Food Recognition Accuracy');
+        console.log(`RQ1 Test: ${file.name}`);
+        console.log(`Expected: 90.4% detection accuracy, 520ms latency`);
+        console.log(`ACTUAL RESULTS:`);
+        logMetric('Actual Latency (ms)', actualLatency, 520);
+        logMetric('Actual Confidence Score (%)', actualConfidence * 100, 90.4);
+        logMetric('Items Detected', detectedItems.length, 1);
+        logThesisMetrics('rq1');
+      }
+    } catch (error) {
+      console.error('❌ [FOOD] Analysis failed:', error);
+    }
 
     setShowCamera(false);
   };
