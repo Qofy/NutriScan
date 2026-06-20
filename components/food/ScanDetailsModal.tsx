@@ -77,23 +77,25 @@ export default function ScanDetailsModal({
     }
   };
 
-  const totalCalories = Object.values(analysis.nutritional_info).reduce((sum, item) => {
+  const nutritionalInfo = analysis.nutritional_info || {};
+
+  const totalCalories = Object.values(nutritionalInfo).reduce((sum, item) => {
     return sum + (typeof item === 'object' && item !== null && 'calories' in item ? (item.calories as number) : 0);
   }, 0);
 
-  const totalProtein = Object.values(analysis.nutritional_info).reduce((sum, item) => {
+  const totalProtein = Object.values(nutritionalInfo).reduce((sum, item) => {
     return sum + (typeof item === 'object' && item !== null && 'protein' in item ? (item.protein as number) : 0);
   }, 0);
 
-  const totalCarbs = Object.values(analysis.nutritional_info).reduce((sum, item) => {
+  const totalCarbs = Object.values(nutritionalInfo).reduce((sum, item) => {
     return sum + (typeof item === 'object' && item !== null && 'carbs' in item ? (item.carbs as number) : 0);
   }, 0);
 
-  const totalFat = Object.values(analysis.nutritional_info).reduce((sum, item) => {
+  const totalFat = Object.values(nutritionalInfo).reduce((sum, item) => {
     return sum + (typeof item === 'object' && item !== null && 'fat' in item ? (item.fat as number) : 0);
   }, 0);
 
-  const totalFiber = Object.values(analysis.nutritional_info).reduce((sum, item) => {
+  const totalFiber = Object.values(nutritionalInfo).reduce((sum, item) => {
     return sum + (typeof item === 'object' && item !== null && 'fiber' in item ? (item.fiber as number) : 0);
   }, 0);
 
@@ -150,7 +152,7 @@ export default function ScanDetailsModal({
           <div>
             <h3 className="text-lg font-semibold text-slate-900 mb-3">Recognized Items</h3>
             <div className="space-y-2">
-              {analysis.recognized_items.map((item, idx) => (
+              {(analysis.recognized_items || []).map((item, idx) => (
                 <div
                   key={idx}
                   className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
