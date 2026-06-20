@@ -253,7 +253,10 @@ export default function RecentScansView() {
                 </div>
 
                 {/* View Button */}
-                <button className="mt-4 w-full py-2 bg-orange-50 hover:bg-orange-100 text-orange-700 font-semibold rounded-lg transition flex items-center justify-center gap-2">
+                <button
+                  onClick={() => openScan(index)}
+                  className="mt-4 w-full py-2 bg-orange-50 hover:bg-orange-100 text-orange-700 font-semibold rounded-lg transition flex items-center justify-center gap-2"
+                >
                   <Eye size={16} />
                   View Details
                 </button>
