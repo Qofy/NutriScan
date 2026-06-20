@@ -11,6 +11,8 @@ import SmartCameraView from './SmartCameraView';
 import ManualEntryModal from './ManualEntryModal';
 import { logThesisMetrics, logMetric } from '@/utils/thesisMetrics';
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+
 export default function FoodUploadZone() {
   const dispatch = useDispatch<AppDispatch>();
   const { loading, error } = useSelector(selectCurrentAnalysis);
@@ -21,10 +23,39 @@ export default function FoodUploadZone() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [showCamera, setShowCamera] = useState(false);
   const [showManualEntry, setShowManualEntry] = useState(false);
+  const [analysisStartTime, setAnalysisStartTime] = useState<number | null>(null);
+  const currentAnalysis = useSelector(selectCurrentAnalysis);
 
   useEffect(() => {
     setIsHydrated(true);
   }, []);
+
+  // Log real metrics when analysis completes
+  useEffect(() => {
+    if (analysisStartTime && currentAnalysis.data && !currentAnalysis.loading) {
+      const actualLatency = performance.now() - analysisStartTime;
+      const detectedItems = currentAnalysis.data.recognized_items || [];
+      const actualConfidence = currentAnalysis.data.confidence_score || 0;
+
+      console.log(`✅ [FOOD] Analysis complete (${actualLatency.toFixed(0)}ms)`);
+      console.log(`📊 [FOOD] Real detection results:`);
+      console.log(`  - Items detected: ${detectedItems.length}`);
+      detectedItems.forEach((item: any, idx: number) => {
+        console.log(`    [${idx + 1}] ${item.name} (confidence: ${(item.confidence * 100).toFixed(1)}%)`);
+      });
+
+      // Log REAL thesis metrics for RQ1: Food Recognition
+      console.log('\n📚 [THESIS VERIFICATION - RQ1] Food Recognition Accuracy');
+      console.log(`Expected: 90.4% detection accuracy, 520ms latency`);
+      console.log(`ACTUAL RESULTS:`);
+      logMetric('Actual Latency (ms)', actualLatency, 520);
+      logMetric('Actual Confidence Score (%)', actualConfidence * 100, 90.4);
+      logMetric('Items Detected', detectedItems.length, 1);
+      logThesisMetrics('rq1');
+
+      setAnalysisStartTime(null);
+    }
+  }, [analysisStartTime, currentAnalysis.data, currentAnalysis.loading]);
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
@@ -44,7 +75,7 @@ export default function FoodUploadZone() {
     }
   };
 
-  const handleFile = async (file: File) => {
+  const handleFile = (file: File) => {
     console.log('🍽️  [FOOD] Food image upload started');
     console.log('📷 [FOOD] File details:', {
       name: file.name,
@@ -68,39 +99,8 @@ export default function FoodUploadZone() {
     });
 
     console.log('⏳ [FOOD] Starting food analysis...');
-    const startTime = performance.now();
-
-    try {
-      // Await real API response with actual metrics
-      const result = await dispatch(analyzeFood(file, healthProfile || undefined));
-      const actualLatency = performance.now() - startTime;
-
-      console.log(`✅ [FOOD] Analysis complete (${actualLatency.toFixed(0)}ms)`);
-
-      // Extract real metrics from actual API response
-      if (result) {
-        const detectedItems = result.recognized_items || [];
-        const actualConfidence = result.confidence_score || 0;
-
-        console.log(`📊 [FOOD] Real detection results:`);
-        console.log(`  - Items detected: ${detectedItems.length}`);
-        detectedItems.forEach((item: any, idx: number) => {
-          console.log(`    [${idx + 1}] ${item.name} (confidence: ${(item.confidence * 100).toFixed(1)}%)`);
-        });
-
-        // Log REAL thesis metrics for RQ1: Food Recognition
-        console.log('\n📚 [THESIS VERIFICATION - RQ1] Food Recognition Accuracy');
-        console.log(`RQ1 Test: ${file.name}`);
-        console.log(`Expected: 90.4% detection accuracy, 520ms latency`);
-        console.log(`ACTUAL RESULTS:`);
-        logMetric('Actual Latency (ms)', actualLatency, 520);
-        logMetric('Actual Confidence Score (%)', actualConfidence * 100, 90.4);
-        logMetric('Items Detected', detectedItems.length, 1);
-        logThesisMetrics('rq1');
-      }
-    } catch (error) {
-      console.error('❌ [FOOD] Analysis failed:', error);
-    }
+    setAnalysisStartTime(performance.now());
+    dispatch(analyzeFood(file, healthProfile || undefined));
 
     setShowCamera(false);
   };
