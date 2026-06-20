@@ -8,6 +8,13 @@ export interface MedicalReport {
   status: 'pending' | 'processing' | 'completed' | 'error';
   extracted_data: {
     extracted_summary?: string;
+    clinical_summary?: string;
+    report_type?: string;
+    completeness?: number;
+    missing_sections?: string[];
+    is_mock?: boolean;
+    extraction_method?: string;
+    raw_text_preview?: string;
     conditions: Array<{ condition: string; confidence: number; severity: string }>;
     allergens: Array<{ allergen: string; severity: string; confidence: number }>;
     dietary_restrictions: Array<{ restriction: string; reason: string; recommendation: string }>;
