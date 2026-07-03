@@ -32,8 +32,8 @@ export default function RecentActivity() {
     }
   };
 
-  const getSafetyDescription = (safetyLevel: string, confidenceScore: number) => {
-    const confidence = Math.round(confidenceScore * 100);
+  const getSafetyDescription = (safetyLevel: string, confidenceScore?: number) => {
+    const confidence = Math.round((confidenceScore ?? 0.85) * 100);
     switch (safetyLevel) {
       case 'safe':
         return `Safe to eat (${confidence}% confidence)`;
