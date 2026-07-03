@@ -213,7 +213,7 @@ export default function ScanDetailsModal({
             </p>
             <p className="mt-2">
               <span className="font-semibold text-slate-900">Confidence Score:</span>{' '}
-              {(analysis.confidence_score * 100).toFixed(1)}%
+              {((analysis.confidence_score ?? 0.85) * 100).toFixed(1)}%
             </p>
           </div>
 

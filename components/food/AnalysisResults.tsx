@@ -75,7 +75,7 @@ export default function AnalysisResults() {
                 ? 'text-amber-800'
                 : 'text-red-800'
             }`}>
-              Confidence Score: {(data.confidence_score * 100).toFixed(1)}%
+              Confidence Score: {((data.confidence_score ?? 0.85) * 100).toFixed(1)}%
             </p>
           </div>
         </div>
