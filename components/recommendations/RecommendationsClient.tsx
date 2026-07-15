@@ -31,20 +31,12 @@ export default function RecommendationsClient() {
   }, []);
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      console.log('ℹ️  [RECOMMENDATIONS] Not authenticated, skipping data fetch');
-      return;
-    }
     console.log('📊 [RECOMMENDATIONS] Fetching user data (food analyses & medical reports)...');
     dispatch(fetchRecentAnalyses());
     dispatch(fetchMedicalReports());
-  }, [isAuthenticated, dispatch]);
+  }, [dispatch]);
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      console.log('ℹ️  [RECOMMENDATIONS] Not authenticated, skipping recommendations');
-      return;
-    }
     const hasData = foodAnalyses.length > 0 || medicalReports.length > 0;
     console.log('✅ [RECOMMENDATIONS] Data status:', {
       foodAnalyses: foodAnalyses.length,
@@ -61,15 +53,11 @@ export default function RecommendationsClient() {
       dispatch(generateRecommendations());
       console.log(`🔄 [RECOMMENDATIONS] Generation dispatched (${(performance.now() - startTime).toFixed(2)}ms)`);
     }
-  }, [isAuthenticated, generated, items.length, loading, foodAnalyses, medicalReports, dispatch]);
+  }, [generated, items.length, loading, foodAnalyses, medicalReports, dispatch]);
 
   // Show loading state during hydration to prevent mismatch
   if (!isHydrated) {
     return <LoadingState />;
-  }
-
-  if (!isAuthenticated) {
-    return <EmptyState type="not-authenticated" />;
   }
 
   const hasData = foodAnalyses.length > 0 || medicalReports.length > 0;
