@@ -115,7 +115,9 @@ export default function ProfileClient() {
   const handleSave = async () => {
     try {
       setSaveStatus('idle');
-      await dispatch(
+      console.log('📝 Saving profile with data:', formData);
+
+      const result = await dispatch(
         updateProfile({
           first_name: formData.firstName,
           last_name: formData.lastName,
@@ -129,11 +131,14 @@ export default function ProfileClient() {
           dietaryPreferences: formData.dietaryPreferences,
         }) as any
       );
+
+      console.log('✅ Profile saved successfully:', result);
       // Save form data to localStorage
       localStorage.setItem('profileFormData', JSON.stringify(formData));
       setSaveStatus('success');
       setTimeout(() => setSaveStatus('idle'), 3000);
     } catch (err) {
+      console.error('❌ Error saving profile:', err);
       setSaveStatus('error');
     }
   };
