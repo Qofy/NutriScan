@@ -96,7 +96,6 @@ export default function ValidationMode() {
 
         const response = await fetch(`${API_BASE_URL}/api/food/analysis/analyze/`, {
           method: 'POST',
-          headers: getAuthHeaders(localStorage.getItem('auth_token')),
           body: formData,
         });
 

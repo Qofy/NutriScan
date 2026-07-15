@@ -58,11 +58,7 @@ export function fetchRecommendations() {
     dispatch(setError(null));
 
     try {
-      const response = await fetch(`${API_BASE_URL}/api/recommendations/`, {
-        headers: {
-          'Authorization': `Token ${localStorage.getItem('auth_token') || ''}`,
-        },
-      });
+      const response = await fetch(`${API_BASE_URL}/api/recommendations/`);
 
       if (!response.ok) throw new Error('Failed to fetch recommendations');
 
@@ -88,7 +84,6 @@ export function generateRecommendations() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Token ${localStorage.getItem('auth_token') || ''}`,
         },
         body: JSON.stringify({}),
       });
@@ -119,7 +114,6 @@ export function trackRecommendationAction(recommendationId: number, action: stri
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Token ${localStorage.getItem('auth_token') || ''}`,
         },
         body: JSON.stringify({ recommendation_id: recommendationId, action }),
       });

@@ -261,16 +261,9 @@ export const analyzeFood =
         formData.append('health_profile', JSON.stringify(healthProfile));
       }
 
-      const token = localStorage.getItem('auth_token');
-      const headers: Record<string, string> = {};
-      if (token) {
-        headers['Authorization'] = `Token ${token}`;
-      }
-
       const response = await fetch(`${API_BASE_URL}/api/food/analysis/analyze/`, {
         method: 'POST',
         body: formData,
-        headers,
       });
 
       if (!response.ok) {
@@ -293,12 +286,10 @@ export const deleteAnalysis =
   (analysisId: number) =>
   async (dispatch: AppDispatch) => {
     try {
-      const token = localStorage.getItem('auth_token');
       const response = await fetch(
         `${API_BASE_URL}/api/food/analysis/${analysisId}/`,
         {
           method: 'DELETE',
-          headers: getAuthHeaders(token),
         }
       );
 
@@ -321,12 +312,10 @@ export const fetchRecentAnalyses =
       dispatch(setRecentAnalysesLoading(true));
       dispatch(setRecentAnalysesError(null));
 
-      const token = localStorage.getItem('auth_token');
       const response = await fetch(
         `${API_BASE_URL}/api/food/analysis/recent/?limit=${limit}`,
         {
           method: 'GET',
-          headers: getAuthHeaders(token),
         }
       );
 
