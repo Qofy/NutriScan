@@ -6,8 +6,6 @@ import { useRouter } from 'next/navigation';
 import { AppDispatch, RootState } from '@/store';
 import { updateProfile, fetchHealthProfile, logout } from '@/features/auth';
 import PersonalInfoSection from './PersonalInfoSection';
-import HealthConditionsSection from './HealthConditionsSection';
-import AllergiesSection from './AllergiesSection';
 import NotificationPreferences from './NotificationPreferences';
 import ActionButtons from './ActionButtons';
 import StatusMessage from './StatusMessage';
@@ -103,16 +101,6 @@ export default function ProfileClient() {
     }));
   };
 
-  const handleCheckboxChange = (condition: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      conditions: {
-        ...prev.conditions,
-        [condition]: !prev.conditions[condition as keyof typeof prev.conditions],
-      },
-    }));
-  };
-
   const handleSave = async () => {
     try {
       setSaveStatus('idle');
@@ -164,11 +152,6 @@ export default function ProfileClient() {
       )}
 
       <PersonalInfoSection formData={formData} handleChange={handleChange} />
-      <HealthConditionsSection
-        conditions={formData.conditions}
-        handleCheckboxChange={handleCheckboxChange}
-      />
-      <AllergiesSection formData={formData} handleChange={handleChange} />
       <NotificationPreferences />
 
       <ActionButtons loading={loading} onSave={handleSave} onCancel={handleCancel} onLogout={handleLogout} />
