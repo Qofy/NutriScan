@@ -112,12 +112,13 @@ export default function ProfileClient() {
     }));
   };
 
-  const handleSave = async () => {
+  const handleSave = () => {
     try {
+      console.log('🔵 Button clicked - handleSave called');
       setSaveStatus('idle');
       console.log('📝 Saving profile with data:', formData);
 
-      const result = await dispatch(
+      dispatch(
         updateProfile({
           first_name: formData.firstName,
           last_name: formData.lastName,
@@ -129,10 +130,10 @@ export default function ProfileClient() {
           conditions: formData.conditions,
           allergies: formData.allergies,
           dietaryPreferences: formData.dietaryPreferences,
-        }) as any
+        })
       );
 
-      console.log('✅ Profile saved successfully:', result);
+      console.log('✅ Save dispatched, waiting for response...');
       // Save form data to localStorage
       localStorage.setItem('profileFormData', JSON.stringify(formData));
       setSaveStatus('success');
