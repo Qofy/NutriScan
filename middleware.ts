@@ -1,21 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const publicRoutes = ['/login', '/register', '/admin/login', '/admin/register'];
-
 export function middleware(request: NextRequest) {
-  const token = request.cookies.get('auth_token')?.value;
-  const pathname = request.nextUrl.pathname;
-
-  // Allow public routes
-  if (publicRoutes.includes(pathname)) {
-    return NextResponse.next();
-  }
-
-  // Redirect to login if no token
-  if (!token) {
-    return NextResponse.redirect(new URL('/login', request.url));
-  }
-
+  // No authentication required - app is free and open
   return NextResponse.next();
 }
 
