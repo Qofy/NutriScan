@@ -53,6 +53,17 @@ export default function ProfileClient() {
 
   useEffect(() => {
     const loadProfileData = async () => {
+      // First, try to load saved data from localStorage
+      const savedData = localStorage.getItem('profileFormData');
+      if (savedData) {
+        try {
+          setFormData(JSON.parse(savedData));
+          return;
+        } catch (err) {
+          console.error('Failed to load saved profile data:', err);
+        }
+      }
+
       if (user) {
         setFormData((prev) => ({
           ...prev,
@@ -118,6 +129,8 @@ export default function ProfileClient() {
           dietaryPreferences: formData.dietaryPreferences,
         }) as any
       );
+      // Save form data to localStorage
+      localStorage.setItem('profileFormData', JSON.stringify(formData));
       setSaveStatus('success');
       setTimeout(() => setSaveStatus('idle'), 3000);
     } catch (err) {
@@ -137,6 +150,8 @@ export default function ProfileClient() {
   };
 
   const handleLogout = () => {
+    // Clear saved profile data when logging out
+    localStorage.removeItem('profileFormData');
     dispatch(logout());
     router.push('/login');
   };
